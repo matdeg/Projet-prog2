@@ -4,6 +4,7 @@ abstract class Vehicle {
     def brake { println("j’arrête") }
 }
 
+
 class Bicycle(name:String) extends Vehicle{
     def move 
         {
