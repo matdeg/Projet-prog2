@@ -1,20 +1,12 @@
-abstract class character(Pname : String) {
-    def name : String
-    def nb_pokemons : Int
-    def pokemons : Array[Pokemon]
-    def money : Int
+abstract class Character(pname : String) {
+    var name : String = pname
+    var nb_pokemons : Int = 0
+    var nb_alive : Int = 0
+    var ip : Int = 0
+    var pokemons : Array[Pokemon] = new Array[Pokemon](6)
+    var money : Int = 0
+    var current_battle : Battle = Empty_Battle
 }
-
-class opponent(Pname : String) extends character(Pname) {
-    var name = Pname
-    var nb_pokemons: Int = 0
-    var pokemons = new Array[Pokemon](6)
-    var money = 0
-}
-
-class player(Pname : String) extends character(Pname) {
-    var name = Pname
-    var nb_pokemons: Int = 0
-    var pokemons = new Array[Pokemon](6)
-    var money = 0
-}
+object Empty_character extends Character("") {}
+class Opponent(pname : String) extends Character(pname) {}
+class Player(pname : String) extends Character(pname) {}
