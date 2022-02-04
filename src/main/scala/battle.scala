@@ -1,7 +1,7 @@
 class Battle(p1 : Character,p2 : Character) {
     var you : Character = p1
     var other : Character = p2
-    var loop : Int = 0
+    var loop : Int = 1
     var finished : Boolean = false
     def lose(p : Character):Unit = {finished = true
                                     if (p == you) {println("Mince, vous avez perdu")}
@@ -11,7 +11,12 @@ class Battle(p1 : Character,p2 : Character) {
             if (you.nb_alive == 0) {lose(you)}
             else {
                 println("Vous changez de Pokemon... Il vous en reste " + you.nb_alive.toString)
-                while (!you.pokemons(you.ip).alive) {you.ip += 1}
+                println("Veuillez choisir un pokémon :")
+                you.ip = readLine().toInt 
+                while (!you.pokemons(you.ip).alive) {
+                    println("Ce pokémon n'est pas apte à retourner au combat")
+                    you.ip = readLine().toInt
+                }
                 println("Vous envoyez " + you.pokemons(you.ip).name)
             }
         }
@@ -32,6 +37,7 @@ class Battle(p1 : Character,p2 : Character) {
         change
     }
     def turn(i1 : Int,i2 : Int):Unit = {
+        println("Début du tour " + loop.toString + " :")
         if (you.pokemons(you.ip).speed > you.pokemons(other.ip).speed) {
             you.pokemons(you.ip).cast_attaque(i1,other.pokemons(other.ip))
             if (other.pokemons(other.ip).alive) {
@@ -45,6 +51,8 @@ class Battle(p1 : Character,p2 : Character) {
             }
         }
         change
+        println("")
+        loop += 1
     }
 }
 

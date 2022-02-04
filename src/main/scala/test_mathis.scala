@@ -1,21 +1,27 @@
 
-class test_mathis {
+object test_mathis {
         def start()={
+            def give(p : Character, pok : Pokemon) = {
+                p.pokemons(p.nb_pokemons) = pok
+                pok.maitre = p
+                p.nb_pokemons += 1
+            }
             var op1 = new Opponent("Gaspard le Canard")
             var pl = new Player("Mathis la saucisse")
-            op1.pokemons(0) = new Pokemon_test1("Pikachu_op")
-            op1.pokemons(1) = new Pokemon_test1("Miaouss_op")
-            op1.pokemons(2) = new Pokemon_test1("Carapuce_op")
-            op1.pokemons(3) = new Pokemon_test1("Dracaufeu_op")
-            op1.pokemons(4) = new Pokemon_test1("Salamèche_op")
-            op1.pokemons(5) = new Pokemon_test1("Ouisticram_op")
 
-            pl.pokemons(0) = new Pokemon_test0("Pikachu")
-            pl.pokemons(1) = new Pokemon_test0("Miaouss")
-            pl.pokemons(2) = new Pokemon_test0("Carapuce")
-            pl.pokemons(3) = new Pokemon_test0("Dracaufeu")
-            pl.pokemons(4) = new Pokemon_test0("Salamèche")
-            pl.pokemons(5) = new Pokemon_test0("Ouisticram")
+            give(op1,new Pokemon_test0("Pikachu_op"))
+            give(op1,new Pokemon_test0("Miaouss_op"))
+            give(op1,new Pokemon_test0("Carapuce_op"))
+            give(op1,new Pokemon_test0("Dracaufeu_op"))
+            give(op1,new Pokemon_test0("Salamèche_op"))
+            give(op1,new Pokemon_test0("Ouisticram_op"))
+
+            give(pl,new Pokemon_test1("Pikachu"))
+            give(pl,new Pokemon_test1("Miaouss"))
+            give(pl,new Pokemon_test1("Carapuce"))
+            give(pl,new Pokemon_test1("Dracaufeu"))
+            give(pl,new Pokemon_test1("Salamèche"))
+            give(pl,new Pokemon_test1("Ouisticram"))
 
             var battle1 = new Battle(pl,op1)
             battle1.start
