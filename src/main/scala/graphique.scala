@@ -1,19 +1,31 @@
-import java.awt.BorderLayout
-import java.awt.Dimension
+import java.awt.{BorderLayout, Dimension, Graphics, Color, Font, Graphics2D, Image}
 import javax.swing.JFrame
 import javax.swing.JScrollPane
 import javax.swing.JTextArea
+import javax.swing.JPanel
+import javax.imageio.ImageIO
+import java.io.File
+import java.io.IOException
+import java.awt.image.BufferedImage
 
-object SwingExample extends App {
+class Fenetre extends JFrame {
 
-    val textArea = new JTextArea("Hello, Swing world")
-    val scrollPane = new JScrollPane(textArea)
+    setLayout(null)
+    setUndecorated(true)
+    setContentPane(new Affichage)
+    setSize(512, 768)
+    setLocation(500, 250)
+    setVisible(true)
+}
 
-    val frame = new JFrame("Hello, Swing")
-    frame.getContentPane.add(scrollPane, BorderLayout.CENTER)
-    frame.setDefaultCloseOperation(0)
-    frame.setSize(new Dimension(600, 400))
-    frame.setLocationRelativeTo(null)
-    frame.setVisible(true)
+class Affichage extends JPanel {
 
+    var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"));
+    
+    override def paintComponent (g : Graphics) : Unit = {
+        super.paintComponent (g)
+        g.setColor(Color.red)
+        g.drawImage(devant, 0, 0, null)
+        println(devant)
+    }
 }
