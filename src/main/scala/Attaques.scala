@@ -11,7 +11,7 @@ abstract class Attaque {
 class axiom_false extends Attaque{
     dmg = 999999
     name = "axiom_false"
-    precision = 50
+    precision = 100
     Atype = new coq
     debuff_atk = 0
     debuff_speed = 0

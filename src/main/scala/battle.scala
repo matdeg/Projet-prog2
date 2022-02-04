@@ -10,7 +10,7 @@ class Battle(p1 : Character,p2 : Character) {
         if (!you.pokemons(you.ip).alive){
             if (you.nb_alive == 0) {lose(you)}
             else {
-                println("Vous changez de Pokemon...")
+                println("Vous changez de Pokemon... Il vous en reste " + you.nb_alive.toString)
                 while (!you.pokemons(you.ip).alive) {you.ip += 1}
                 println("Vous envoyez " + you.pokemons(you.ip).name)
             }
@@ -18,7 +18,7 @@ class Battle(p1 : Character,p2 : Character) {
         if (!other.pokemons(other.ip).alive){
             if (other.nb_alive == 0) {lose(other)}
             else {
-                println("Il change de Pokemon...")
+                println("Il change de Pokemon... Il lui en reste " + other.nb_alive.toString)
                 while (!other.pokemons(other.ip).alive) {other.ip += 1}
                 println("Il envoie " + other.pokemons(other.ip).name)
             }
