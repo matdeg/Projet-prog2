@@ -39,9 +39,9 @@ class Battle(p1 : Character,p2 : Character) {
             }
         }
         else {
-            other.pokemons(other.ip).cast_attaque(i1,you.pokemons(you.ip))
+            other.pokemons(other.ip).cast_attaque(i2,you.pokemons(you.ip))
             if (you.pokemons(you.ip).alive) {
-                you.pokemons(you.ip).cast_attaque(i2,other.pokemons(other.ip))
+                you.pokemons(you.ip).cast_attaque(i1,other.pokemons(other.ip))
             }
         }
         change
