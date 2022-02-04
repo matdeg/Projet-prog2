@@ -11,7 +11,7 @@ object SwingExample extends App {
 
     val frame = new JFrame("Hello, Swing")
     frame.getContentPane.add(scrollPane, BorderLayout.CENTER)
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+    frame.setDefaultCloseOperation(0)
     frame.setSize(new Dimension(600, 400))
     frame.setLocationRelativeTo(null)
     frame.setVisible(true)
