@@ -40,14 +40,18 @@ class Battle(p1 : Character,p2 : Character) {
         println("Début du tour " + loop.toString + " :")
         if (you.pokemons(you.ip).speed > you.pokemons(other.ip).speed) {
             you.pokemons(you.ip).cast_attaque(i1,other.pokemons(other.ip))
+            you.pokemons(you.ip).reload_state
             if (other.pokemons(other.ip).alive) {
                 other.pokemons(other.ip).cast_attaque(i2,you.pokemons(you.ip))
+                other.pokemons(other.ip).reload_state
             }
         }
         else {
             other.pokemons(other.ip).cast_attaque(i2,you.pokemons(you.ip))
+            other.pokemons(other.ip).reload_state
             if (you.pokemons(you.ip).alive) {
                 you.pokemons(you.ip).cast_attaque(i1,other.pokemons(other.ip))
+                you.pokemons(you.ip).reload_state
             }
         }
         change
