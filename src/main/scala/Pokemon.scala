@@ -111,7 +111,8 @@ class Pokemon_test0(pname : String) extends Pokemon(pname) {
 class Pokemon_test1(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
-    hp = 50
+    image = "pok_test.png"
+    hp = 30
     lvl = 10
     base_atk = 50
     base_defense = 50
