@@ -25,13 +25,5 @@ object test_mathis {
 
             var battle1 = new Battle(pl,op1)
             battle1.start
-            val r = scala.util.Random; 
-            var i1 = 0; var i2 = 0;
-            while (!battle1.finished) {
-                println("Choisissez une attaque :")
-                i1 = readLine().toInt
-                i2 = r.nextInt(4)
-                battle1.turn(i1,i2)
-            }
         }
     }
