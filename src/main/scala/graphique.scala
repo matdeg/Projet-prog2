@@ -12,9 +12,11 @@ import java.awt.image.BufferedImage
 import java.awt.GridLayout
 import javax.swing.BoxLayout
 import java.text.AttributedString
+import java.net.CookieStore
 
 class AffichageBataille extends JPanel {
 
+    this.setFont(new Font("Helvetica Neue", Font.BOLD, 15))
 
     var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"))
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
@@ -48,9 +50,24 @@ class AffichageBataille extends JPanel {
     }
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent (g)
+
         g.drawImage(env, 0, 0, null)
-        g.drawImage(devant, 240, 40, null)
-        g.drawImage(derriere, 40, 240, null)
+
+        g.drawImage(devant, 230, 50, null)
+        g.setColor(Color.BLACK)
+        g.drawString(name_op + " lvl." + lvl_op, 230, 170)
+        g.drawRect(220, 50, 10, 120)
+        g.drawString(hp_op.toString + "/" + max_hp_op.toString, 220, 45)
+        g.setColor(Color.GREEN)
+        g.fillRect(220, 170-(120*hp_op/max_hp_op), 10, 120*hp_op/max_hp_op)
+
+        g.drawImage(derriere, 50, 230, null)
+        g.setColor(Color.BLACK)
+        g.drawString(name_perso + " lvl." + lvl_perso.toString, 50, 350)
+        g.drawRect(40, 230, 10, 120)
+        g.drawString(hp_perso.toString + "/" + max_hp_perso.toString, 40, 225)
+        g.setColor(Color.GREEN)
+        g.fillRect(40, 350-120*hp_perso/max_hp_perso, 10, 120*hp_perso/max_hp_perso)
     }
 }
 
