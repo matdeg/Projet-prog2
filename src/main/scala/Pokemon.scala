@@ -97,7 +97,7 @@ object Empty_Pokemon extends Pokemon("") {}
 class Pokemon_test0(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
-    image = "pok_test.png"
+    image = "pok_test_trsp.png"
     hp = 30
     lvl = 10
     base_atk = 50
@@ -111,7 +111,7 @@ class Pokemon_test0(pname : String) extends Pokemon(pname) {
 class Pokemon_test1(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
-    image = "pok_test.png"
+    image = "pok_test_trsp.png"
     hp = 30
     lvl = 10
     base_atk = 50
