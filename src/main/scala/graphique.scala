@@ -18,7 +18,7 @@ class AffichageBataille extends JPanel {
 
     var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"))
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
-    var env : BufferedImage = ImageIO.read(getClass.getResource("Atrium_background.png"))
+    var env : BufferedImage = ImageIO.read(getClass.getResource("Atrium.png"))
 
     def print_pok_perso (p : Pokemon)  : Unit = {
         derriere = ImageIO.read(getClass.getResource(p.image))
