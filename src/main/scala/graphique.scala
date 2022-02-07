@@ -20,13 +20,30 @@ class AffichageBataille extends JPanel {
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
     var env : BufferedImage = ImageIO.read(getClass.getResource("Atrium.png"))
 
+    var hp_perso = 50
+    var max_hp_perso = 100
+    var name_perso = "perso"
+    var lvl_perso = 5
+    var hp_op = 30
+    var max_hp_op = 120
+    var name_op = "op"
+    var lvl_op  = 7
+
     def print_pok_perso (p : Pokemon)  : Unit = {
         derriere = ImageIO.read(getClass.getResource(p.image))
+        hp_perso = p.hp
+        max_hp_perso = p.max_hp
+        name_perso = p.name
+        lvl_perso = p.lvl
         repaint ()
     }
 
     def print_pok_op (p: Pokemon) : Unit = {
         devant = ImageIO.read(getClass.getResource(p.image))
+        hp_op = p.hp
+        max_hp_op = p.max_hp
+        name_op = p.name
+        lvl_op = p.lvl
         repaint ()
     }
     override def paintComponent (g : Graphics) : Unit = {
