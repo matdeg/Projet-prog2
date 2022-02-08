@@ -13,6 +13,9 @@ import java.awt.GridLayout
 import javax.swing.BoxLayout
 import java.text.AttributedString
 import java.net.CookieStore
+import java.awt.event.ActionListener
+import java.awt.event.ActionEvent
+import java.lang.Thread
 
 class AffichageBataille extends JPanel {
 
@@ -73,18 +76,21 @@ class AffichageBataille extends JPanel {
 
 class MsgBox extends JPanel {
 
+    var texte = new JLabel("Msgbox")
+    this.add(texte)
+
     def print_msg (s: String) : Unit = {
-        var texte = new JLabel(s)
-        this.add(texte)
+        texte.setText(s)
     }
 }
 
-class Fenetre extends JFrame {
-
+object Fenetre extends JFrame with ActionListener{
     this.setTitle("Best Game Ever")
     this.setSize(400, 800)
     this.setLocation(500, 250)
     this.setResizable(false)
+
+    var compteur = 0
 
 
     var bataille = new AffichageBataille ()
@@ -94,17 +100,149 @@ class Fenetre extends JFrame {
     
 
     var interaction = new JPanel ()
-    interaction.setLayout(new GridLayout(2,2))
+    var bouton0 = new JButton ("0")
+    var bouton1 = new JButton ("1")
+    var bouton2 = new JButton ("2")
+    var bouton3 = new JButton ("3")
+    var bouton4 = new JButton ("4")
+    var bouton5 = new JButton ("5")
+    var boutonr = new JButton ("-1")
 
-    var boutonhg = new JButton ("Haut Gauche")
-    var boutonhd = new JButton ("Haut Droit")
-    var boutonbg = new JButton ("Bas Gauche")
-    var boutonbd = new JButton ("Bas Droit")
-    interaction.add(boutonhg)
-    interaction.add(boutonhd)
-    interaction.add(boutonbg)
-    interaction.add(boutonbd)
+    var choix_menu = -2
 
+    def print_menu_base () : Int = {
+        
+        interaction.setLayout(new GridLayout(2,2))
+
+        bouton0.setText("Attaque")
+        bouton1.setText("Pokémon")
+        bouton2.setText("Sac")
+        bouton3.setText("Fuite")
+
+        interaction.add(bouton0)
+        interaction.add(bouton1)
+        interaction.add(bouton2)
+        interaction.add(bouton3)
+
+        bouton0.addActionListener(this)
+        bouton1.addActionListener(this)
+        bouton2.addActionListener(this)
+        bouton3.addActionListener(this)
+
+        interaction.updateUI
+
+        choix_menu = -2
+
+        while (choix_menu == -2) {
+            Thread.sleep(100)
+        }
+
+        println(choix_menu)
+        choix_menu
+    }
+
+    def print_menu_attaque (p : Pokemon) : Int = {
+        
+        interaction.setLayout(new GridLayout(3,2))
+
+        bouton0.setText(p.attaques(0).name)
+        bouton1.setText(p.attaques(1).name)
+        bouton2.setText(p.attaques(2).name)
+        bouton3.setText(p.attaques(3).name)
+        boutonr.setText("Retour")
+
+        interaction.add(bouton0)
+        interaction.add(bouton1)
+        interaction.add(bouton2)
+        interaction.add(bouton3)
+        interaction.add(boutonr)
+
+        interaction.updateUI
+
+        bouton0.addActionListener(this)
+        bouton1.addActionListener(this)
+        bouton2.addActionListener(this)
+        bouton3.addActionListener(this)
+        boutonr.addActionListener(this)
+
+        choix_menu = -2
+
+        while (choix_menu == -2) {
+            Thread.sleep(100)
+        }
+
+        interaction.remove(boutonr)
+
+        println(choix_menu)
+        choix_menu
+    }
+
+    def print_menu_pokemon (p : Character) : Int = {
+        
+        interaction.setLayout(new GridLayout(4,2))
+        
+        bouton0.setText(p.pokemons(0).name)
+        bouton1.setText(p.pokemons(1).name)
+        bouton2.setText(p.pokemons(2).name)
+        bouton3.setText(p.pokemons(3).name)
+        bouton4.setText(p.pokemons(4).name)
+        bouton5.setText(p.pokemons(5).name)
+        boutonr.setText("Retour")
+
+        interaction.add(bouton0)
+        interaction.add(bouton1)
+        interaction.add(bouton2)
+        interaction.add(bouton3)
+        interaction.add(bouton4)
+        interaction.add(bouton5)
+        interaction.add(boutonr)
+
+        interaction.updateUI
+
+        bouton0.addActionListener(this)
+        bouton1.addActionListener(this)
+        bouton2.addActionListener(this)
+        bouton3.addActionListener(this)
+        bouton4.addActionListener(this)
+        bouton5.addActionListener(this)
+        boutonr.addActionListener(this)
+
+        choix_menu = -2
+
+        while (choix_menu == -2) {
+            Thread.sleep(100)
+        }
+
+        interaction.remove(boutonr)
+        interaction.remove(bouton4)
+        interaction.remove(bouton5)
+
+        println(choix_menu)
+        choix_menu
+    }
+    override def actionPerformed (arg0 : ActionEvent) : Unit = {
+        if (arg0.getSource == bouton0) {
+            choix_menu = 0
+        }
+        if (arg0.getSource == bouton1) {
+            choix_menu = 1
+        }
+        if (arg0.getSource == bouton2) {
+            choix_menu = 2
+        }
+        if (arg0.getSource == bouton3) {
+            choix_menu = 3
+        }
+        if (arg0.getSource == bouton4) {
+            choix_menu = 4
+        }
+        if (arg0.getSource == bouton5) {
+            choix_menu = 5
+        }
+        if (arg0.getSource == boutonr) {
+            choix_menu = -1
+        }
+    }
 
     var bas_fenetre = new JPanel
     bas_fenetre.setLayout(new GridLayout(2,1))
