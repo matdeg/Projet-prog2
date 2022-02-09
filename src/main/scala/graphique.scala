@@ -99,7 +99,6 @@ object Fenetre extends JFrame with ActionListener{
     var msgbox = new MsgBox ()
     
 
-    var interaction = new JPanel ()
     var bouton0 = new JButton ("0")
     var bouton1 = new JButton ("1")
     var bouton2 = new JButton ("2")
@@ -107,29 +106,48 @@ object Fenetre extends JFrame with ActionListener{
     var bouton4 = new JButton ("4")
     var bouton5 = new JButton ("5")
     var boutonr = new JButton ("-1")
+    
+    var rangee_bouton_1 = new JPanel
+    rangee_bouton_1.setLayout(new GridLayout(1, 2)) 
+    rangee_bouton_1.add(bouton0)
+    rangee_bouton_1.add(bouton1)
+
+    var rangee_bouton_2 = new JPanel
+    rangee_bouton_2.setLayout(new GridLayout(1, 2))
+    rangee_bouton_2.add(bouton2)
+    rangee_bouton_2.add(bouton3)
+
+    var rangee_bouton_3 = new JPanel
+    rangee_bouton_3.setLayout(new GridLayout(1, 2))
+    rangee_bouton_3.add(bouton4)
+    rangee_bouton_3.add(bouton5)
+
+    var rangee_retour = new JPanel
+    rangee_retour.setLayout(new GridLayout(1, 1))
+    rangee_retour.add(boutonr)
 
     var choix_menu = -2
 
+    var bas_fenetre = new JPanel
+    bas_fenetre.setLayout(new BoxLayout(bas_fenetre, BoxLayout.PAGE_AXIS))
+    bas_fenetre.add(msgbox)
+
     def print_menu_base () : Int = {
-        
-        interaction.setLayout(new GridLayout(2,2))
 
         bouton0.setText("Attaque")
         bouton1.setText("Pokémon")
         bouton2.setText("Sac")
         bouton3.setText("Fuite")
 
-        interaction.add(bouton0)
-        interaction.add(bouton1)
-        interaction.add(bouton2)
-        interaction.add(bouton3)
+        bas_fenetre.add(rangee_bouton_1)
+        bas_fenetre.add(rangee_bouton_2)
 
         bouton0.addActionListener(this)
         bouton1.addActionListener(this)
         bouton2.addActionListener(this)
         bouton3.addActionListener(this)
 
-        interaction.updateUI
+        bas_fenetre.updateUI
 
         choix_menu = -2
 
@@ -137,13 +155,13 @@ object Fenetre extends JFrame with ActionListener{
             Thread.sleep(100)
         }
 
-        println(choix_menu)
+        bas_fenetre.remove(rangee_bouton_1)
+        bas_fenetre.remove(rangee_bouton_2)
+
         choix_menu
     }
 
     def print_menu_attaque (p : Pokemon) : Int = {
-        
-        interaction.setLayout(new GridLayout(3,2))
 
         bouton0.setText(p.attaques(0).name)
         bouton1.setText(p.attaques(1).name)
@@ -151,13 +169,11 @@ object Fenetre extends JFrame with ActionListener{
         bouton3.setText(p.attaques(3).name)
         boutonr.setText("Retour")
 
-        interaction.add(bouton0)
-        interaction.add(bouton1)
-        interaction.add(bouton2)
-        interaction.add(bouton3)
-        interaction.add(boutonr)
+        bas_fenetre.add(rangee_bouton_1)
+        bas_fenetre.add(rangee_bouton_2)
+        bas_fenetre.add(rangee_retour)
 
-        interaction.updateUI
+        bas_fenetre.updateUI
 
         bouton0.addActionListener(this)
         bouton1.addActionListener(this)
@@ -171,15 +187,14 @@ object Fenetre extends JFrame with ActionListener{
             Thread.sleep(100)
         }
 
-        interaction.remove(boutonr)
+        bas_fenetre.remove(rangee_bouton_1)
+        bas_fenetre.remove(rangee_bouton_2)
+        bas_fenetre.remove(rangee_retour)
 
-        println(choix_menu)
         choix_menu
     }
 
     def print_menu_pokemon (p : Character) : Int = {
-        
-        interaction.setLayout(new GridLayout(4,2))
         
         bouton0.setText(p.pokemons(0).name)
         bouton1.setText(p.pokemons(1).name)
@@ -189,15 +204,12 @@ object Fenetre extends JFrame with ActionListener{
         bouton5.setText(p.pokemons(5).name)
         boutonr.setText("Retour")
 
-        interaction.add(bouton0)
-        interaction.add(bouton1)
-        interaction.add(bouton2)
-        interaction.add(bouton3)
-        interaction.add(bouton4)
-        interaction.add(bouton5)
-        interaction.add(boutonr)
+        bas_fenetre.add(rangee_bouton_1)
+        bas_fenetre.add(rangee_bouton_2)
+        bas_fenetre.add(rangee_bouton_3)
+        bas_fenetre.add(rangee_retour)
 
-        interaction.updateUI
+        bas_fenetre.updateUI
 
         bouton0.addActionListener(this)
         bouton1.addActionListener(this)
@@ -213,11 +225,11 @@ object Fenetre extends JFrame with ActionListener{
             Thread.sleep(100)
         }
 
-        interaction.remove(boutonr)
-        interaction.remove(bouton4)
-        interaction.remove(bouton5)
+        bas_fenetre.remove(rangee_bouton_1)
+        bas_fenetre.remove(rangee_bouton_2)
+        bas_fenetre.remove(rangee_bouton_3)
+        bas_fenetre.remove(rangee_retour)
 
-        println(choix_menu)
         choix_menu
     }
     override def actionPerformed (arg0 : ActionEvent) : Unit = {
@@ -243,11 +255,6 @@ object Fenetre extends JFrame with ActionListener{
             choix_menu = -1
         }
     }
-
-    var bas_fenetre = new JPanel
-    bas_fenetre.setLayout(new GridLayout(2,1))
-    bas_fenetre.add(msgbox)
-    bas_fenetre.add(interaction)
 
     var total = new JPanel
     total.setLayout(new GridLayout(2,1))
