@@ -86,8 +86,7 @@ class MsgBox extends JPanel {
 
 object Fenetre extends JFrame with ActionListener{
     this.setTitle("Best Game Ever")
-    this.setSize(400, 800)
-    this.setLocation(500, 250)
+    this.setSize(750, 1000)
     this.setResizable(false)
 
     var compteur = 0
