@@ -23,7 +23,7 @@ class AffichageBataille extends JPanel {
 
     var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"))
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
-    var env : BufferedImage = ImageIO.read(getClass.getResource("Atrium.png"))
+    var env : BufferedImage = ImageIO.read(getClass.getResource("ens.png"))
 
     var hp_perso = 50
     var max_hp_perso = 100
@@ -76,11 +76,24 @@ class AffichageBataille extends JPanel {
 
 class MsgBox extends JPanel {
 
-    var texte = new JLabel("Msgbox")
-    this.add(texte)
+    var texte = "Msgbox"
+
+    this.setFont(new Font("Helvetica Neue", Font.BOLD, 17))
+    override def paintComponent (g : Graphics) : Unit = {
+        super.paintComponent(g)
+
+        g.setColor(Color.BLACK)
+        g.fillRect(0, 0, this.getWidth, this.getHeight)
+        g.setColor(Color.WHITE)
+        g.drawRect(5, 5, this.getWidth-10, this.getHeight-10)
+        g.fillRect(10, 10, this.getWidth-20, this.getHeight-20)
+        g.setColor(Color.BLACK)
+        g.drawString(texte, 15, 30)
+    }
 
     def print_msg (s: String) : Unit = {
-        texte.setText(s)
+        texte = s
+        repaint ()
     }
 }
 
