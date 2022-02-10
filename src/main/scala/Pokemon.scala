@@ -1,29 +1,49 @@
 import java.awt.Taskbar.State
 abstract class Pokemon(pname : String) {
-    var maitre : Character = Empty_character 
-    var alive = false 
     var name = pname
     var image = ""
-    var max_hp = 0
     var lvl = 5
+    var xp = 0
+    var max_hp = 0
     var hp = 0
     var base_atk = 0
     var base_defense = 0
     var base_speed = 0
+    var base_xp_given : Int = 70
+    var ptype : Ttype = Scala
+    var attaques = new Array[Attaque](4)
+    var atk_per_lvl : Double = 0
+    var defense_per_lvl : Double = 0
+    var speed_per_lvl : Double = 0
+
+    var xp_given : Int = lvl * base_xp_given / 7
     var atk_mult = 0
     var defense_mult = 0 
     var speed_mult = 0
-    var ptype : Ttype = Scala
-    var attaques = new Array[Attaque](4)
+    var maitre : Character = Empty_character 
+    var alive = false 
     var state : States = None_state
     var remaining_time : Int = 0
-    def atk = {(base_atk.toFloat * Func.mult(atk_mult + state.matk)).toInt}
-    def defense = {(base_defense.toFloat * Func.mult(defense_mult + state.mdef)).toInt}
-    def speed = {(base_speed.toFloat * Func.mult(speed_mult + state.mspeed)).toInt}
+    def next_xp = {3 * lvl * lvl}
+    def atk = {((base_atk.toFloat + lvl.toFloat * atk_per_lvl.toFloat) * Func.mult(atk_mult + state.matk)).toInt}
+    def defense = {((base_defense.toFloat + lvl.toFloat * defense_per_lvl.toFloat)* Func.mult(defense_mult + state.mdef)).toInt}
+    def speed = {((base_speed.toFloat + lvl.toFloat * speed_per_lvl.toFloat) * Func.mult(speed_mult + state.mspeed)).toInt}
     def reload_state = {
         remaining_time = Func.max(remaining_time - 1,0)
         if (remaining_time == 0) {
             state = None_state
+        }
+    }
+    def add_xp(exp : Int) = {
+        Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !")
+        Thread.sleep(1000)
+        xp += exp
+        if (xp >= next_xp){
+            while (xp >= next_xp) {
+                xp -= next_xp
+                lvl += 1
+            }
+            Fenetre.msgbox.print_msg(this.name + " est monté au niveau " + lvl)
         }
     }
     def cast_attaque(i : Int,defenser : Pokemon) = {
@@ -59,11 +79,12 @@ abstract class Pokemon(pname : String) {
         else{
             Fenetre.msgbox.print_msg(this.name + " est gelé, il ne peut pas attaquer")
         }
+        if (!defenser.alive) {add_xp(defenser.xp_given)}
     }
     def receive_attaque(a: Attaque, atker : Pokemon):Unit = {
         var dmg_taken = (((0.4 * atker.lvl.toFloat + 2.0) * a.dmg.toFloat * atker.atk.toFloat / (50.0 * defense.toFloat)) * (a.Atype).affinites(ptype)).toInt
         Fenetre.msgbox.print_msg(this.name + " perd " + dmg_taken.toString() + " PV !")
-        hp = hp - dmg_taken
+        hp = Func.max(hp - dmg_taken,0)
         val r = scala.util.Random
         if (a.debuff_atk > 0) {atk_mult = Func.max(-a.debuff_atk + atk_mult,-6)
                               Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...")}
@@ -96,7 +117,7 @@ abstract class Pokemon(pname : String) {
         else {
             Fenetre.bataille.print_pok_op(this)
         }
-        if (hp <= 0) {Fenetre.msgbox.print_msg(this.name + " est KO !"); alive = false; maitre.nb_alive -= 1}
+        if (hp == 0) {Fenetre.msgbox.print_msg(this.name + " est KO !"); alive = false; maitre.nb_alive -= 1}
     }
 }
 
