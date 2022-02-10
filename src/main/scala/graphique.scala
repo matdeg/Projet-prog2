@@ -35,6 +35,8 @@ class AffichageBataille extends JPanel {
     var max_hp_op = 120
     var name_op = "op"
     var lvl_op  = 100
+    var exp = 50
+    var next_lvl = 150
 
     def print_pok_perso (p : Pokemon)  : Unit = {
         derriere = ImageIO.read(getClass.getResource(p.image))
@@ -42,6 +44,8 @@ class AffichageBataille extends JPanel {
         max_hp_perso = p.max_hp
         name_perso = p.name
         lvl_perso = p.lvl
+        exp = p.xp
+        next_lvl = p.next_xp
         repaint ()
     }
 
@@ -100,6 +104,8 @@ class AffichageBataille extends JPanel {
             }
         }
         g.fillRect(387, 382, hp_perso*90/max_hp_perso, 3)
+        g.setColor(Color.CYAN)
+        g.fillRect(298, 400, exp*190/next_lvl, 2)
     }
 }
 
