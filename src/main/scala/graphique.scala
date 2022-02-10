@@ -19,20 +19,22 @@ import java.lang.Thread
 
 class AffichageBataille extends JPanel {
 
-    this.setFont(new Font("Helvetica Neue", Font.BOLD, 15))
+    this.setFont(new Font("Helvetica Neue", Font.BOLD, 13))
 
     var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"))
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
     var env : BufferedImage = ImageIO.read(getClass.getResource("ens.png"))
+    var stat_op : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_op.png"))
+    var stat_perso : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_perso.png"))
 
-    var hp_perso = 50
+    var hp_perso = 20
     var max_hp_perso = 100
     var name_perso = "perso"
-    var lvl_perso = 5
-    var hp_op = 30
+    var lvl_perso = 100
+    var hp_op = 12
     var max_hp_op = 120
     var name_op = "op"
-    var lvl_op  = 7
+    var lvl_op  = 100
 
     def print_pok_perso (p : Pokemon)  : Unit = {
         derriere = ImageIO.read(getClass.getResource(p.image))
@@ -56,21 +58,48 @@ class AffichageBataille extends JPanel {
 
         g.drawImage(env, 0, 0, null)
 
-        g.drawImage(devant, 230, 50, null)
-        g.setColor(Color.BLACK)
-        g.drawString(name_op + " lvl." + lvl_op, 230, 170)
-        g.drawRect(220, 50, 10, 120)
-        g.drawString(hp_op.toString + "/" + max_hp_op.toString, 220, 45)
-        g.setColor(Color.GREEN)
-        g.fillRect(220, 170-(120*hp_op/max_hp_op), 10, 120*hp_op/max_hp_op)
+        g.drawImage(devant, 500, 50, null)
+        g.drawImage(stat_op, 250, 100, 250, 60, null)
+        g.setColor(Color.WHITE)
+        g.drawString(name_op, 280, 131)
+        g.drawString(lvl_op.toString, 420, 131)
+        if (hp_op <= max_hp_op/5) {
+            g.setColor(Color.RED)
+        }
+        else {
+            if (hp_op <= max_hp_op/2) {
+                g.setColor(Color.ORANGE)
+            }
+            else {
+                g.setColor(Color.GREEN)
+            }
+        }
+        g.fillRect(356, 142, hp_op*92/max_hp_op, 3)
 
-        g.drawImage(derriere, 50, 230, null)
-        g.setColor(Color.BLACK)
-        g.drawString(name_perso + " lvl." + lvl_perso.toString, 50, 350)
-        g.drawRect(40, 230, 10, 120)
-        g.drawString(hp_perso.toString + "/" + max_hp_perso.toString, 40, 225)
-        g.setColor(Color.GREEN)
-        g.fillRect(40, 350-120*hp_perso/max_hp_perso, 10, 120*hp_perso/max_hp_perso)
+        g.drawImage(derriere, 100, 450-derriere.getHeight, null)
+        g.drawImage(stat_perso, 250, 350, 250, 60, null)
+        g.setColor(Color.WHITE)
+        g.drawString(name_perso, 310, 374)
+        g.drawString(lvl_perso.toString, 448, 374)
+        if (hp_perso < 100) {
+            g.drawString(hp_perso.toString, 397, 397)
+        }
+        else {
+            g.drawString(hp_perso.toString, 391, 397)
+        }
+        g.drawString(max_hp_perso.toString, 431, 397)
+        if (hp_perso <= max_hp_perso/5) {
+            g.setColor(Color.RED)
+        }
+        else {
+            if (hp_perso <= max_hp_perso/2) {
+                g.setColor(Color.ORANGE)
+            }
+            else {
+                g.setColor(Color.GREEN)
+            }
+        }
+        g.fillRect(387, 382, hp_perso*90/max_hp_perso, 3)
     }
 }
 
