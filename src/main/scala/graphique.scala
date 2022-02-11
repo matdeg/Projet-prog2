@@ -23,7 +23,7 @@ class AffichageBataille extends JPanel {
 
     var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"))
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
-    var env : BufferedImage = ImageIO.read(getClass.getResource("jardin.png"))
+    var env : BufferedImage = ImageIO.read(getClass.getResource("jardin_flou.png"))
     var stat_op : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_op.png"))
     var stat_perso : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_perso.png"))
 

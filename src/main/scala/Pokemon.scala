@@ -122,10 +122,11 @@ abstract class Pokemon(pname : String) {
 }
 
 object Empty_Pokemon extends Pokemon("") {}
-class Pokemon_test0(pname : String) extends Pokemon(pname) {
+
+class Alabri(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
-    image = "pok_test.png"
+    image = "pokemons/alabri.png"
     hp = 30
     lvl = 10
     base_atk = 50
@@ -136,16 +137,211 @@ class Pokemon_test0(pname : String) extends Pokemon(pname) {
     state = None_state
 }
 
-class Pokemon_test1(pname : String) extends Pokemon(pname) {
+class Alacool(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
-    image = "pok_test_trsp.png"
+    image = "pokemons/alacool.png"
     hp = 30
     lvl = 10
     base_atk = 50
     base_defense = 50
-    base_speed = 100
+    base_speed = 200
     ptype = Scala
-    attaques = Array(Axiom_false,Scala_vibes,Python_vibes,Ocaml_vibes)
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Dracarpe(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/dracarpe.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Galopan(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/galopan.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Kokicarpe(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/kokicarpe.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Mcool(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/m.cool.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Mherbe(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/m.herbe.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Magilangue(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/magilangue.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Poissocarpe(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/poissocarpe.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Poryodin(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/poryodin.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Rhinocarpe(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/rhinocarpe.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+class salatard(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/salatard.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Starstar(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/Starstar.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Salatard(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/salatard.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Tentapan(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/tentapan.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
+    state = None_state
+}
+
+class Torgogo(pname : String) extends Pokemon(pname) {
+    max_hp = 50
+    alive = true
+    image = "pokemons/torgogo.png"
+    hp = 30
+    lvl = 10
+    base_atk = 50
+    base_defense = 50
+    base_speed = 200
+    ptype = Scala
+    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
     state = None_state
 }
