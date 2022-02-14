@@ -16,7 +16,7 @@ class Battle(p1 : Character,p2 : Character) {
             else {
                 you.ip = -1
                 Fenetre.msgbox.print_msg("Vous changez de Pokemon... \n Il vous en reste " + you.nb_alive.toString)
-                Thread.sleep(1000)
+                Thread.sleep(2000)
                 while ((you.ip == -1) || !you.pokemons(you.ip).alive) {
                     if (you.ip == -1) {Fenetre.msgbox.print_msg("Veuillez choisir un pokémon :")}
                     else {Fenetre.msgbox.print_msg("Ce pokémon n'est pas apte à retourner au combat, veuillez choisir un pokémon :")}
@@ -33,10 +33,10 @@ class Battle(p1 : Character,p2 : Character) {
             if (other.nb_alive == 0) {lose(other)}
             else {
                 Fenetre.msgbox.print_msg("Il change de Pokemon... Il lui en reste " + other.nb_alive.toString)
-                Thread.sleep(1000)
+                Thread.sleep(2000)
                 while (!other.pokemons(other.ip).alive) {other.ip += 1}
                 Fenetre.msgbox.print_msg("Il envoie " + other.pokemons(other.ip).name)
-                Thread.sleep(1000)
+                Thread.sleep(2000)
                 Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
             }
         }
@@ -76,7 +76,7 @@ class Battle(p1 : Character,p2 : Character) {
                     }
                     if (i0 >= 2 ) {
                         Fenetre.msgbox.print_msg("Ceci n'a pas été codé")
-                        Thread.sleep(1000)
+                        Thread.sleep(2000)
                     }
                 }
                 var j0 = 0
@@ -112,14 +112,14 @@ class Battle(p1 : Character,p2 : Character) {
             if (p == you) {
                 p.ip = i1
                 Fenetre.msgbox.print_msg("Vous envoyez " + p.pokemons(p.ip).name + " !")
-                Thread.sleep(1000)
+                Thread.sleep(2000)
                 p.pokemons(p.ip).reload_state
                 Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
             }
             else {
                 p.ip = i1
                 Fenetre.msgbox.print_msg("Il envoie " + p.pokemons(p.ip).name + " !")
-                Thread.sleep(1000)
+                Thread.sleep(2000)
                 p.pokemons(p.ip).reload_state
                 Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
             }
