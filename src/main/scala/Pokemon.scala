@@ -309,7 +309,7 @@ class Salatard(pname : String) extends Pokemon(pname) {
 class Starstar(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
-    image = "pokemons/Starstar.png"
+    image = "pokemons/starstar.png"
     hp = 30
     lvl = 10
     base_atk = 50
