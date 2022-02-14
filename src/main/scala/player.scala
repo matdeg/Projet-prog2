@@ -7,6 +7,7 @@ abstract class Character(pname : String) {
     var pokemons : Array[Pokemon] = new Array[Pokemon](6)
     var money : Int = 0
     var current_battle : Battle = Empty_Battle
+    
 }
 object Empty_character extends Character("") {}
 class Opponent(pname : String) extends Character(pname) {}

@@ -36,97 +36,94 @@ abstract class Pokemon(pname : String) {
         }
     }
     def use_item(i : Item) = {
-        hp = Func.max(hp + regen,max_hp)
-        if (regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !")
+        hp = Func.max(hp + i.regen,max_hp)
+        if (i.regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !");Thread.sleep(1000)}
         if (i.buff_atk > 0) {atk_mult = Func.min(i.buff_atk + atk_mult,6)
-                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !")}
+                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1000)}
         if (i.buff_defense > 0) {defense_mult = Func.min(i.buff_defense + defense_mult,6)
-                                Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !")}
+                                Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1000)}
         if (i.buff_speed > 0) {speed_mult = Func.min(i.buff_speed + speed_mult,6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !")}
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1000)}
         if (i.buff_atk < 0) {atk_mult = Func.max(i.buff_atk + atk_mult,-6)
-                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...")}
+                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1000)}
         if (i.buff_defense < 0) {defense_mult = Func.max(i.buff_defense + defense_mult,-6)
-                                Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...")}
+                                Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1000)}
         if (i.buff_speed < 0) {speed_mult = Func.max(i.buff_speed + speed_mult,-6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...")}
-        
-}
-    }
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1000)}
+        }
     def add_xp(exp : Int) = {
-        Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !")
-        Thread.sleep(1000)
+        Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !");Thread.sleep(1000)
         xp += exp
         if (xp >= next_xp){
             while (xp >= next_xp) {
                 xp -= next_xp
                 lvl += 1
             }
-            Fenetre.msgbox.print_msg(this.name + " est monté au niveau " + lvl)
+            Fenetre.msgbox.print_msg(this.name + " est monté au niveau " + lvl);Thread.sleep(1000)
         }
     }
     def cast_attaque(i : Int,defenser : Pokemon) = {
         var a = attaques(i); 
         val r = scala.util.Random; 
         if (!state.stun) {
-            Fenetre.msgbox.print_msg(this.name + " lance l'attaque " + a.name)
-            Thread.sleep(2000)
+            Fenetre.msgbox.print_msg(this.name + " lance l'attaque " + a.name);Thread.sleep(1000)
             if (r.nextDouble > state.miss) {
                 if (r.nextFloat < ((a.precision).toFloat/100)) {
                     if (a.dmg > 0) {defenser.receive_attaque(a,this)}
                     if (a.buff_atk > 0) {atk_mult = Func.min(a.buff_atk + atk_mult,6)
-                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !")}
+                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1000)}
                     if (a.buff_defense > 0) {defense_mult = Func.min(a.buff_defense + defense_mult,6)
-                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !")}
+                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1000)}
                     if (a.buff_speed > 0) {speed_mult = Func.min(a.buff_speed + speed_mult,6)
-                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !")}
+                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1000)}
                     if (a.buff_atk < 0) {atk_mult = Func.max(a.buff_atk + atk_mult,-6)
-                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...")}
+                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1000)}
                     if (a.buff_defense < 0) {defense_mult = Func.max(a.buff_defense + defense_mult,-6)
-                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...")}
+                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1000)}
                     if (a.buff_speed < 0) {speed_mult = Func.max(a.buff_speed + speed_mult,-6)
-                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...")}
+                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1000)}
                 }
                 else {
-                    Fenetre.msgbox.print_msg(this.name + " a raté l'attaque...")
+                    Fenetre.msgbox.print_msg(this.name + " a raté l'attaque...");Thread.sleep(1000)
                 }
             }
             else{
-                Fenetre.msgbox.print_msg(this.name + " est paralysé, il n'a pas pu attaquer")
+                Fenetre.msgbox.print_msg(this.name + " est paralysé, il n'a pas pu attaquer");Thread.sleep(1000)
             }
         }
         else{
-            Fenetre.msgbox.print_msg(this.name + " est gelé, il ne peut pas attaquer")
+            Fenetre.msgbox.print_msg(this.name + " est gelé, il ne peut pas attaquer");Thread.sleep(1000)
         }
         if (!defenser.alive) {add_xp(defenser.xp_given)}
     }
     def receive_attaque(a: Attaque, atker : Pokemon):Unit = {
         var dmg_taken = (((0.4 * atker.lvl.toFloat + 2.0) * a.dmg.toFloat * atker.atk.toFloat / (50.0 * defense.toFloat)) * (a.Atype).affinites(ptype)).toInt
         Fenetre.msgbox.print_msg(this.name + " perd " + dmg_taken.toString() + " PV !")
+        Thread.sleep(1000)
         hp = Func.max(hp - dmg_taken,0)
         val r = scala.util.Random
         if (a.debuff_atk > 0) {atk_mult = Func.max(-a.debuff_atk + atk_mult,-6)
-                              Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...")}
+                              Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1000)}
         if (a.debuff_defense > 0) {defense_mult = Func.max(-a.debuff_defense + defense_mult,-6)
-                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...")}
+                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1000)}
         if (a.debuff_speed > 0) {speed_mult = Func.max(-a.debuff_speed + speed_mult,-6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...")}
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1000)}
         if (a.debuff_atk < 0) {atk_mult = Func.min(-a.debuff_atk + atk_mult,6)
-                                Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !")}
+                                Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1000)}
         if (a.debuff_defense < 0) {defense_mult = Func.min(-a.debuff_defense + defense_mult,6)
-                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !")}
+                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1000)}
         if (a.debuff_speed < 0) {speed_mult = Func.min(-a.debuff_speed + speed_mult,6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !")}
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1000)}
         var (astate,pstate) = a.pstate 
         if (pstate > 0) {
             if  (r.nextDouble < pstate) {
-                Fenetre.msgbox.print_msg(this.name + "vas subir l'effet " + astate.name)
+                Fenetre.msgbox.print_msg(this.name + "vas subir l'effet " + astate.name);Thread.sleep(1000)
                 if (astate == state || state == None_state) {
                     state = astate 
                     remaining_time = astate.duration
                 }
                 else {
-                    Fenetre.msgbox.print_msg("Mais " + this.name + " a déjà un effet !")
+                    Fenetre.msgbox.print_msg("Mais " + this.name + " a déjà un effet !");Thread.sleep(1000)
                 }
             }
         }
@@ -136,7 +133,7 @@ abstract class Pokemon(pname : String) {
         else {
             Fenetre.bataille.print_pok_op(this)
         }
-        if (hp == 0) {Fenetre.msgbox.print_msg(this.name + " est KO !"); alive = false; maitre.nb_alive -= 1}
+        if (hp == 0) {Fenetre.msgbox.print_msg(this.name + " est KO !");Thread.sleep(1000); alive = false; maitre.nb_alive -= 1}
     }
 }
 
@@ -295,7 +292,7 @@ class Rhinocarpe(pname : String) extends Pokemon(pname) {
     attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
     state = None_state
 }
-class salatard(pname : String) extends Pokemon(pname) {
+class Salatard(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
     image = "pokemons/salatard.png"
@@ -313,20 +310,6 @@ class Starstar(pname : String) extends Pokemon(pname) {
     max_hp = 50
     alive = true
     image = "pokemons/Starstar.png"
-    hp = 30
-    lvl = 10
-    base_atk = 50
-    base_defense = 50
-    base_speed = 200
-    ptype = Scala
-    attaques = Array(Ocaml_vibes,Ocaml_vibes,Ocaml_vibes,Ocaml_vibes)
-    state = None_state
-}
-
-class Salatard(pname : String) extends Pokemon(pname) {
-    max_hp = 50
-    alive = true
-    image = "pokemons/salatard.png"
     hp = 30
     lvl = 10
     base_atk = 50
@@ -357,7 +340,7 @@ class Torgogo(pname : String) extends Pokemon(pname) {
     image = "pokemons/torgogo.png"
     hp = 30
     lvl = 10
-    base_atk = 50
+    base_atk = 500
     base_defense = 50
     base_speed = 200
     ptype = Scala
