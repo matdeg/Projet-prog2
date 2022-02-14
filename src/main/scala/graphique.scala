@@ -16,6 +16,7 @@ import java.net.CookieStore
 import java.awt.event.ActionListener
 import java.awt.event.ActionEvent
 import java.lang.Thread
+import javax.swing.SwingConstants
 
 class AffichageBataille extends JPanel {
 
@@ -132,6 +133,28 @@ class MsgBox extends JPanel {
     }
 }
 
+class Bouton extends JButton {
+
+    var fond : BufferedImage = ImageIO.read(getClass.getResource("multicolor.jpeg"))
+
+    def set_font (s : String) : Unit = {
+        fond = ImageIO.read(getClass.getResource(s))
+        repaint ()
+    }
+
+    this.setFont(new Font("Helvetica Neue", Font.BOLD, 17))
+    var mesure = getFontMetrics(new Font("Helvetica Neue", Font.BOLD, 17))
+
+    override def paintComponent (g : Graphics) : Unit = {
+        super.paintComponents(g)
+
+        g.drawImage(fond, 0, 0, this.getWidth, this.getHeight, null)
+        g.setColor(Color.BLACK)
+        g.drawString(getText, (this.getWidth-mesure.stringWidth(getText))/2, (this.getHeight-mesure.getHeight())/2 + mesure.getAscent())
+    }
+
+}
+
 object Fenetre extends JFrame with ActionListener{
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
@@ -146,13 +169,13 @@ object Fenetre extends JFrame with ActionListener{
     var msgbox = new MsgBox ()
     
 
-    var bouton0 = new JButton ("0")
-    var bouton1 = new JButton ("1")
-    var bouton2 = new JButton ("2")
-    var bouton3 = new JButton ("3")
-    var bouton4 = new JButton ("4")
-    var bouton5 = new JButton ("5")
-    var boutonr = new JButton ("-1")
+    var bouton0 = new Bouton
+    var bouton1 = new Bouton
+    var bouton2 = new Bouton
+    var bouton3 = new Bouton
+    var bouton4 = new Bouton
+    var bouton5 = new Bouton
+    var boutonr = new Bouton
     
     var rangee_bouton_1 = new JPanel
     rangee_bouton_1.setLayout(new GridLayout(1, 2)) 
@@ -182,9 +205,13 @@ object Fenetre extends JFrame with ActionListener{
     def print_menu_base () : Int = {
 
         bouton0.setText("Attaque")
+        bouton0.set_font("rouge.jpeg")
         bouton1.setText("Pokémon")
+        bouton1.set_font("vert.png")
         bouton2.setText("Sac")
+        bouton2.set_font("jaune.jpg")
         bouton3.setText("Fuite")
+        bouton3.set_font("bleu.jpg")
 
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
