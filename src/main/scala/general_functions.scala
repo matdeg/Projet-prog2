@@ -13,6 +13,7 @@ object Func {
         case -4 => 0.33
         case -5 => 0.28
         case -6 => 0.25  
+        case x => if (x > 6) {4} else {0.25}
     }
     def mult(i : Int) = {
         (Func.mult_a(i)).toFloat

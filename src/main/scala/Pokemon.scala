@@ -15,6 +15,7 @@ abstract class Pokemon(pname : String) {
     var atk_per_lvl : Double = 0
     var defense_per_lvl : Double = 0
     var speed_per_lvl : Double = 0
+    var held_item : Item = Empty_item
 
     var xp_given : Int = lvl * base_xp_given / 7
     var atk_mult = 0
@@ -25,14 +26,32 @@ abstract class Pokemon(pname : String) {
     var state : States = None_state
     var remaining_time : Int = 0
     def next_xp = {3 * lvl * lvl}
-    def atk = {((base_atk.toFloat + lvl.toFloat * atk_per_lvl.toFloat) * Func.mult(atk_mult + state.matk)).toInt}
-    def defense = {((base_defense.toFloat + lvl.toFloat * defense_per_lvl.toFloat)* Func.mult(defense_mult + state.mdef)).toInt}
-    def speed = {((base_speed.toFloat + lvl.toFloat * speed_per_lvl.toFloat) * Func.mult(speed_mult + state.mspeed)).toInt}
+    def atk = {((base_atk.toFloat + lvl.toFloat * atk_per_lvl.toFloat) * Func.mult(atk_mult + state.matk + held_item.held_atk)).toInt}
+    def defense = {((base_defense.toFloat + lvl.toFloat * defense_per_lvl.toFloat)* Func.mult(defense_mult + state.mdef + held_item.held_defense)).toInt}
+    def speed = {((base_speed.toFloat + lvl.toFloat * speed_per_lvl.toFloat) * Func.mult(speed_mult + state.mspeed + held_item.held_speed)).toInt}
     def reload_state = {
         remaining_time = Func.max(remaining_time - 1,0)
         if (remaining_time == 0) {
             state = None_state
         }
+    }
+    def use_item(i : Item) = {
+        hp = Func.max(hp + regen,max_hp)
+        if (regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !")
+        if (i.buff_atk > 0) {atk_mult = Func.min(i.buff_atk + atk_mult,6)
+                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !")}
+        if (i.buff_defense > 0) {defense_mult = Func.min(i.buff_defense + defense_mult,6)
+                                Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !")}
+        if (i.buff_speed > 0) {speed_mult = Func.min(i.buff_speed + speed_mult,6)
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !")}
+        if (i.buff_atk < 0) {atk_mult = Func.max(i.buff_atk + atk_mult,-6)
+                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...")}
+        if (i.buff_defense < 0) {defense_mult = Func.max(i.buff_defense + defense_mult,-6)
+                                Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...")}
+        if (i.buff_speed < 0) {speed_mult = Func.max(i.buff_speed + speed_mult,-6)
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...")}
+        
+}
     }
     def add_xp(exp : Int) = {
         Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !")
