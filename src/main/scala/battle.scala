@@ -24,6 +24,9 @@ class Battle(p1 : Character,p2 : Character) {
                 Fenetre.bataille.print_pok_perso(you.pokemons(you.ip))
             }
         }
+        else{
+            Fenetre.bataille.print_pok_perso(you.pokemons(you.ip))
+        }
         if (!other.pokemons(other.ip).alive){
             if (other.nb_alive == 0) {lose(other)}
             else {
@@ -32,6 +35,9 @@ class Battle(p1 : Character,p2 : Character) {
                 Fenetre.msgbox.print_msg("Il envoie " + other.pokemons(other.ip).name)
                 Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
             }
+        }
+        else {
+            Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
         }
     }
     def start:Unit = {
