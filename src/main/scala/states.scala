@@ -18,6 +18,26 @@ object Freeze extends States {
     duration = 2
 }
 
+object Burned extends States {
+    name = "Burned"
+    mspeed = 0
+    matk = -1
+    mdef = 0
+    stun = false
+    miss = 0.0
+    duration = 3
+}
+
+object Sommeil extends States {
+    name = "Sommeil"
+    mspeed = 0
+    matk = 0
+    mdef = 0
+    stun = false
+    miss = 1.0
+    duration = 2
+}
+
 object None_state extends States {
     name = "none_state"
     mspeed = 0
