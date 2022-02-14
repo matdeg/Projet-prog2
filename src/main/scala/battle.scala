@@ -2,7 +2,7 @@ class Battle(p1 : Character,p2 : Character) {
     var you : Character = p1
     Fenetre.bataille.you = you
     var other : Character = p2
-    Fenetre.bataille.other = other
+    Fenetre.bataille.op = other
     var loop : Int = 1
     var finished : Boolean = false
     var fst : Character = Empty_character
