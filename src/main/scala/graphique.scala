@@ -27,7 +27,12 @@ class AffichageBataille extends JPanel {
     var env : BufferedImage = ImageIO.read(getClass.getResource("jardin_flou.png"))
     var stat_op : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_op.png"))
     var stat_perso : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_perso.png"))
+    var pokeball : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille.png"))
+    var pokeball_statut : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_statut.png"))
+    var pokeball_KO : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_KO.png"))
 
+    var you : Character = Empty_character
+    var op : Character = Empty_character
     var hp_perso = 20
     var max_hp_perso = 100
     var name_perso = "perso"
@@ -58,6 +63,41 @@ class AffichageBataille extends JPanel {
         lvl_op = p.lvl
         repaint ()
     }
+
+    def print_ball_op (g : Graphics) : Unit = {
+        for (i<-0 to 5) {
+            if (!op.pokemons(i).alive) {
+                g.drawImage(pokeball_KO, 250 + i*40, 160, 30, 30, null)
+            }
+            else {
+                if (op.pokemons(i).state == None_state) {
+                    g.drawImage(pokeball, 250 + i*40, 160, 30, 30, null)
+                }
+                else {
+                    g.drawImage(pokeball_statut, 250 + i*40, 160, 30, 30, null)
+                }
+            }
+            
+        }
+    }
+
+    def print_ball_perso (g : Graphics) : Unit = {
+        for (i<-0 to 5) {
+            if (!you.pokemons(i).alive) {
+                g.drawImage(pokeball_KO, 285 + i*40, 410, 30, 30, null)
+            }
+            else {
+                if (you.pokemons(i).state == None_state) {
+                    g.drawImage(pokeball, 285 + i*40, 410, 30, 30, null)
+                }
+                else {
+                    g.drawImage(pokeball_statut, 285 + i*40, 410, 30, 30, null)
+                }
+            }
+            
+        }
+    }
+    
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent (g)
 
@@ -65,6 +105,7 @@ class AffichageBataille extends JPanel {
 
         g.drawImage(devant, 500, 50, null)
         g.drawImage(stat_op, 250, 100, 250, 60, null)
+        print_ball_op(g)
         g.setColor(Color.WHITE)
         g.drawString(name_op, 280, 131)
         g.drawString(lvl_op.toString, 420, 131)
@@ -83,6 +124,7 @@ class AffichageBataille extends JPanel {
 
         g.drawImage(derriere, 100, 450-derriere.getHeight, null)
         g.drawImage(stat_perso, 250, 350, 250, 60, null)
+        print_ball_perso(g)
         g.setColor(Color.WHITE)
         g.drawString(name_perso, 310, 374)
         g.drawString(lvl_perso.toString, 448, 374)

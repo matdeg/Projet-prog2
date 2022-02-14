@@ -36,8 +36,8 @@ abstract class Pokemon(pname : String) {
         }
     }
     def use_item(i : Item) = {
-        hp = Func.max(hp + regen,max_hp)
-        if (regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !")
+        hp = Func.max(hp + i.regen,max_hp)
+        if (i.regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !")
         if (i.buff_atk > 0) {atk_mult = Func.min(i.buff_atk + atk_mult,6)
                             Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !")}
         if (i.buff_defense > 0) {defense_mult = Func.min(i.buff_defense + defense_mult,6)
