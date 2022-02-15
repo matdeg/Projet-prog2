@@ -24,15 +24,17 @@ class AffichageBataille extends JPanel {
 
     var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"))
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
-    var env : BufferedImage = ImageIO.read(getClass.getResource("jardin_flou.png"))
+    var env : BufferedImage = ImageIO.read(getClass.getResource("background/jardin_flou.png"))
     var stat_op : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_op.png"))
     var stat_perso : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_perso.png"))
     var pokeball : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille.png"))
     var pokeball_statut : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_statut.png"))
     var pokeball_KO : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_KO.png"))
-    var gel : BufferedImage = ImageIO.read(getClass.getResource("gel.png"))
-    var burned : BufferedImage = ImageIO.read(getClass.getResource("burned.png"))
-    var sleep : BufferedImage = ImageIO.read(getClass.getResource("sleep.png"))
+    var gel : BufferedImage = ImageIO.read(getClass.getResource("effets/gel.png"))
+    var burned : BufferedImage = ImageIO.read(getClass.getResource("effets/burned.png"))
+    var sleep : BufferedImage = ImageIO.read(getClass.getResource("effets/sleep.png"))
+    var para : BufferedImage = ImageIO.read(getClass.getResource("effets/para.png"))
+    var poison : BufferedImage = ImageIO.read(getClass.getResource("effets/poison.png"))
 
     var you : Character = Empty_character
     var op : Character = Empty_character
@@ -188,7 +190,7 @@ class MsgBox extends JPanel {
 
 class Bouton extends JButton {
 
-    var fond : BufferedImage = ImageIO.read(getClass.getResource("blanc.png"))
+    var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
     var icone : BufferedImage = null
 
     def set_font (s : String) : Unit = {
@@ -246,7 +248,7 @@ object Fenetre extends JFrame with ActionListener{
             case Spectre => "types/Spectre.jpg"
             case Tenebres => "types/Tenebres.jpg"
             case Normal => "types/Normal.jpg"
-            case _ => "multicolor.jpeg"
+            case _ => "couleur/multicolor.jpeg"
         }
     }
 
@@ -295,16 +297,16 @@ object Fenetre extends JFrame with ActionListener{
     def print_menu_base () : Int = {
 
         bouton0.setText("Attaque")
-        bouton0.set_font("rouge.jpeg")
+        bouton0.set_font("couleur/rouge.jpeg")
         bouton0.init_icone()
         bouton1.setText("Pokémon")
-        bouton1.set_font("vert.png")
+        bouton1.set_font("couleur/vert.png")
         bouton1.init_icone()
         bouton2.setText("Sac")
-        bouton2.set_font("jaune.jpg")
+        bouton2.set_font("couleur/jaune.jpg")
         bouton2.init_icone()
         bouton3.setText("Fuite")
-        bouton3.set_font("bleu.jpg")
+        bouton3.set_font("couleur/bleu.jpg")
         bouton3.init_icone()
 
         bas_fenetre.add(rangee_bouton_1)
