@@ -76,7 +76,7 @@ object Fouet_lianes extends Attaque{
     pp = 35
     precision = 100
     name = "fouet lianes"
-    atype = Eau
+    atype = Plante
 }
 
 

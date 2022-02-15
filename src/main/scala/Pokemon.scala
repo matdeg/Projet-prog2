@@ -86,7 +86,7 @@ abstract class Pokemon(pname : String) {
             Fenetre.msgbox.print_msg(this.name + " lance l'attaque " + a.name);Thread.sleep(2000)
             if (r.nextDouble > state.miss) {
                 if (r.nextFloat < ((a.precision).toFloat/100)) {
-                    if (a.dmg > 0) {defenser.receive_attaque(a,this)}
+                    defenser.receive_attaque(a,this)
                     if (ba > 0 && r.nextDouble < bap) {atk_mult = Func.min(ba + atk_mult,6)
                                         Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(2000)}
                     if (bd > 0 && r.nextDouble < bdp) {defense_mult = Func.min(bd + defense_mult,6)
@@ -117,7 +117,7 @@ abstract class Pokemon(pname : String) {
         if (!defenser.alive) {add_xp(defenser.xp_given)}
     }
     def receive_attaque(a: Attaque, atker : Pokemon):Unit = {
-        var dmg_taken = (((0.4 * atker.lvl.toFloat + 2.0) * a.dmg.toFloat * atker.atk.toFloat / (50.0 * defense.toFloat)) * (a.atype).affinites(ptype)).toInt
+        var dmg_taken = (((0.4 * atker.lvl.toFloat + 2.0) * a.dmg.toFloat * atker.atk.toFloat / (50.0 * defense.toFloat) + 3.0) * (a.atype).affinites(ptype)).toInt
         if ((a.atype).affinites(ptype) == 0.0) {Fenetre.msgbox.print_msg("Cette attaque n'est pas efficace...");Thread.sleep(2000)}
         if ((a.atype).affinites(ptype) == 0.5) {Fenetre.msgbox.print_msg("Cette attaque n'est pas très efficace...");Thread.sleep(2000)}
         if ((a.atype).affinites(ptype) == 2.0) {Fenetre.msgbox.print_msg("Cette attaque est super efficace!");Thread.sleep(2000)}
