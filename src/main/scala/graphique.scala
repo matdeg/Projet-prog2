@@ -202,6 +202,30 @@ object Fenetre extends JFrame with ActionListener{
     this.setSize(750, 1000)
     this.setResizable(false)
 
+    def associe_couleur (t : Ttype) : String = {
+        t match {
+            case Acier => "types/Acier.jpg"
+            case Combat => "types/Combat.jpg"
+            case Dragon => "types/Dragon.png"
+            case Eau => "types/Eau.png"
+            case Electrik => "types/Electrik.jpg"
+            case Feu => "types/Feu.jpeg"
+            case Glace => "types/Glace.png"
+            case Insecte => "types/Insecte.png"
+            case Vol => "types/Vol.jpeg"
+            case Plante => "types/Plante.jpg"
+            case Poison => "types/Poison.png"
+            case Psy => "types/Psy.png"
+            case Roche => "types/Roche.png"
+            case Sol => "types/Sol.jpg"
+            case Spectre => "types/Spectre.jpg"
+            case Tenebres => "types/Tenebres.jpg"
+            case Normal => "types/Normal.jpg"
+            case _ => "multicolor.jpeg"
+        }
+    }
+
+
     var compteur = 0
 
 
@@ -280,9 +304,13 @@ object Fenetre extends JFrame with ActionListener{
     def print_menu_attaque (p : Pokemon) : Int = {
 
         bouton0.setText(p.attaques(0).name)
+        bouton0.set_font(associe_couleur(p.attaques(0).atype))
         bouton1.setText(p.attaques(1).name)
+        bouton1.set_font(associe_couleur(p.attaques(1).atype))
         bouton2.setText(p.attaques(2).name)
+        bouton2.set_font(associe_couleur(p.attaques(2).atype))
         bouton3.setText(p.attaques(3).name)
+        bouton3.set_font(associe_couleur(p.attaques(3).atype))
         boutonr.setText("Retour")
 
         bas_fenetre.add(rangee_bouton_1)
@@ -313,11 +341,17 @@ object Fenetre extends JFrame with ActionListener{
     def print_menu_pokemon (p : Character) : Int = {
         
         bouton0.setText(p.pokemons(0).name)
+        bouton0.set_font(associe_couleur(p.pokemons(0).ptype))
         bouton1.setText(p.pokemons(1).name)
+        bouton1.set_font(associe_couleur(p.pokemons(1).ptype))
         bouton2.setText(p.pokemons(2).name)
+        bouton2.set_font(associe_couleur(p.pokemons(2).ptype))
         bouton3.setText(p.pokemons(3).name)
+        bouton3.set_font(associe_couleur(p.pokemons(3).ptype))
         bouton4.setText(p.pokemons(4).name)
+        bouton4.set_font(associe_couleur(p.pokemons(4).ptype))
         bouton5.setText(p.pokemons(5).name)
+        bouton5.set_font(associe_couleur(p.pokemons(5).ptype))
         boutonr.setText("Retour")
 
         bas_fenetre.add(rangee_bouton_1)
