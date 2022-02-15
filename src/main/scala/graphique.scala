@@ -30,6 +30,9 @@ class AffichageBataille extends JPanel {
     var pokeball : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille.png"))
     var pokeball_statut : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_statut.png"))
     var pokeball_KO : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_KO.png"))
+    var gel : BufferedImage = ImageIO.read(getClass.getResource("gel.png"))
+    var burned : BufferedImage = ImageIO.read(getClass.getResource("burned.png"))
+    var sleep : BufferedImage = ImageIO.read(getClass.getResource("sleep.png"))
 
     var you : Character = Empty_character
     var op : Character = Empty_character
@@ -95,6 +98,14 @@ class AffichageBataille extends JPanel {
                 }
             }
             
+        }
+    }
+
+    def print_statut_op (g : Graphics) : Unit = {
+        op.pokemons(op.ip).state match {
+            case Freeze => g.drawImage(gel, 100, 100, 100, 100, null)
+            case Burned => g.drawImage(burned, 100, 100, 100, 100, null)
+            case Sommeil => g.drawImage(sleep, 100, 100, 100, 100, null)
         }
     }
     
@@ -224,7 +235,6 @@ object Fenetre extends JFrame with ActionListener{
             case _ => "multicolor.jpeg"
         }
     }
-
 
     var compteur = 0
 
