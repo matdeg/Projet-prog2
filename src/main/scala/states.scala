@@ -6,6 +6,7 @@ abstract class States {
     var stun : Boolean = false 
     var miss : Double = 0.0
     var duration : Int = 0
+    var degat : Boolean = false
 }
 
 object Freeze extends States {
@@ -15,17 +16,18 @@ object Freeze extends States {
     mdef = 0
     stun = true
     miss = 0.0
-    duration = 2
+    duration = 3
 }
 
 object Burned extends States {
     name = "Burned"
+    degat = true
     mspeed = 0
     matk = -1
     mdef = 0
     stun = false
     miss = 0.0
-    duration = 3
+    duration = 1000
 }
 
 object Sommeil extends States {
@@ -33,10 +35,31 @@ object Sommeil extends States {
     mspeed = 0
     matk = 0
     mdef = 0
-    stun = false
-    miss = 1.0
-    duration = 2
+    stun = true
+    miss = 0
+    duration = 3
 }
+
+object Paralysie extends States {
+    name = "Paralysie"
+    mspeed = -1
+    matk = 0
+    mdef = 0
+    stun = false
+    miss = 0.5
+    duration = 1000
+}
+
+object Empoisonnement extends States {
+    name = "Paralysie"
+    degat = true
+    mspeed = 0
+    matk = 0
+    mdef = 0
+    stun = false
+    miss = 0.5
+    duration = 1000
+} 
 
 object None_state extends States {
     name = "none_state"

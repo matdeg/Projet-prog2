@@ -60,6 +60,12 @@ class Battle(p1 : Character,p2 : Character) {
                     if (i0 == 0) {
                         Fenetre.msgbox.print_msg("Choisissez une attaque :")
                         i1 = Fenetre.print_menu_attaque(you.pokemons(you.ip))
+                        while ((i1 != -1) && (you.pokemons(you.ip).pp_list(i1) == 0)) {
+                            if (you.pokemons(you.ip).pp_list(i1) == 0) {
+                                Fenetre.msgbox.print_msg(you.pokemons(you.ip).name + " ne peut plus lancer cette attaque")
+                                i1 = Fenetre.print_menu_attaque(you.pokemons(you.ip))
+                            }
+                        }
                     }
                     if (i0 == 1) {
                         Fenetre.msgbox.print_msg("Choisissez un pokémon :")
@@ -98,6 +104,10 @@ class Battle(p1 : Character,p2 : Character) {
         play(fst,snd,a,b)
         play(snd,fst,c,d)
         change
+        you.pokemons(you.ip).reload_state
+        other.pokemons(other.ip).reload_state
+        Fenetre.bataille.print_pok_perso(you.pokemons(you.ip))
+        Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
         loop += 1
     }
 
@@ -105,7 +115,6 @@ class Battle(p1 : Character,p2 : Character) {
         if (i0 == 0) {
             if (p.pokemons(p.ip).alive) {
                 p.pokemons(p.ip).cast_attaque(i1,q.pokemons(q.ip))
-                p.pokemons(p.ip).reload_state
             }
         }
         if (i0 == 1) {
@@ -113,14 +122,12 @@ class Battle(p1 : Character,p2 : Character) {
                 p.ip = i1
                 Fenetre.msgbox.print_msg("Vous envoyez " + p.pokemons(p.ip).name + " !")
                 Thread.sleep(2000)
-                p.pokemons(p.ip).reload_state
                 Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
             }
             else {
                 p.ip = i1
                 Fenetre.msgbox.print_msg("Il envoie " + p.pokemons(p.ip).name + " !")
                 Thread.sleep(2000)
-                p.pokemons(p.ip).reload_state
                 Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
             }
         }
