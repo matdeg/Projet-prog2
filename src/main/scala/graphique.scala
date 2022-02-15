@@ -188,10 +188,21 @@ class MsgBox extends JPanel {
 
 class Bouton extends JButton {
 
-    var fond : BufferedImage = ImageIO.read(getClass.getResource("multicolor.jpeg"))
+    var fond : BufferedImage = ImageIO.read(getClass.getResource("blanc.png"))
+    var icone : BufferedImage = null
 
     def set_font (s : String) : Unit = {
         fond = ImageIO.read(getClass.getResource(s))
+        repaint ()
+    }
+    
+    def set_icone (s : String) : Unit = {
+        icone = ImageIO.read(getClass.getResource(s))
+        repaint ()
+    }
+
+    def init_icone () : Unit = {
+        icone = null
         repaint ()
     }
 
@@ -204,6 +215,9 @@ class Bouton extends JButton {
         g.drawImage(fond, 0, 0, this.getWidth, this.getHeight, null)
         g.setColor(Color.BLACK)
         g.drawString(getText, (this.getWidth-mesure.stringWidth(getText))/2, (this.getHeight-mesure.getHeight())/2 + mesure.getAscent())
+        if (icone != null) {
+            g.drawImage(icone, (this.getWidth-mesure.stringWidth(getText))/2 - 80, (this.getHeight-mesure.getHeight())/2 - mesure.getAscent(), 70, 70, null)
+        }
     }
 
 }
@@ -282,12 +296,16 @@ object Fenetre extends JFrame with ActionListener{
 
         bouton0.setText("Attaque")
         bouton0.set_font("rouge.jpeg")
+        bouton0.init_icone()
         bouton1.setText("Pokémon")
         bouton1.set_font("vert.png")
+        bouton1.init_icone()
         bouton2.setText("Sac")
         bouton2.set_font("jaune.jpg")
+        bouton2.init_icone()
         bouton3.setText("Fuite")
         bouton3.set_font("bleu.jpg")
+        bouton3.init_icone()
 
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
@@ -315,12 +333,16 @@ object Fenetre extends JFrame with ActionListener{
 
         bouton0.setText(p.attaques(0).name)
         bouton0.set_font(associe_couleur(p.attaques(0).atype))
+        bouton0.init_icone()
         bouton1.setText(p.attaques(1).name)
         bouton1.set_font(associe_couleur(p.attaques(1).atype))
+        bouton1.init_icone()
         bouton2.setText(p.attaques(2).name)
         bouton2.set_font(associe_couleur(p.attaques(2).atype))
+        bouton2.init_icone()
         bouton3.setText(p.attaques(3).name)
         bouton3.set_font(associe_couleur(p.attaques(3).atype))
+        bouton3.init_icone()
         boutonr.setText("Retour")
 
         bas_fenetre.add(rangee_bouton_1)
@@ -352,16 +374,22 @@ object Fenetre extends JFrame with ActionListener{
         
         bouton0.setText(p.pokemons(0).name)
         bouton0.set_font(associe_couleur(p.pokemons(0).ptype))
+        bouton0.set_icone(p.pokemons(0).image)
         bouton1.setText(p.pokemons(1).name)
         bouton1.set_font(associe_couleur(p.pokemons(1).ptype))
+        bouton1.set_icone(p.pokemons(1).image)
         bouton2.setText(p.pokemons(2).name)
         bouton2.set_font(associe_couleur(p.pokemons(2).ptype))
+        bouton2.set_icone(p.pokemons(2).image)
         bouton3.setText(p.pokemons(3).name)
         bouton3.set_font(associe_couleur(p.pokemons(3).ptype))
+        bouton3.set_icone(p.pokemons(3).image)
         bouton4.setText(p.pokemons(4).name)
         bouton4.set_font(associe_couleur(p.pokemons(4).ptype))
+        bouton4.set_icone(p.pokemons(4).image)
         bouton5.setText(p.pokemons(5).name)
         bouton5.set_font(associe_couleur(p.pokemons(5).ptype))
+        bouton5.set_icone(p.pokemons(5).image)
         boutonr.setText("Retour")
 
         bas_fenetre.add(rangee_bouton_1)
