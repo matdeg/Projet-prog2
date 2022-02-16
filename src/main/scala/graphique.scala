@@ -201,7 +201,7 @@ abstract class Button extends JButton with MouseListener {
     }
 }
 
-class Test extends Button {}
+//class Test extends Button {}
 
 
 class Bouton extends JButton {
