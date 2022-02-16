@@ -15,8 +15,10 @@ import java.text.AttributedString
 import java.net.CookieStore
 import java.awt.event.ActionListener
 import java.awt.event.ActionEvent
+import java.awt.event.MouseEvent
 import java.lang.Thread
 import javax.swing.SwingConstants
+import java.awt.event.MouseListener
 
 class AffichageBataille extends JPanel {
 
@@ -188,6 +190,20 @@ class MsgBox extends JPanel {
     }
 }
 
+abstract class Button extends JButton with MouseListener {
+
+    var info = "azerty"
+
+    this.addMouseListener(this)
+
+    override def mouseEntered (e : MouseEvent) : Unit = {
+        println(info)
+    }
+}
+
+class Test extends Button {}
+
+
 class Bouton extends JButton {
 
     var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
@@ -224,7 +240,7 @@ class Bouton extends JButton {
 
 }
 
-object Fenetre extends JFrame with ActionListener{
+object Fenetre extends JFrame with ActionListener {
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
     this.setResizable(false)
