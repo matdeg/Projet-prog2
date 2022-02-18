@@ -170,6 +170,7 @@ class AffichageBataille extends JPanel {
 class MsgBox extends JPanel {
 
     var texte = "Msgbox"
+    var save = "save"
 
     this.setFont(new Font("Helvetica Neue", Font.BOLD, 17))
     override def paintComponent (g : Graphics) : Unit = {
@@ -188,26 +189,57 @@ class MsgBox extends JPanel {
         texte = s
         repaint ()
     }
+
+    def print_save () : Unit = {
+        texte = save
+        repaint ()
+    }
 }
 
-abstract class Button extends JButton with MouseListener {
+class Button extends JButton with MouseListener {
 
     var info = "azerty"
 
     this.addMouseListener(this)
 
-    override def mouseEntered (e : MouseEvent) : Unit = {
+    def mouseEntered (e : MouseEvent) : Unit = {
         println(info)
     }
+
+    def mouseClicked (e : MouseEvent) : Unit = {}
+
+    def mouseExited (e : MouseEvent) : Unit = {}
+
+    def mousePressed (e : MouseEvent) : Unit = {}
+
+    def mouseReleased (e : MouseEvent) : Unit = {}
 }
 
 //class Test extends Button {}
 
 
-class Bouton extends JButton {
+class Bouton extends JButton with MouseListener {
 
     var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
     var icone : BufferedImage = null
+
+    var info = "azerty"
+
+    this.addMouseListener(this)
+
+    def mouseEntered (e : MouseEvent) : Unit = {
+        Fenetre.msgbox.print_msg(info)
+    }
+
+    def mouseClicked (e : MouseEvent) : Unit = {}
+
+    def mouseExited (e : MouseEvent) : Unit = {
+        Fenetre.msgbox.print_save ()
+    }
+
+    def mousePressed (e : MouseEvent) : Unit = {}
+
+    def mouseReleased (e : MouseEvent) : Unit = {}
 
     def set_font (s : String) : Unit = {
         fond = ImageIO.read(getClass.getResource(s))

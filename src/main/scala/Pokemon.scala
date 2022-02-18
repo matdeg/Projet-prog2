@@ -321,7 +321,7 @@ class Poissocarpe(pname : String) extends Pokemon(pname) {
     image = "pokemons/poissocarpe.png"
     lvl = 5
     hp = max_hp
-    base_atk = 45
+    base_atk = 450
     base_defense = 47
     base_speed = 43
     atk_per_lvl = 1.8
