@@ -1,7 +1,9 @@
 object Func {
 
+    // permet de retrouver un item à partir de son id
     var id_items : Array[Item] = Array(new Potion,new Potion1,new Potion2,new Potion3,new Potion4,new Potion5,new Potion6,new Potion7,new Potion8)
 
+    // multiplicateur de stat en fonction de l'indice de modification
     def mult_a: Int => Double = {
         case 0 => 1
         case 1 => 1.5 
@@ -18,6 +20,7 @@ object Func {
         case -6 => 0.25  
         case x => if (x > 6) {4} else {0.25}
     }
+
     def mult(i : Int) = {
         (Func.mult_a(i)).toFloat
     }

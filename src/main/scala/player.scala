@@ -10,9 +10,11 @@ abstract class Character(pname : String) {
     // indice du pokémon courant
     var ip : Int = 0
 
+    // sac d'objet et page courante dans l'affichage du sac en combat
     var page : Int = 0
     var bag : Array[Int] = new Array[Int](40)
 
+    // donne un tableau qui contient les id d'items de la page courante
     def current_items_id = {Func.choose(bag,page * 4, (page + 1) * 4)}
 
     var pokemons : Array[Pokemon] = new Array[Pokemon](6)
