@@ -5,5 +5,6 @@ import java.util.Random
 object MyProgram {
     def main(args: Array[String]): Unit = {
         test_mathis.start
+        
     }
 }

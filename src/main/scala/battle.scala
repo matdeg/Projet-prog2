@@ -5,11 +5,15 @@ class Battle(p1 : Character,p2 : Character) {
     Fenetre.bataille.op = other
     var loop : Int = 1
     var finished : Boolean = false
+
+    // joueur qui joue en premier/second
     var fst : Character = Empty_character
     var snd : Character = Empty_character
     def lose(p : Character):Unit = {finished = true
                                     if (p == you) {Fenetre.msgbox.print_msg("Mince, vous avez perdu")}
                                     else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}}
+
+    // actualise les pokémons sur le terrain si l'un est K.O , l'adversaire lance son premier pokémon vivant 
     def change:Unit = {
         if (!you.pokemons(you.ip).alive){
             if (you.nb_alive == 0) {lose(you)}
@@ -44,62 +48,63 @@ class Battle(p1 : Character,p2 : Character) {
             Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
         }
     }
+
+    // Démarre la battle
     def start:Unit = {
         finished = false
         you.ip = 0; other.ip = 0; you.nb_alive = 0; other.nb_alive = 0
         for (i <- 0 to 5) {if (you.pokemons(i).alive) {you.nb_alive += 1};
                            if (other.pokemons(i).alive) {other.nb_alive += 1}}
         change
+
+        // gestion menu - boutons
         val r = scala.util.Random; 
-            var i0 = 0; 
+            var choix_menu = 0; 
             while (!this.finished) {
-                var i1 = -1
-                while (i1 == -1) {
+                var second_choix = -1
+                while (second_choix == -1) {
                     Fenetre.msgbox.print_msg("Que voulez vous faire ?")
-                    i0 = Fenetre.print_menu_base
-                    if (i0 == 0) {
+                    choix_menu = Fenetre.print_menu_base
+                    if (choix_menu == 0) {
                         Fenetre.msgbox.print_msg("Choisissez une attaque :")
-                        i1 = Fenetre.print_menu_attaque(you.pokemons(you.ip))
-                        while ((i1 != -1) && (you.pokemons(you.ip).pp_list(i1) == 0)) {
-                            if (you.pokemons(you.ip).pp_list(i1) == 0) {
+                        second_choix = Fenetre.print_menu_attaque(you.pokemons(you.ip))
+                        while ((second_choix != -1) && (you.pokemons(you.ip).pp_list(second_choix) == 0)) {
+                            if (you.pokemons(you.ip).pp_list(second_choix) == 0) {
                                 Fenetre.msgbox.print_msg(you.pokemons(you.ip).name + " ne peut plus lancer cette attaque")
-                                i1 = Fenetre.print_menu_attaque(you.pokemons(you.ip))
+                                second_choix = Fenetre.print_menu_attaque(you.pokemons(you.ip))
                             }
                         }
                     }
-                    if (i0 == 1) {
+                    if (choix_menu == 1) {
                         Fenetre.msgbox.print_msg("Choisissez un pokémon :")
-                        i1 = Fenetre.print_menu_pokemon(you)
-                        while (((i1 != -1) && (!you.pokemons(i1).alive)) || (i1 == you.ip) ) {
-                            if (i1 == you.ip) {
+                        second_choix = Fenetre.print_menu_pokemon(you)
+                        while (((second_choix != -1) && (!you.pokemons(second_choix).alive)) || (second_choix == you.ip) ) {
+                            if (second_choix == you.ip) {
                                 Fenetre.msgbox.print_msg("Ce pokémon est dékà sur le terrain, choisissez un autre pokémon :")
                             }
                             else {
                                 Fenetre.msgbox.print_msg("Celui-ci n'est pas apte à retourner au combat, choisissez un autre pokémon :")
                             }
-                            i1 = Fenetre.print_menu_pokemon(you)
+                            second_choix = Fenetre.print_menu_pokemon(you)
                         }
                     }
-                    if (i0 >= 2 ) {
+                    if (choix_menu >= 2 ) {
                         Fenetre.msgbox.print_msg("Ceci n'a pas été codé")
                         Thread.sleep(2000)
                     }
                 }
-                var j0 = 0
-                var j1 = r.nextInt(4)
-                this.turn(i0,i1,j0,j1)
+                var choix_menu_op = 0
+                var second_choix_op = r.nextInt(4)
+                this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
             }
     }
-    def turn(i0 : Int,i1 : Int,j0 : Int, j1 : Int):Unit = {
+
+    // détermine qui joue en premier selon les choix des deux joueurs. et lance le tour
+    def turn(choix_menu : Int,second_choix : Int,choix_menu_op : Int, second_choix_op : Int):Unit = {
         var a = 0; var b = 0;var c = 0; var d = 0
-        if (!(i0 == 0)) {fst = you; snd = other; a = i0; b = i1; c = j0; d = j1}
-        else {
-            if (!(j0 == 0) || you.pokemons(you.ip).speed < other.pokemons(other.ip).speed) {
-                fst = other; snd = you; a = j0; b = j1; c = i0; d = i1
-            }
-            else {
-                fst = you; snd = other; a = i0; b = i1; c = j0; d = j1
-            }
+        fst = you; snd = other; a = choix_menu; b = second_choix; c = choix_menu_op; d = second_choix_op
+        if (!(choix_menu_op == 0) || you.pokemons(you.ip).speed < other.pokemons(other.ip).speed) {
+            fst = other; snd = you; a = choix_menu_op; b = second_choix_op; c = choix_menu; d = second_choix
         }
         play(fst,snd,a,b)
         play(snd,fst,c,d)
@@ -111,25 +116,22 @@ class Battle(p1 : Character,p2 : Character) {
         loop += 1
     }
 
-    def play(p : Character,q : Character,i0 : Int,i1 : Int) = {
-        if (i0 == 0) {
-            if (p.pokemons(p.ip).alive) {
-                p.pokemons(p.ip).cast_attaque(i1,q.pokemons(q.ip))
-            }
+    // effectue les actions choisies par p (tour de p contre q)
+    def play(p : Character,q : Character,choix_menu : Int,second_choix : Int) = {
+        if (choix_menu == 0 && p.pokemons(p.ip).alive) {
+            p.pokemons(p.ip).cast_attaque(second_choix,q.pokemons(q.ip))
         }
-        if (i0 == 1) {
+        if (choix_menu == 1) {
+            p.ip = second_choix
             if (p == you) {
-                p.ip = i1
                 Fenetre.msgbox.print_msg("Vous envoyez " + p.pokemons(p.ip).name + " !")
-                Thread.sleep(2000)
                 Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
             }
             else {
-                p.ip = i1
                 Fenetre.msgbox.print_msg("Il envoie " + p.pokemons(p.ip).name + " !")
-                Thread.sleep(2000)
                 Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
             }
+            Thread.sleep(2000)
         }
     }
 }

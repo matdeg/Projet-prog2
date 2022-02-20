@@ -1,6 +1,9 @@
 abstract class Attaque {
     var dmg : Int = 0
     var pp : Int = 0
+
+    // modification des stats du lanceur/receveur, l'entier est l'indice de modification
+    // le Double est la probabilité du changement 
     var debuff_atk : (Int,Double) = (0,0.0)
     var debuff_speed : (Int,Double) = (0,0.0)
     var debuff_defense : (Int,Double) = (0,0.0)

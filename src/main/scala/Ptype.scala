@@ -1,5 +1,6 @@
 import java.awt.dnd.DragSource
 abstract class Ttype {
+    // fonction définissant les types efficaces ou non
     def affinites(t:Ttype) = 1.0
 }
 

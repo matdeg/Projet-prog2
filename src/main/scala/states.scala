@@ -1,11 +1,21 @@
 abstract class States {
     var name : String = ""
+
+    // indice de modification des statistiques
     var mspeed : Int = 0
     var matk : Int = 0
     var mdef : Int = 0
+
+    // true si incapable d'attaquer
     var stun : Boolean = false 
+
+    // probabilité de rater les attaques
     var miss : Double = 0.0
+
+    // durée de l'état 
     var duration : Int = 0
+
+    // true si des dégats sont reçus à chaque tour
     var degat : Boolean = false
 }
 
