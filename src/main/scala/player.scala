@@ -17,6 +17,18 @@ abstract class Character(pname : String) {
     // donne un tableau qui contient les id d'items de la page courante
     def current_items_id = {Func.choose(bag,page * 4, (page + 1) * 4)}
 
+    def nb_distinct_items = {bag.count(_ > 0)}
+
+    // passe à la page suivante/précédente
+    def next_page = {
+        if (nb_distinct_items > 4 * (page + 1)) {page += 1}
+        else {page = 0} 
+    }
+    def back_page = {
+        if (page == 0) {page = (nb_distinct_items - 1)/4}
+        else {page -= 1} 
+    }
+    
     var pokemons : Array[Pokemon] = new Array[Pokemon](6)
     var money : Int = 0
     var current_battle : Battle = Empty_Battle
