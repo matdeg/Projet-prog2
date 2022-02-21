@@ -1,4 +1,7 @@
 abstract class Item {
+    var x : Int = 0
+    var y : Int = 0
+    var current_area : Area = Empty_area
     var id : Int = 0
     var name : String = ""
     var img : String = ""

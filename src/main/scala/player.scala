@@ -1,4 +1,4 @@
-abstract class Character(pname : String) {
+abstract class Character(pname : String) extends Seenable {
 
     // true s'il s'agit du joueur 
     var is_main : Boolean = false
@@ -30,12 +30,33 @@ abstract class Character(pname : String) {
     }
 
     var pokemons : Array[Pokemon] = new Array[Pokemon](6)
+
     var money : Int = 0
+
     var current_battle : Battle = Empty_Battle
+
+    var current_area : Area = Empty_area
+    var x : Int = 0
+    var y : Int = 0
+
+    var direction : Direction = S
+
+    def move(d : Direction) = {
+        current_area.tab(d.newx(x))(d.newy(y)) match {
+            case Empty_seenable => x = d.newx(x); y = d.newy(y)
+        }
+        direction = d
+    }
+
+
 }
 
 object Empty_character extends Character("") {}
 class Opponent(pname : String) extends Character(pname) {}
 class Player(pname : String) extends Character(pname) {
     is_main = true
+}
+
+object Example_opponent1 extends Character("Serge") {
+    
 }
