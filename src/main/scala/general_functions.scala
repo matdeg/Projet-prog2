@@ -49,4 +49,10 @@ object Func {
         }
         selection
     }
+
+    def give(p : Character, pok : Pokemon) = {
+                p.pokemons(p.nb_pokemons) = pok
+                pok.maitre = p
+                p.nb_pokemons += 1
+            }
 }
