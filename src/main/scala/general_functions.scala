@@ -1,7 +1,7 @@
 object Func {
 
     // permet de retrouver un item à partir de son id
-    var id_items : Array[Item] = Array(new Potion,new Potion1,new Potion2,new Potion3,new Potion4,new Potion5,new Potion6,new Potion7,new Potion8)
+    var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal)
 
     // multiplicateur de stat en fonction de l'indice de modification
     def mult_a: Int => Double = {

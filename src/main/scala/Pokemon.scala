@@ -57,6 +57,8 @@ abstract class Pokemon(pname : String) {
     def use_item(i : Item) = {
         hp = Func.max(hp + i.regen,max_hp)
         if (i.regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !");Thread.sleep(2000)}
+        if (hp == 0 && i.revive > 0) {hp = (max_hp.toDouble * i.revive).toInt;Fenetre.msgbox.print_msg(this.name + " peut retourner au combat !");
+                                      Thread.sleep(1500)}
         if (i.buff_atk > 0) {atk_mult = Func.min(i.buff_atk + atk_mult,6)
                             Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(2000)}
         if (i.buff_defense > 0) {defense_mult = Func.min(i.buff_defense + defense_mult,6)
@@ -69,8 +71,8 @@ abstract class Pokemon(pname : String) {
                                 Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(2000)}
         if (i.buff_speed < 0) {speed_mult = Func.max(i.buff_speed + speed_mult,-6)
                                 Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(2000)}
-        }
-
+        i.state_heal.foreach(x => if (state == x) {state = None_state;Fenetre.msgbox.print_msg(this.name + " n'a plus l'effet " + x.name);Thread.sleep(1500)})
+    }
     def add_xp(exp : Int) = {
         Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !");Thread.sleep(2000)
         xp += exp
