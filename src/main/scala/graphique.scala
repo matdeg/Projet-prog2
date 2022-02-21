@@ -503,6 +503,8 @@ class Menu_attaque extends JPanel {
         this.remove(rangee_retour)
         rangee_retour.remove(bouton4)
         rangee_retour.remove(bouton5)
+        rangee_bouton_3.add(bouton4)
+        rangee_bouton_3.add(bouton5)
 
         vider(bouton_enleve)
         
