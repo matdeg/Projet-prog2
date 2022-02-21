@@ -22,6 +22,7 @@ import java.awt.event.MouseListener
 import java.awt.event.KeyListener
 import java.awt.event.KeyEvent
 import java.awt.RenderingHints.Key
+import javax.swing.Timer
 
 class AffichageBataille extends JPanel {
 
@@ -203,6 +204,7 @@ class Bouton extends JButton with MouseListener {
 
     var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
     var icone : BufferedImage = null
+    var valeur = -2
 
     var info = "azerty"
 
@@ -215,7 +217,9 @@ class Bouton extends JButton with MouseListener {
         
     }
 
-    def mouseClicked (e : MouseEvent) : Unit = {}
+    def mouseClicked (e : MouseEvent) : Unit = {
+        Fenetre.choix_menu = valeur
+    }
 
     def mouseExited (e : MouseEvent) : Unit = {
         Fenetre.msgbox.print_save ()
@@ -256,10 +260,14 @@ class Bouton extends JButton with MouseListener {
 
 }
 
-object Fenetre extends JFrame with ActionListener {
+object Fenetre extends JFrame {
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
     this.setResizable(false)
+
+    override def setFocusable(b : Boolean) = {
+        super.setFocusable(b)
+    }
 
     def associe_couleur (t : Ttype) : String = {
         t match {
@@ -286,16 +294,22 @@ object Fenetre extends JFrame with ActionListener {
 
     var bataille = new AffichageBataille ()
 
-
     var msgbox = new MsgBox ()
 
     var bouton0 = new Bouton
+    bouton0.valeur = 0
     var bouton1 = new Bouton
+    bouton1.valeur = 1
     var bouton2 = new Bouton
+    bouton2.valeur = 2
     var bouton3 = new Bouton
+    bouton3.valeur = 3
     var bouton4 = new Bouton
+    bouton4.valeur = 4
     var bouton5 = new Bouton
+    bouton5.valeur = 5
     var boutonr = new Bouton
+    boutonr.valeur = -1
     
     var rangee_bouton_1 = new JPanel
     rangee_bouton_1.setLayout(new GridLayout(1, 2)) 
@@ -324,6 +338,9 @@ object Fenetre extends JFrame with ActionListener {
 
     def print_menu_base () : Int = {
 
+        setFocusable(true)
+        this.addKeyListener(Touche)
+
         msgbox.save = "Que voulez vous faire ?"
         bouton0.setText("Attaque")
         bouton0.set_font("couleur/rouge.jpeg")
@@ -345,11 +362,6 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
 
-        bouton0.addActionListener(this)
-        bouton1.addActionListener(this)
-        bouton2.addActionListener(this)
-        bouton3.addActionListener(this)
-
         bas_fenetre.updateUI
 
         choix_menu = -2
@@ -361,10 +373,16 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.remove(rangee_bouton_1)
         bas_fenetre.remove(rangee_bouton_2)
 
+        this.removeKeyListener(Touche)
+        setFocusable(false)
+
         choix_menu
     }
 
     def print_menu_attaque (p : Pokemon) : Int = {
+
+        setFocusable(true)
+        this.addKeyListener(Touche)
 
         Fenetre.msgbox.save = "Choisissez une attaque :"
         bouton0.setText(p.attaques(0).name + "   " + p.pp_list(0).toString + "/" + p.attaques(0).pp.toString)
@@ -392,12 +410,6 @@ object Fenetre extends JFrame with ActionListener {
 
         bas_fenetre.updateUI
 
-        bouton0.addActionListener(this)
-        bouton1.addActionListener(this)
-        bouton2.addActionListener(this)
-        bouton3.addActionListener(this)
-        boutonr.addActionListener(this)
-
         choix_menu = -2
 
         while (choix_menu == -2) {
@@ -408,10 +420,16 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.remove(rangee_bouton_2)
         bas_fenetre.remove(rangee_retour)
 
+        this.removeKeyListener(Touche)
+        setFocusable(false)
+
         choix_menu
     }
 
     def print_menu_pokemon (p : Character) : Int = {
+        
+        setFocusable(true)
+        this.addKeyListener(Touche)
         
         Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
         bouton0.setText(p.pokemons(0).name)
@@ -448,14 +466,6 @@ object Fenetre extends JFrame with ActionListener {
 
         bas_fenetre.updateUI
 
-        bouton0.addActionListener(this)
-        bouton1.addActionListener(this)
-        bouton2.addActionListener(this)
-        bouton3.addActionListener(this)
-        bouton4.addActionListener(this)
-        bouton5.addActionListener(this)
-        boutonr.addActionListener(this)
-
         choix_menu = -2
 
         while (choix_menu == -2) {
@@ -467,30 +477,10 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.remove(rangee_bouton_3)
         bas_fenetre.remove(rangee_retour)
 
+        this.removeKeyListener(Touche)
+        setFocusable(false)
+
         choix_menu
-    }
-    override def actionPerformed (arg0 : ActionEvent) : Unit = {
-        if (arg0.getSource == bouton0) {
-            choix_menu = 0
-        }
-        if (arg0.getSource == bouton1) {
-            choix_menu = 1
-        }
-        if (arg0.getSource == bouton2) {
-            choix_menu = 2
-        }
-        if (arg0.getSource == bouton3) {
-            choix_menu = 3
-        }
-        if (arg0.getSource == bouton4) {
-            choix_menu = 4
-        }
-        if (arg0.getSource == bouton5) {
-            choix_menu = 5
-        }
-        if (arg0.getSource == boutonr) {
-            choix_menu = -1
-        }
     }
 
     var total = new JPanel
