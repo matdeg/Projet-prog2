@@ -413,22 +413,29 @@ object Fenetre extends JFrame with ActionListener {
         bouton0.setText(p.pokemons(0).name)
         bouton0.set_font(associe_couleur(p.pokemons(0).ptype))
         bouton0.set_icone(p.pokemons(0).image)
+        bouton0.info = "Hp : " +  p.pokemons(0).hp.toString + "/" + p.pokemons(0).max_hp.toString + "   " + "Atk : " + p.pokemons(0).atk.toString + "   Dfs : " + p.pokemons(0).defense.toString + "   Spd : " + p.pokemons(0).speed.toString
         bouton1.setText(p.pokemons(1).name)
         bouton1.set_font(associe_couleur(p.pokemons(1).ptype))
         bouton1.set_icone(p.pokemons(1).image)
+        bouton1.info = "Hp : " +  p.pokemons(1).hp.toString + "/" + p.pokemons(1).max_hp.toString + "   " + "Atk : " + p.pokemons(1).atk.toString + "   Dfs : " + p.pokemons(1).defense.toString + "   Spd : " + p.pokemons(1).speed.toString
         bouton2.setText(p.pokemons(2).name)
         bouton2.set_font(associe_couleur(p.pokemons(2).ptype))
         bouton2.set_icone(p.pokemons(2).image)
+        bouton2.info = "Hp : " +  p.pokemons(2).hp.toString + "/" + p.pokemons(2).max_hp.toString + "   " + "Atk : " + p.pokemons(2).atk.toString + "   Dfs : " + p.pokemons(2).defense.toString + "   Spd : " + p.pokemons(2).speed.toString
         bouton3.setText(p.pokemons(3).name)
         bouton3.set_font(associe_couleur(p.pokemons(3).ptype))
         bouton3.set_icone(p.pokemons(3).image)
+        bouton3.info = "Hp : " +  p.pokemons(3).hp.toString + "/" + p.pokemons(3).max_hp.toString + "   " + "Atk : " + p.pokemons(3).atk.toString + "   Dfs : " + p.pokemons(3).defense.toString + "   Spd : " + p.pokemons(3).speed.toString
         bouton4.setText(p.pokemons(4).name)
         bouton4.set_font(associe_couleur(p.pokemons(4).ptype))
         bouton4.set_icone(p.pokemons(4).image)
+        bouton4.info = "Hp : " +  p.pokemons(4).hp.toString + "/" + p.pokemons(4).max_hp.toString + "   " + "Atk : " + p.pokemons(4).atk.toString + "   Dfs : " + p.pokemons(4).defense.toString + "   Spd : " + p.pokemons(4).speed.toString
         bouton5.setText(p.pokemons(5).name)
         bouton5.set_font(associe_couleur(p.pokemons(5).ptype))
         bouton5.set_icone(p.pokemons(5).image)
+        bouton5.info = "Hp : " +  p.pokemons(5).hp.toString + "/" + p.pokemons(5).max_hp.toString + "   " + "Atk : " + p.pokemons(5).atk.toString + "   Dfs : " + p.pokemons(5).defense.toString + "   Spd : " + p.pokemons(5).speed.toString
         boutonr.setText("Retour")
+        boutonr.info = "Permet de retourner au menu principal"
 
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
