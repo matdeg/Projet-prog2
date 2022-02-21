@@ -76,7 +76,7 @@ class Battle(p1 : Character,p2 : Character) {
                         }
                     }
                     if (choix_menu == 1) {
-                        Fenetre.msgbox.print_msg("Choisissez un pokémon :")
+                        Fenetre.msgbox.print_msg("Choisissez un Pokéfusion :")
                         second_choix = Fenetre.print_menu_pokemon(you)
                         while (((second_choix != -1) && (!you.pokemons(second_choix).alive)) || (second_choix == you.ip) ) {
                             if (second_choix == you.ip) {

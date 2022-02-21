@@ -19,6 +19,9 @@ import java.awt.event.MouseEvent
 import java.lang.Thread
 import javax.swing.SwingConstants
 import java.awt.event.MouseListener
+import java.awt.event.KeyListener
+import java.awt.event.KeyEvent
+import java.awt.RenderingHints.Key
 
 class AffichageBataille extends JPanel {
 
@@ -206,7 +209,10 @@ class Bouton extends JButton with MouseListener {
     this.addMouseListener(this)
 
     def mouseEntered (e : MouseEvent) : Unit = {
-        Fenetre.msgbox.print_msg(info)
+        if (Touche.aide) {
+            Fenetre.msgbox.print_msg(info)
+        }
+        
     }
 
     def mouseClicked (e : MouseEvent) : Unit = {}
@@ -278,14 +284,10 @@ object Fenetre extends JFrame with ActionListener {
         }
     }
 
-    var compteur = 0
-
-
     var bataille = new AffichageBataille ()
 
 
     var msgbox = new MsgBox ()
-    
 
     var bouton0 = new Bouton
     var bouton1 = new Bouton
@@ -364,6 +366,7 @@ object Fenetre extends JFrame with ActionListener {
 
     def print_menu_attaque (p : Pokemon) : Int = {
 
+        Fenetre.msgbox.save = "Choisissez une attaque :"
         bouton0.setText(p.attaques(0).name + "   " + p.pp_list(0).toString + "/" + p.attaques(0).pp.toString)
         bouton0.set_font(associe_couleur(p.attaques(0).atype))
         bouton0.init_icone()
@@ -410,6 +413,7 @@ object Fenetre extends JFrame with ActionListener {
 
     def print_menu_pokemon (p : Character) : Int = {
         
+        Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
         bouton0.setText(p.pokemons(0).name)
         bouton0.set_font(associe_couleur(p.pokemons(0).ptype))
         bouton0.set_icone(p.pokemons(0).image)
