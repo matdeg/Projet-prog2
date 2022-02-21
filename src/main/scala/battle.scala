@@ -57,6 +57,7 @@ class Battle(p1 : Character,p2 : Character) {
         choix_menu match {
             case 0 => menu_attaque()
             case 1 => menu_pokemon()
+            case 2 => menu_sac()
         }
     }
 
@@ -93,6 +94,18 @@ class Battle(p1 : Character,p2 : Character) {
                           }
                         (1,choix_pokemon)
                       } 
+        }
+    }
+
+    def menu_sac() : (Int, Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un objet :")
+        var choix_objet = -2
+        choix_objet = Fenetre.bas_fenetre.print_menu_objet(you)
+        choix_objet match {
+            case -1 => menu_principal
+            case 4 => {you.next_page; menu_sac}
+            case 5 => {you.back_page; menu_sac}
+            case _ => {println(Func.id_items(you.current_items_id(choix_objet)).name); (0,0)}
         }
     }
 

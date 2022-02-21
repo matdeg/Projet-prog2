@@ -296,7 +296,7 @@ class Menu_attaque extends JPanel {
     rangee_bouton_3.add(bouton5)
 
     var rangee_retour = new JPanel
-    rangee_retour.setLayout(new GridLayout(1, 1))
+    rangee_retour.setLayout(new GridLayout(1, 3))
     rangee_retour.add(boutonr)
 
     var choix_menu = -2
@@ -425,6 +425,81 @@ class Menu_attaque extends JPanel {
         this.remove(rangee_bouton_3)
         this.remove(rangee_retour)
 
+        choix_menu
+    }
+
+    def vider (l : List[Int]) : Unit = {
+        if (!l.isEmpty) {
+            vider(l.tail)
+            if (l.head < 2) (
+                rangee_bouton_1.add(bouton(l.head))
+            )
+            else {
+                rangee_bouton_2.add(bouton(l.head))
+            }
+        }
+    }
+
+    def print_menu_objet (p : Character) : Int = {
+
+        Fenetre.requestFocus
+
+        Fenetre.msgbox.save = "Choisissez un objet :"
+        var bouton_enleve : List[Int] = List() 
+        for (i <- 0 to 3) {
+            if (p.current_items_id(i) != -1) {
+                bouton(i).setText(Func.id_items(p.current_items_id(i)).name)
+                //println(i)
+                //bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img)
+            }
+            else {
+                if (i > 1) {
+                    rangee_bouton_2.remove(bouton(i))
+                    bouton_enleve = i :: bouton_enleve
+                }
+                else {
+                    rangee_bouton_1.remove(bouton(i))
+                    bouton_enleve = i :: bouton_enleve
+                }
+            }
+        }
+        bouton4.setText("Suivant")
+        bouton5.setText("Précédent")
+        boutonr.setText("Retour")
+
+        this.add(rangee_bouton_1)
+        this.add(rangee_bouton_2)
+        if (p.page == 0) {
+            if (p.nb_distinct_items > 4 * (p.page + 1)) {
+                rangee_retour.add(bouton4)
+            }
+        }
+        else {
+            rangee_retour.remove(boutonr)
+            rangee_retour.add(bouton5)
+            rangee_retour.add(boutonr)
+            if (p.nb_distinct_items > 4 * (p.page + 1)) {
+                rangee_retour.add(bouton4)
+            }
+        }
+        this.add(rangee_retour)
+
+        this.updateUI
+
+        choix_menu = -2
+
+        while (choix_menu == -2) {
+            Thread.sleep(100)
+        }
+
+        this.remove(rangee_bouton_1)
+        this.remove(rangee_bouton_2)
+        this.remove(rangee_retour)
+        rangee_retour.remove(bouton4)
+        rangee_retour.remove(bouton5)
+
+        vider(bouton_enleve)
+        
         choix_menu
     }
 }
