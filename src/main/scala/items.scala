@@ -86,7 +86,7 @@ class Ice_heal extends Item {
 
 class Paralyze_heal extends Item {
     name = "paralyze heal"
-    img = "items/medicine/paralyse-heal.png"
+    img = "items/medicine/paralyze-heal.png"
     regen = 0
     id = 9
     state_heal = Array(Paralysie)

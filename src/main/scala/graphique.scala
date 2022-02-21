@@ -449,8 +449,7 @@ class Menu_attaque extends JPanel {
         for (i <- 0 to 3) {
             if (p.current_items_id(i) != -1) {
                 bouton(i).setText(Func.id_items(p.current_items_id(i)).name)
-                //println(i)
-                //bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img)
+                bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img)
             }
             else {
                 if (i > 1) {
