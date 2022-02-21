@@ -12,7 +12,7 @@ abstract class Character(pname : String) {
 
     // sac d'objet et page courante dans l'affichage du sac en combat
     var page : Int = 0
-    var bag : Array[Int] = new Array[Int](40)
+    var bag : Array[Int] = new Array[Int](11)
 
     // donne un tableau qui contient les id d'items de la page courante
     def current_items_id = {Func.choose(bag,page * 4, (page + 1) * 4)}
@@ -28,7 +28,7 @@ abstract class Character(pname : String) {
         if (page == 0) {page = (nb_distinct_items - 1)/4}
         else {page -= 1} 
     }
-    
+
     var pokemons : Array[Pokemon] = new Array[Pokemon](6)
     var money : Int = 0
     var current_battle : Battle = Empty_Battle
