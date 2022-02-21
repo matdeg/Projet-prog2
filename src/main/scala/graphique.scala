@@ -450,6 +450,7 @@ class Menu_attaque extends JPanel {
             if (p.current_items_id(i) != -1) {
                 bouton(i).setText(Func.id_items(p.current_items_id(i)).name)
                 bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img)
+                bouton(i).info = Func.id_items(p.current_items_id(i)).info
             }
             else {
                 if (i > 1) {
@@ -463,8 +464,11 @@ class Menu_attaque extends JPanel {
             }
         }
         bouton4.setText("Suivant")
+        bouton4.info = "Affiche la page suivante"
         bouton5.setText("Précédent")
+        bouton5.info = "Affiche la page précédente"
         boutonr.setText("Retour")
+        boutonr.info = "Permet de retourner au menu principal"
 
         this.add(rangee_bouton_1)
         this.add(rangee_bouton_2)
