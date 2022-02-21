@@ -395,7 +395,7 @@ class Menu_attaque extends JPanel {
 
     def print_menu_pokemon (p : Character) : Int = {
         
-        Fentre.requestFocus
+        Fenetre.requestFocus
         
         Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
         for (i <- 0 to 5) {
