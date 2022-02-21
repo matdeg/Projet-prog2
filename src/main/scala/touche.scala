@@ -13,7 +13,6 @@ object Touche_aide extends JPanel with KeyListener {
     def keyTyped (evt : KeyEvent) : Unit = {
         if (evt.getKeyChar() == 'a') {
             aide = !aide
-            println("a")
         }
     }
 }
