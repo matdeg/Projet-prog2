@@ -465,10 +465,13 @@ class Menu_attaque extends JPanel {
         }
         bouton4.setText("Suivant")
         bouton4.info = "Affiche la page suivante"
+        bouton4.init_icone
         bouton5.setText("Précédent")
         bouton5.info = "Affiche la page précédente"
+        bouton5.init_icone
         boutonr.setText("Retour")
         boutonr.info = "Permet de retourner au menu principal"
+        boutonr.init_icone
 
         this.add(rangee_bouton_1)
         this.add(rangee_bouton_2)
