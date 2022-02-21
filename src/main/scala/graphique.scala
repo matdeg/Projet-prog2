@@ -19,6 +19,10 @@ import java.awt.event.MouseEvent
 import java.lang.Thread
 import javax.swing.SwingConstants
 import java.awt.event.MouseListener
+import java.awt.event.KeyListener
+import java.awt.event.KeyEvent
+import java.awt.RenderingHints.Key
+import javax.swing.Timer
 
 class AffichageBataille extends JPanel {
 
@@ -196,42 +200,26 @@ class MsgBox extends JPanel {
     }
 }
 
-class Button extends JButton with MouseListener {
-
-    var info = "azerty"
-
-    this.addMouseListener(this)
-
-    def mouseEntered (e : MouseEvent) : Unit = {
-        println(info)
-    }
-
-    def mouseClicked (e : MouseEvent) : Unit = {}
-
-    def mouseExited (e : MouseEvent) : Unit = {}
-
-    def mousePressed (e : MouseEvent) : Unit = {}
-
-    def mouseReleased (e : MouseEvent) : Unit = {}
-}
-
-//class Test extends Button {}
-
-
 class Bouton extends JButton with MouseListener {
 
     var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
     var icone : BufferedImage = null
+    var valeur = -2
 
     var info = "azerty"
 
     this.addMouseListener(this)
 
     def mouseEntered (e : MouseEvent) : Unit = {
-        Fenetre.msgbox.print_msg(info)
+        if (Touche_aide.aide) {
+            Fenetre.msgbox.print_msg(info)
+        }
+        
     }
 
-    def mouseClicked (e : MouseEvent) : Unit = {}
+    def mouseClicked (e : MouseEvent) : Unit = {
+        Fenetre.choix_menu = valeur
+    }
 
     def mouseExited (e : MouseEvent) : Unit = {
         Fenetre.msgbox.print_save ()
@@ -272,10 +260,14 @@ class Bouton extends JButton with MouseListener {
 
 }
 
-object Fenetre extends JFrame with ActionListener {
+object Fenetre extends JFrame {
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
     this.setResizable(false)
+
+    override def setFocusable(b : Boolean) = {
+        super.setFocusable(b)
+    }
 
     def associe_couleur (t : Ttype) : String = {
         t match {
@@ -300,22 +292,24 @@ object Fenetre extends JFrame with ActionListener {
         }
     }
 
-    var compteur = 0
-
-
     var bataille = new AffichageBataille ()
 
-
     var msgbox = new MsgBox ()
-    
 
     var bouton0 = new Bouton
+    bouton0.valeur = 0
     var bouton1 = new Bouton
+    bouton1.valeur = 1
     var bouton2 = new Bouton
+    bouton2.valeur = 2
     var bouton3 = new Bouton
+    bouton3.valeur = 3
     var bouton4 = new Bouton
+    bouton4.valeur = 4
     var bouton5 = new Bouton
+    bouton5.valeur = 5
     var boutonr = new Bouton
+    boutonr.valeur = -1
     
     var rangee_bouton_1 = new JPanel
     rangee_bouton_1.setLayout(new GridLayout(1, 2)) 
@@ -344,26 +338,29 @@ object Fenetre extends JFrame with ActionListener {
 
     def print_menu_base () : Int = {
 
+        setFocusable(true)
+        this.addKeyListener(Touche_aide)
+
+        msgbox.save = "Que voulez vous faire ?"
         bouton0.setText("Attaque")
         bouton0.set_font("couleur/rouge.jpeg")
+        bouton0.info = "Permet de lancer les attaques"
         bouton0.init_icone()
         bouton1.setText("Pokémon")
         bouton1.set_font("couleur/vert.png")
+        bouton1.info = "Permet de changer de Pokéfusion"
         bouton1.init_icone()
         bouton2.setText("Sac")
         bouton2.set_font("couleur/jaune.jpg")
+        bouton2.info = "Permet d'utiliser des objets"
         bouton2.init_icone()
         bouton3.setText("Fuite")
         bouton3.set_font("couleur/bleu.jpg")
+        bouton3.info = "Permet de fuir le combat"
         bouton3.init_icone()
 
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
-
-        bouton0.addActionListener(this)
-        bouton1.addActionListener(this)
-        bouton2.addActionListener(this)
-        bouton3.addActionListener(this)
 
         bas_fenetre.updateUI
 
@@ -376,36 +373,42 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.remove(rangee_bouton_1)
         bas_fenetre.remove(rangee_bouton_2)
 
+        this.removeKeyListener(Touche_aide)
+        setFocusable(false)
+
         choix_menu
     }
 
     def print_menu_attaque (p : Pokemon) : Int = {
 
-        bouton0.setText(p.attaques(0).name)
+        setFocusable(true)
+        this.addKeyListener(Touche_aide)
+
+        Fenetre.msgbox.save = "Choisissez une attaque :"
+        bouton0.setText(p.attaques(0).name + "   " + p.pp_list(0).toString + "/" + p.attaques(0).pp.toString)
         bouton0.set_font(associe_couleur(p.attaques(0).atype))
         bouton0.init_icone()
-        bouton1.setText(p.attaques(1).name)
+        bouton0.info = "Dégats bruts : " + p.attaques(0).dmg.toString + "   " + "Precision : " + p.attaques(0).precision.toString 
+        bouton1.setText(p.attaques(1).name + "   " + p.pp_list(1).toString + "/" + p.attaques(1).pp.toString)
         bouton1.set_font(associe_couleur(p.attaques(1).atype))
         bouton1.init_icone()
-        bouton2.setText(p.attaques(2).name)
+        bouton1.info = "Dégats bruts : " + p.attaques(1).dmg.toString + "   " + "Precision : " + p.attaques(1).precision.toString
+        bouton2.setText(p.attaques(2).name + "   " + p.pp_list(2).toString + "/" + p.attaques(2).pp.toString)
         bouton2.set_font(associe_couleur(p.attaques(2).atype))
         bouton2.init_icone()
-        bouton3.setText(p.attaques(3).name)
+        bouton2.info = "Dégats bruts : " + p.attaques(2).dmg.toString + "   " + "Precision : " + p.attaques(2).precision.toString
+        bouton3.setText(p.attaques(3).name + "   " + p.pp_list(3).toString + "/" + p.attaques(3).pp.toString)
         bouton3.set_font(associe_couleur(p.attaques(3).atype))
         bouton3.init_icone()
+        bouton3.info = "Dégats bruts : " + p.attaques(3).dmg.toString + "   " + "Precision : " + p.attaques(3).precision.toString
         boutonr.setText("Retour")
+        boutonr.info = "Permet de retourner au menu principal"
 
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
         bas_fenetre.add(rangee_retour)
 
         bas_fenetre.updateUI
-
-        bouton0.addActionListener(this)
-        bouton1.addActionListener(this)
-        bouton2.addActionListener(this)
-        bouton3.addActionListener(this)
-        boutonr.addActionListener(this)
 
         choix_menu = -2
 
@@ -417,30 +420,44 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.remove(rangee_bouton_2)
         bas_fenetre.remove(rangee_retour)
 
+        this.removeKeyListener(Touche_aide)
+        setFocusable(false)
+
         choix_menu
     }
 
     def print_menu_pokemon (p : Character) : Int = {
         
+        setFocusable(true)
+        this.addKeyListener(Touche_aide)
+        
+        Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
         bouton0.setText(p.pokemons(0).name)
         bouton0.set_font(associe_couleur(p.pokemons(0).ptype))
         bouton0.set_icone(p.pokemons(0).image)
+        bouton0.info = "Hp : " +  p.pokemons(0).hp.toString + "/" + p.pokemons(0).max_hp.toString + "   " + "Atk : " + p.pokemons(0).atk.toString + "   Dfs : " + p.pokemons(0).defense.toString + "   Spd : " + p.pokemons(0).speed.toString
         bouton1.setText(p.pokemons(1).name)
         bouton1.set_font(associe_couleur(p.pokemons(1).ptype))
         bouton1.set_icone(p.pokemons(1).image)
+        bouton1.info = "Hp : " +  p.pokemons(1).hp.toString + "/" + p.pokemons(1).max_hp.toString + "   " + "Atk : " + p.pokemons(1).atk.toString + "   Dfs : " + p.pokemons(1).defense.toString + "   Spd : " + p.pokemons(1).speed.toString
         bouton2.setText(p.pokemons(2).name)
         bouton2.set_font(associe_couleur(p.pokemons(2).ptype))
         bouton2.set_icone(p.pokemons(2).image)
+        bouton2.info = "Hp : " +  p.pokemons(2).hp.toString + "/" + p.pokemons(2).max_hp.toString + "   " + "Atk : " + p.pokemons(2).atk.toString + "   Dfs : " + p.pokemons(2).defense.toString + "   Spd : " + p.pokemons(2).speed.toString
         bouton3.setText(p.pokemons(3).name)
         bouton3.set_font(associe_couleur(p.pokemons(3).ptype))
         bouton3.set_icone(p.pokemons(3).image)
+        bouton3.info = "Hp : " +  p.pokemons(3).hp.toString + "/" + p.pokemons(3).max_hp.toString + "   " + "Atk : " + p.pokemons(3).atk.toString + "   Dfs : " + p.pokemons(3).defense.toString + "   Spd : " + p.pokemons(3).speed.toString
         bouton4.setText(p.pokemons(4).name)
         bouton4.set_font(associe_couleur(p.pokemons(4).ptype))
         bouton4.set_icone(p.pokemons(4).image)
+        bouton4.info = "Hp : " +  p.pokemons(4).hp.toString + "/" + p.pokemons(4).max_hp.toString + "   " + "Atk : " + p.pokemons(4).atk.toString + "   Dfs : " + p.pokemons(4).defense.toString + "   Spd : " + p.pokemons(4).speed.toString
         bouton5.setText(p.pokemons(5).name)
         bouton5.set_font(associe_couleur(p.pokemons(5).ptype))
         bouton5.set_icone(p.pokemons(5).image)
+        bouton5.info = "Hp : " +  p.pokemons(5).hp.toString + "/" + p.pokemons(5).max_hp.toString + "   " + "Atk : " + p.pokemons(5).atk.toString + "   Dfs : " + p.pokemons(5).defense.toString + "   Spd : " + p.pokemons(5).speed.toString
         boutonr.setText("Retour")
+        boutonr.info = "Permet de retourner au menu principal"
 
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
@@ -448,14 +465,6 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.add(rangee_retour)
 
         bas_fenetre.updateUI
-
-        bouton0.addActionListener(this)
-        bouton1.addActionListener(this)
-        bouton2.addActionListener(this)
-        bouton3.addActionListener(this)
-        bouton4.addActionListener(this)
-        bouton5.addActionListener(this)
-        boutonr.addActionListener(this)
 
         choix_menu = -2
 
@@ -468,38 +477,18 @@ object Fenetre extends JFrame with ActionListener {
         bas_fenetre.remove(rangee_bouton_3)
         bas_fenetre.remove(rangee_retour)
 
+        this.removeKeyListener(Touche_aide)
+        setFocusable(false)
+
         choix_menu
     }
-    override def actionPerformed (arg0 : ActionEvent) : Unit = {
-        if (arg0.getSource == bouton0) {
-            choix_menu = 0
-        }
-        if (arg0.getSource == bouton1) {
-            choix_menu = 1
-        }
-        if (arg0.getSource == bouton2) {
-            choix_menu = 2
-        }
-        if (arg0.getSource == bouton3) {
-            choix_menu = 3
-        }
-        if (arg0.getSource == bouton4) {
-            choix_menu = 4
-        }
-        if (arg0.getSource == bouton5) {
-            choix_menu = 5
-        }
-        if (arg0.getSource == boutonr) {
-            choix_menu = -1
-        }
-    }
 
-    var total = new JPanel
-    total.setLayout(new GridLayout(2,1))
-    total.add(bataille)
-    total.add(bas_fenetre)
+    var total_bataille = new JPanel
+    total_bataille.setLayout(new GridLayout(2,1))
+    total_bataille.add(bataille)
+    total_bataille.add(bas_fenetre)
 
-    this.setContentPane(total)
+    this.setContentPane(total_bataille)
     setVisible(true)
 
 }

@@ -97,7 +97,7 @@ class Battle(p1 : Character,p2 : Character) {
     }
 
     // Démarre la battle
-    def start:Unit = {
+    def start : Unit = {
         finished = false
         you.ip = 0; other.ip = 0; you.nb_alive = 0; other.nb_alive = 0
         for (i <- 0 to 5) {if (you.pokemons(i).alive) {you.nb_alive += 1};
@@ -112,7 +112,6 @@ class Battle(p1 : Character,p2 : Character) {
             this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
         }
     }
-
     // détermine qui joue en premier selon les choix des deux joueurs. et lance le tour
     def turn(choix_menu : Int,second_choix : Int,choix_menu_op : Int, second_choix_op : Int):Unit = {
         var a = 0; var b = 0;var c = 0; var d = 0
