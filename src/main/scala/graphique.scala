@@ -196,28 +196,6 @@ class MsgBox extends JPanel {
     }
 }
 
-class Button extends JButton with MouseListener {
-
-    var info = "azerty"
-
-    this.addMouseListener(this)
-
-    def mouseEntered (e : MouseEvent) : Unit = {
-        println(info)
-    }
-
-    def mouseClicked (e : MouseEvent) : Unit = {}
-
-    def mouseExited (e : MouseEvent) : Unit = {}
-
-    def mousePressed (e : MouseEvent) : Unit = {}
-
-    def mouseReleased (e : MouseEvent) : Unit = {}
-}
-
-//class Test extends Button {}
-
-
 class Bouton extends JButton with MouseListener {
 
     var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
@@ -344,17 +322,22 @@ object Fenetre extends JFrame with ActionListener {
 
     def print_menu_base () : Int = {
 
+        msgbox.save = "Que voulez vous faire ?"
         bouton0.setText("Attaque")
         bouton0.set_font("couleur/rouge.jpeg")
+        bouton0.info = "Permet de lancer les attaques"
         bouton0.init_icone()
         bouton1.setText("Pokémon")
         bouton1.set_font("couleur/vert.png")
+        bouton1.info = "Permet de changer de Pokéfusion"
         bouton1.init_icone()
         bouton2.setText("Sac")
         bouton2.set_font("couleur/jaune.jpg")
+        bouton2.info = "Permet d'utiliser des objets"
         bouton2.init_icone()
         bouton3.setText("Fuite")
         bouton3.set_font("couleur/bleu.jpg")
+        bouton3.info = "Permet de fuir le combat"
         bouton3.init_icone()
 
         bas_fenetre.add(rangee_bouton_1)
@@ -381,19 +364,24 @@ object Fenetre extends JFrame with ActionListener {
 
     def print_menu_attaque (p : Pokemon) : Int = {
 
-        bouton0.setText(p.attaques(0).name)
+        bouton0.setText(p.attaques(0).name + "   " + p.pp_list(0).toString + "/" + p.attaques(0).pp.toString)
         bouton0.set_font(associe_couleur(p.attaques(0).atype))
         bouton0.init_icone()
-        bouton1.setText(p.attaques(1).name)
+        bouton0.info = "Dégats bruts : " + p.attaques(0).dmg.toString + "   " + "Precision : " + p.attaques(0).precision.toString 
+        bouton1.setText(p.attaques(1).name + "   " + p.pp_list(1).toString + "/" + p.attaques(1).pp.toString)
         bouton1.set_font(associe_couleur(p.attaques(1).atype))
         bouton1.init_icone()
-        bouton2.setText(p.attaques(2).name)
+        bouton1.info = "Dégats bruts : " + p.attaques(1).dmg.toString + "   " + "Precision : " + p.attaques(1).precision.toString
+        bouton2.setText(p.attaques(2).name + "   " + p.pp_list(2).toString + "/" + p.attaques(2).pp.toString)
         bouton2.set_font(associe_couleur(p.attaques(2).atype))
         bouton2.init_icone()
-        bouton3.setText(p.attaques(3).name)
+        bouton2.info = "Dégats bruts : " + p.attaques(2).dmg.toString + "   " + "Precision : " + p.attaques(2).precision.toString
+        bouton3.setText(p.attaques(3).name + "   " + p.pp_list(3).toString + "/" + p.attaques(3).pp.toString)
         bouton3.set_font(associe_couleur(p.attaques(3).atype))
         bouton3.init_icone()
+        bouton3.info = "Dégats bruts : " + p.attaques(3).dmg.toString + "   " + "Precision : " + p.attaques(3).precision.toString
         boutonr.setText("Retour")
+        boutonr.info = "Permet de retourner au menu principal"
 
         bas_fenetre.add(rangee_bouton_1)
         bas_fenetre.add(rangee_bouton_2)
