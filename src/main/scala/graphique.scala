@@ -23,6 +23,7 @@ import java.awt.event.KeyListener
 import java.awt.event.KeyEvent
 import java.awt.RenderingHints.Key
 import javax.swing.Timer
+import java.awt.event.FocusEvent
 
 class AffichageBataille extends JPanel {
 
@@ -361,6 +362,8 @@ class Menu_attaque extends JPanel {
 
     def print_menu_attaque (p : Pokemon) : Int = {
 
+        Fenetre.requestFocus
+
         Fenetre.msgbox.save = "Choisissez une attaque :"
         for (i <- 0 to 3) {
             bouton(i).setText(p.attaques(i).name + "   " + p.pp_list(i).toString + "/" + p.attaques(i).pp.toString)
@@ -391,6 +394,8 @@ class Menu_attaque extends JPanel {
     }
 
     def print_menu_pokemon (p : Character) : Int = {
+        
+        Fentre.requestFocus
         
         Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
         for (i <- 0 to 5) {
