@@ -5,6 +5,7 @@ class Battle(p1 : Character,p2 : Character) {
     Fenetre.bataille.op = other
     var loop : Int = 1
     var finished : Boolean = false
+    val r = scala.util.Random;
 
     // joueur qui joue en premier/second
     var fst : Character = Empty_character
@@ -49,6 +50,52 @@ class Battle(p1 : Character,p2 : Character) {
         }
     }
 
+    def menu_principal() : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Que voulez vous faire ?")
+        var choix_menu = -2
+        choix_menu = Fenetre.print_menu_base
+        choix_menu match {
+            case 0 => menu_attaque()
+            case 1 => menu_pokemon()
+        }
+    }
+
+    def menu_attaque() : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Choisissez une attaque :")
+        var choix_attaque = -2
+        choix_attaque = Fenetre.print_menu_attaque(you.pokemons(you.ip))
+        choix_attaque match {
+            case -1 => menu_principal()
+            case _ => if (you.pokemons(you.ip).pp_list(choix_attaque) == 0) {
+                        Fenetre.msgbox.print_msg("Vous ne pouvez plus lancer cette attaque"); Thread.sleep(1500)
+                        menu_attaque()
+                      }
+                      else {
+                        (0,choix_attaque)
+                      } 
+        }
+    }
+
+    def menu_pokemon() : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un pokémon :")
+        var choix_pokemon = -2
+        choix_pokemon = Fenetre.print_menu_pokemon(you)
+        choix_pokemon match {
+            case -1 => menu_principal
+            case _ => if (!you.pokemons(you.ip).alive) {
+                        Fenetre.msgbox.print_msg("Ce pokémon n'est pas apte à retourner au combat"); Thread.sleep(1500)
+                        menu_pokemon()
+                      }
+                      else {
+                          if (you.ip == choix_pokemon) {
+                            Fenetre.msgbox.print_msg("Ce pokémon est déjà sur le terrain"); Thread.sleep(1500)
+                            menu_pokemon()
+                          }
+                        (1,choix_pokemon)
+                      } 
+        }
+    }
+
     // Démarre la battle
     def start:Unit = {
         finished = false
@@ -58,52 +105,19 @@ class Battle(p1 : Character,p2 : Character) {
         change
 
         // gestion menu - boutons
-        val r = scala.util.Random; 
-            var choix_menu = 0; 
-            while (!this.finished) {
-                var second_choix = -1
-                while (second_choix == -1) {
-                    Fenetre.msgbox.print_msg("Que voulez vous faire ?")
-                    choix_menu = Fenetre.print_menu_base
-                    if (choix_menu == 0) {
-                        Fenetre.msgbox.print_msg("Choisissez une attaque :")
-                        second_choix = Fenetre.print_menu_attaque(you.pokemons(you.ip))
-                        while ((second_choix != -1) && (you.pokemons(you.ip).pp_list(second_choix) == 0)) {
-                            if (you.pokemons(you.ip).pp_list(second_choix) == 0) {
-                                Fenetre.msgbox.print_msg(you.pokemons(you.ip).name + " ne peut plus lancer cette attaque")
-                                second_choix = Fenetre.print_menu_attaque(you.pokemons(you.ip))
-                            }
-                        }
-                    }
-                    if (choix_menu == 1) {
-                        Fenetre.msgbox.print_msg("Choisissez un pokémon :")
-                        second_choix = Fenetre.print_menu_pokemon(you)
-                        while (((second_choix != -1) && (!you.pokemons(second_choix).alive)) || (second_choix == you.ip) ) {
-                            if (second_choix == you.ip) {
-                                Fenetre.msgbox.print_msg("Ce pokémon est dékà sur le terrain, choisissez un autre pokémon :")
-                            }
-                            else {
-                                Fenetre.msgbox.print_msg("Celui-ci n'est pas apte à retourner au combat, choisissez un autre pokémon :")
-                            }
-                            second_choix = Fenetre.print_menu_pokemon(you)
-                        }
-                    }
-                    if (choix_menu >= 2 ) {
-                        Fenetre.msgbox.print_msg("Ceci n'a pas été codé")
-                        Thread.sleep(2000)
-                    }
-                }
-                var choix_menu_op = 0
-                var second_choix_op = r.nextInt(4)
-                this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
-            }
+        while (!finished) {
+            var (choix_menu,second_choix) = menu_principal()       
+            var choix_menu_op = 0
+            var second_choix_op = r.nextInt(4)
+            this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
+        }
     }
 
     // détermine qui joue en premier selon les choix des deux joueurs. et lance le tour
     def turn(choix_menu : Int,second_choix : Int,choix_menu_op : Int, second_choix_op : Int):Unit = {
         var a = 0; var b = 0;var c = 0; var d = 0
         fst = you; snd = other; a = choix_menu; b = second_choix; c = choix_menu_op; d = second_choix_op
-        if (!(choix_menu_op == 0) || you.pokemons(you.ip).speed < other.pokemons(other.ip).speed) {
+        if (!(choix_menu_op == 0) || (choix_menu == 0 && you.pokemons(you.ip).speed < other.pokemons(other.ip).speed)) {
             fst = other; snd = you; a = choix_menu_op; b = second_choix_op; c = choix_menu; d = second_choix
         }
         play(fst,snd,a,b)
