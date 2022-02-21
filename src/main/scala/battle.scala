@@ -25,7 +25,7 @@ class Battle(p1 : Character,p2 : Character) {
                 while ((you.ip == -1) || !you.pokemons(you.ip).alive) {
                     if (you.ip == -1) {Fenetre.msgbox.print_msg("Veuillez choisir un pokémon :")}
                     else {Fenetre.msgbox.print_msg("Ce pokémon n'est pas apte à retourner au combat, veuillez choisir un pokémon :")}
-                    you.ip = Fenetre.print_menu_pokemon(you) 
+                    you.ip = Fenetre.bas_fenetre.print_menu_pokemon(you) 
                 }
                 Fenetre.msgbox.print_msg("Vous envoyez " + you.pokemons(you.ip).name)
                 Fenetre.bataille.print_pok_perso(you.pokemons(you.ip))
@@ -53,7 +53,7 @@ class Battle(p1 : Character,p2 : Character) {
     def menu_principal() : (Int,Int) = {
         Fenetre.msgbox.print_msg("Que voulez vous faire ?")
         var choix_menu = -2
-        choix_menu = Fenetre.print_menu_base
+        choix_menu = Fenetre.bas_fenetre.print_menu_base
         choix_menu match {
             case 0 => menu_attaque()
             case 1 => menu_pokemon()
@@ -63,7 +63,7 @@ class Battle(p1 : Character,p2 : Character) {
     def menu_attaque() : (Int,Int) = {
         Fenetre.msgbox.print_msg("Choisissez une attaque :")
         var choix_attaque = -2
-        choix_attaque = Fenetre.print_menu_attaque(you.pokemons(you.ip))
+        choix_attaque = Fenetre.bas_fenetre.print_menu_attaque(you.pokemons(you.ip))
         choix_attaque match {
             case -1 => menu_principal()
             case _ => if (you.pokemons(you.ip).pp_list(choix_attaque) == 0) {
@@ -79,7 +79,7 @@ class Battle(p1 : Character,p2 : Character) {
     def menu_pokemon() : (Int,Int) = {
         Fenetre.msgbox.print_msg("Choisissez un pokémon :")
         var choix_pokemon = -2
-        choix_pokemon = Fenetre.print_menu_pokemon(you)
+        choix_pokemon = Fenetre.bas_fenetre.print_menu_pokemon(you)
         choix_pokemon match {
             case -1 => menu_principal
             case _ => if (!you.pokemons(you.ip).alive) {

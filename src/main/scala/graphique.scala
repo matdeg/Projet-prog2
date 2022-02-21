@@ -218,7 +218,7 @@ class Bouton extends JButton with MouseListener {
     }
 
     def mouseClicked (e : MouseEvent) : Unit = {
-        Fenetre.choix_menu = valeur
+        Fenetre.bas_fenetre.choix_menu = valeur
     }
 
     def mouseExited (e : MouseEvent) : Unit = {
@@ -260,13 +260,80 @@ class Bouton extends JButton with MouseListener {
 
 }
 
-object Fenetre extends JFrame {
-    this.setTitle("Best Game Ever")
-    this.setSize(750, 1000)
-    this.setResizable(false)
+class Menu_attaque extends JPanel {
 
-    override def setFocusable(b : Boolean) = {
-        super.setFocusable(b)
+    setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS))
+    add(Fenetre.msgbox)
+
+    var bouton0 = new Bouton
+    var bouton1 = new Bouton
+    var bouton2 = new Bouton
+    var bouton3 = new Bouton
+    var bouton4 = new Bouton
+    var bouton5 = new Bouton
+    var boutonr = new Bouton
+    boutonr.valeur = -1
+
+    var bouton : Array[Bouton] = Array(bouton0, bouton1, bouton2, bouton3, bouton4, bouton5, boutonr)
+    for (i <- 0 to 5) {
+        bouton(i).valeur = i
+    }
+    
+    var rangee_bouton_1 = new JPanel
+    rangee_bouton_1.setLayout(new GridLayout(1, 2)) 
+    rangee_bouton_1.add(bouton0)
+    rangee_bouton_1.add(bouton1)
+
+    var rangee_bouton_2 = new JPanel
+    rangee_bouton_2.setLayout(new GridLayout(1, 2))
+    rangee_bouton_2.add(bouton2)
+    rangee_bouton_2.add(bouton3)
+
+    var rangee_bouton_3 = new JPanel
+    rangee_bouton_3.setLayout(new GridLayout(1, 2))
+    rangee_bouton_3.add(bouton4)
+    rangee_bouton_3.add(bouton5)
+
+    var rangee_retour = new JPanel
+    rangee_retour.setLayout(new GridLayout(1, 1))
+    rangee_retour.add(boutonr)
+
+    var choix_menu = -2
+
+    def print_menu_base () : Int = {
+
+        Fenetre.msgbox.save = "Que voulez vous faire ?"
+        bouton0.setText("Attaque")
+        bouton0.set_font("couleur/rouge.jpeg")
+        bouton0.info = "Permet de lancer les attaques"
+        bouton1.setText("Pokémon")
+        bouton1.set_font("couleur/vert.png")
+        bouton1.info = "Permet de changer de Pokéfusion"
+        bouton2.setText("Sac")
+        bouton2.set_font("couleur/jaune.jpg")
+        bouton2.info = "Permet d'utiliser des objets"
+        bouton3.setText("Fuite")
+        bouton3.set_font("couleur/bleu.jpg")
+        bouton3.info = "Permet de fuir le combat"
+        for (i <- 0 to 3) {
+            bouton(i).init_icone
+        }
+
+        this.add(rangee_bouton_1)
+        this.add(rangee_bouton_2)
+
+        this.updateUI
+
+        choix_menu = -2
+
+        while (choix_menu == -2) {
+            Thread.sleep(100)
+        }
+
+        this.remove(rangee_bouton_1)
+        this.remove(rangee_bouton_2)
+
+        choix_menu
     }
 
     def associe_couleur (t : Ttype) : String = {
@@ -292,123 +359,23 @@ object Fenetre extends JFrame {
         }
     }
 
-    var bataille = new AffichageBataille ()
-
-    var msgbox = new MsgBox ()
-
-    var bouton0 = new Bouton
-    bouton0.valeur = 0
-    var bouton1 = new Bouton
-    bouton1.valeur = 1
-    var bouton2 = new Bouton
-    bouton2.valeur = 2
-    var bouton3 = new Bouton
-    bouton3.valeur = 3
-    var bouton4 = new Bouton
-    bouton4.valeur = 4
-    var bouton5 = new Bouton
-    bouton5.valeur = 5
-    var boutonr = new Bouton
-    boutonr.valeur = -1
-    
-    var rangee_bouton_1 = new JPanel
-    rangee_bouton_1.setLayout(new GridLayout(1, 2)) 
-    rangee_bouton_1.add(bouton0)
-    rangee_bouton_1.add(bouton1)
-
-    var rangee_bouton_2 = new JPanel
-    rangee_bouton_2.setLayout(new GridLayout(1, 2))
-    rangee_bouton_2.add(bouton2)
-    rangee_bouton_2.add(bouton3)
-
-    var rangee_bouton_3 = new JPanel
-    rangee_bouton_3.setLayout(new GridLayout(1, 2))
-    rangee_bouton_3.add(bouton4)
-    rangee_bouton_3.add(bouton5)
-
-    var rangee_retour = new JPanel
-    rangee_retour.setLayout(new GridLayout(1, 1))
-    rangee_retour.add(boutonr)
-
-    var choix_menu = -2
-
-    var bas_fenetre = new JPanel
-    bas_fenetre.setLayout(new BoxLayout(bas_fenetre, BoxLayout.PAGE_AXIS))
-    bas_fenetre.add(msgbox)
-
-    def print_menu_base () : Int = {
-
-        setFocusable(true)
-        this.addKeyListener(Touche_aide)
-
-        msgbox.save = "Que voulez vous faire ?"
-        bouton0.setText("Attaque")
-        bouton0.set_font("couleur/rouge.jpeg")
-        bouton0.info = "Permet de lancer les attaques"
-        bouton0.init_icone()
-        bouton1.setText("Pokémon")
-        bouton1.set_font("couleur/vert.png")
-        bouton1.info = "Permet de changer de Pokéfusion"
-        bouton1.init_icone()
-        bouton2.setText("Sac")
-        bouton2.set_font("couleur/jaune.jpg")
-        bouton2.info = "Permet d'utiliser des objets"
-        bouton2.init_icone()
-        bouton3.setText("Fuite")
-        bouton3.set_font("couleur/bleu.jpg")
-        bouton3.info = "Permet de fuir le combat"
-        bouton3.init_icone()
-
-        bas_fenetre.add(rangee_bouton_1)
-        bas_fenetre.add(rangee_bouton_2)
-
-        bas_fenetre.updateUI
-
-        choix_menu = -2
-
-        while (choix_menu == -2) {
-            Thread.sleep(100)
-        }
-
-        bas_fenetre.remove(rangee_bouton_1)
-        bas_fenetre.remove(rangee_bouton_2)
-
-        this.removeKeyListener(Touche_aide)
-        setFocusable(false)
-
-        choix_menu
-    }
-
     def print_menu_attaque (p : Pokemon) : Int = {
 
-        setFocusable(true)
-        this.addKeyListener(Touche_aide)
-
         Fenetre.msgbox.save = "Choisissez une attaque :"
-        bouton0.setText(p.attaques(0).name + "   " + p.pp_list(0).toString + "/" + p.attaques(0).pp.toString)
-        bouton0.set_font(associe_couleur(p.attaques(0).atype))
-        bouton0.init_icone()
-        bouton0.info = "Dégats bruts : " + p.attaques(0).dmg.toString + "   " + "Precision : " + p.attaques(0).precision.toString 
-        bouton1.setText(p.attaques(1).name + "   " + p.pp_list(1).toString + "/" + p.attaques(1).pp.toString)
-        bouton1.set_font(associe_couleur(p.attaques(1).atype))
-        bouton1.init_icone()
-        bouton1.info = "Dégats bruts : " + p.attaques(1).dmg.toString + "   " + "Precision : " + p.attaques(1).precision.toString
-        bouton2.setText(p.attaques(2).name + "   " + p.pp_list(2).toString + "/" + p.attaques(2).pp.toString)
-        bouton2.set_font(associe_couleur(p.attaques(2).atype))
-        bouton2.init_icone()
-        bouton2.info = "Dégats bruts : " + p.attaques(2).dmg.toString + "   " + "Precision : " + p.attaques(2).precision.toString
-        bouton3.setText(p.attaques(3).name + "   " + p.pp_list(3).toString + "/" + p.attaques(3).pp.toString)
-        bouton3.set_font(associe_couleur(p.attaques(3).atype))
-        bouton3.init_icone()
-        bouton3.info = "Dégats bruts : " + p.attaques(3).dmg.toString + "   " + "Precision : " + p.attaques(3).precision.toString
+        for (i <- 0 to 3) {
+            bouton(i).setText(p.attaques(i).name + "   " + p.pp_list(i).toString + "/" + p.attaques(i).pp.toString)
+            bouton(i).set_font(associe_couleur(p.attaques(i).atype))
+            bouton(i).init_icone()
+            bouton(i).info = "Dégats bruts : " + p.attaques(i).dmg.toString + "   " + "Precision : " + p.attaques(i).precision.toString 
+        }
         boutonr.setText("Retour")
         boutonr.info = "Permet de retourner au menu principal"
 
-        bas_fenetre.add(rangee_bouton_1)
-        bas_fenetre.add(rangee_bouton_2)
-        bas_fenetre.add(rangee_retour)
+        this.add(rangee_bouton_1)
+        this.add(rangee_bouton_2)
+        this.add(rangee_retour)
 
-        bas_fenetre.updateUI
+        this.updateUI
 
         choix_menu = -2
 
@@ -416,55 +383,31 @@ object Fenetre extends JFrame {
             Thread.sleep(100)
         }
 
-        bas_fenetre.remove(rangee_bouton_1)
-        bas_fenetre.remove(rangee_bouton_2)
-        bas_fenetre.remove(rangee_retour)
-
-        this.removeKeyListener(Touche_aide)
-        setFocusable(false)
+        this.remove(rangee_bouton_1)
+        this.remove(rangee_bouton_2)
+        this.remove(rangee_retour)
 
         choix_menu
     }
 
     def print_menu_pokemon (p : Character) : Int = {
         
-        setFocusable(true)
-        this.addKeyListener(Touche_aide)
-        
         Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
-        bouton0.setText(p.pokemons(0).name)
-        bouton0.set_font(associe_couleur(p.pokemons(0).ptype))
-        bouton0.set_icone(p.pokemons(0).image)
-        bouton0.info = "Hp : " +  p.pokemons(0).hp.toString + "/" + p.pokemons(0).max_hp.toString + "   " + "Atk : " + p.pokemons(0).atk.toString + "   Dfs : " + p.pokemons(0).defense.toString + "   Spd : " + p.pokemons(0).speed.toString
-        bouton1.setText(p.pokemons(1).name)
-        bouton1.set_font(associe_couleur(p.pokemons(1).ptype))
-        bouton1.set_icone(p.pokemons(1).image)
-        bouton1.info = "Hp : " +  p.pokemons(1).hp.toString + "/" + p.pokemons(1).max_hp.toString + "   " + "Atk : " + p.pokemons(1).atk.toString + "   Dfs : " + p.pokemons(1).defense.toString + "   Spd : " + p.pokemons(1).speed.toString
-        bouton2.setText(p.pokemons(2).name)
-        bouton2.set_font(associe_couleur(p.pokemons(2).ptype))
-        bouton2.set_icone(p.pokemons(2).image)
-        bouton2.info = "Hp : " +  p.pokemons(2).hp.toString + "/" + p.pokemons(2).max_hp.toString + "   " + "Atk : " + p.pokemons(2).atk.toString + "   Dfs : " + p.pokemons(2).defense.toString + "   Spd : " + p.pokemons(2).speed.toString
-        bouton3.setText(p.pokemons(3).name)
-        bouton3.set_font(associe_couleur(p.pokemons(3).ptype))
-        bouton3.set_icone(p.pokemons(3).image)
-        bouton3.info = "Hp : " +  p.pokemons(3).hp.toString + "/" + p.pokemons(3).max_hp.toString + "   " + "Atk : " + p.pokemons(3).atk.toString + "   Dfs : " + p.pokemons(3).defense.toString + "   Spd : " + p.pokemons(3).speed.toString
-        bouton4.setText(p.pokemons(4).name)
-        bouton4.set_font(associe_couleur(p.pokemons(4).ptype))
-        bouton4.set_icone(p.pokemons(4).image)
-        bouton4.info = "Hp : " +  p.pokemons(4).hp.toString + "/" + p.pokemons(4).max_hp.toString + "   " + "Atk : " + p.pokemons(4).atk.toString + "   Dfs : " + p.pokemons(4).defense.toString + "   Spd : " + p.pokemons(4).speed.toString
-        bouton5.setText(p.pokemons(5).name)
-        bouton5.set_font(associe_couleur(p.pokemons(5).ptype))
-        bouton5.set_icone(p.pokemons(5).image)
-        bouton5.info = "Hp : " +  p.pokemons(5).hp.toString + "/" + p.pokemons(5).max_hp.toString + "   " + "Atk : " + p.pokemons(5).atk.toString + "   Dfs : " + p.pokemons(5).defense.toString + "   Spd : " + p.pokemons(5).speed.toString
+        for (i <- 0 to 5) {
+            bouton(i).setText(p.pokemons(i).name)
+            bouton(i).set_font(associe_couleur(p.pokemons(i).ptype))
+            bouton(i).set_icone(p.pokemons(i).image)
+            bouton(i).info = "Hp : " +  p.pokemons(i).hp.toString + "/" + p.pokemons(i).max_hp.toString + "   " + "Atk : " + p.pokemons(i).atk.toString + "   Dfs : " + p.pokemons(i).defense.toString + "   Spd : " + p.pokemons(i).speed.toString
+        }
         boutonr.setText("Retour")
         boutonr.info = "Permet de retourner au menu principal"
 
-        bas_fenetre.add(rangee_bouton_1)
-        bas_fenetre.add(rangee_bouton_2)
-        bas_fenetre.add(rangee_bouton_3)
-        bas_fenetre.add(rangee_retour)
+        this.add(rangee_bouton_1)
+        this.add(rangee_bouton_2)
+        this.add(rangee_bouton_3)
+        this.add(rangee_retour)
 
-        bas_fenetre.updateUI
+        this.updateUI
 
         choix_menu = -2
 
@@ -472,16 +415,32 @@ object Fenetre extends JFrame {
             Thread.sleep(100)
         }
 
-        bas_fenetre.remove(rangee_bouton_1)
-        bas_fenetre.remove(rangee_bouton_2)
-        bas_fenetre.remove(rangee_bouton_3)
-        bas_fenetre.remove(rangee_retour)
-
-        this.removeKeyListener(Touche_aide)
-        setFocusable(false)
+        this.remove(rangee_bouton_1)
+        this.remove(rangee_bouton_2)
+        this.remove(rangee_bouton_3)
+        this.remove(rangee_retour)
 
         choix_menu
     }
+}
+
+object Fenetre extends JFrame {
+    this.setTitle("Best Game Ever")
+    this.setSize(750, 1000)
+    this.setResizable(false)
+
+    override def setFocusable(b : Boolean) = {
+        super.setFocusable(b)
+    }
+
+    setFocusable(true)
+    addKeyListener(Touche_aide)
+
+    var bataille = new AffichageBataille ()
+
+    var msgbox = new MsgBox ()
+
+    var bas_fenetre = new Menu_attaque
 
     var total_bataille = new JPanel
     total_bataille.setLayout(new GridLayout(2,1))

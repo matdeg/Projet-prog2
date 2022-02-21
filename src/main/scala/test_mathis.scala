@@ -23,23 +23,23 @@ object test_mathis {
             give(pl,new Dracarpe("Dracarpe"))
             give(pl,new Mherbe("Mherbe"))
 
-            println(pl.page)
-            pl.next_page
-            println(pl.page)
-            pl.next_page
-            println(pl.page)
-            pl.next_page
-            println(pl.page)
-            pl.next_page
-            println(pl.page)
-            pl.back_page
-            println(pl.page)
-            pl.back_page
-            println(pl.page)
-            pl.back_page
-            println(pl.page)
-            pl.back_page
-            println(pl.page)
+            // println(pl.page)
+            // pl.next_page
+            // println(pl.page)
+            // pl.next_page
+            // println(pl.page)
+            // pl.next_page
+            // println(pl.page)
+            // pl.next_page
+            // println(pl.page)
+            // pl.back_page
+            // println(pl.page)
+            // pl.back_page
+            // println(pl.page)
+            // pl.back_page
+            // println(pl.page)
+            // pl.back_page
+            // println(pl.page)
 
             var battle1 = new Battle(pl,op1)
             battle1.start
