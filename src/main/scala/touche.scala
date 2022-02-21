@@ -2,7 +2,7 @@ import javax.swing.JPanel
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 
-object Touche extends JPanel with KeyListener {
+object Touche_aide extends JPanel with KeyListener {
     
     var aide = false
     

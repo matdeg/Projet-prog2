@@ -211,7 +211,7 @@ class Bouton extends JButton with MouseListener {
     this.addMouseListener(this)
 
     def mouseEntered (e : MouseEvent) : Unit = {
-        if (Touche.aide) {
+        if (Touche_aide.aide) {
             Fenetre.msgbox.print_msg(info)
         }
         
@@ -339,7 +339,7 @@ object Fenetre extends JFrame {
     def print_menu_base () : Int = {
 
         setFocusable(true)
-        this.addKeyListener(Touche)
+        this.addKeyListener(Touche_aide)
 
         msgbox.save = "Que voulez vous faire ?"
         bouton0.setText("Attaque")
@@ -373,7 +373,7 @@ object Fenetre extends JFrame {
         bas_fenetre.remove(rangee_bouton_1)
         bas_fenetre.remove(rangee_bouton_2)
 
-        this.removeKeyListener(Touche)
+        this.removeKeyListener(Touche_aide)
         setFocusable(false)
 
         choix_menu
@@ -382,7 +382,7 @@ object Fenetre extends JFrame {
     def print_menu_attaque (p : Pokemon) : Int = {
 
         setFocusable(true)
-        this.addKeyListener(Touche)
+        this.addKeyListener(Touche_aide)
 
         Fenetre.msgbox.save = "Choisissez une attaque :"
         bouton0.setText(p.attaques(0).name + "   " + p.pp_list(0).toString + "/" + p.attaques(0).pp.toString)
@@ -420,7 +420,7 @@ object Fenetre extends JFrame {
         bas_fenetre.remove(rangee_bouton_2)
         bas_fenetre.remove(rangee_retour)
 
-        this.removeKeyListener(Touche)
+        this.removeKeyListener(Touche_aide)
         setFocusable(false)
 
         choix_menu
@@ -429,7 +429,7 @@ object Fenetre extends JFrame {
     def print_menu_pokemon (p : Character) : Int = {
         
         setFocusable(true)
-        this.addKeyListener(Touche)
+        this.addKeyListener(Touche_aide)
         
         Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
         bouton0.setText(p.pokemons(0).name)
@@ -477,18 +477,18 @@ object Fenetre extends JFrame {
         bas_fenetre.remove(rangee_bouton_3)
         bas_fenetre.remove(rangee_retour)
 
-        this.removeKeyListener(Touche)
+        this.removeKeyListener(Touche_aide)
         setFocusable(false)
 
         choix_menu
     }
 
-    var total = new JPanel
-    total.setLayout(new GridLayout(2,1))
-    total.add(bataille)
-    total.add(bas_fenetre)
+    var total_bataille = new JPanel
+    total_bataille.setLayout(new GridLayout(2,1))
+    total_bataille.add(bataille)
+    total_bataille.add(bas_fenetre)
 
-    this.setContentPane(total)
+    this.setContentPane(total_bataille)
     setVisible(true)
 
 }
