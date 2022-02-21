@@ -48,15 +48,30 @@ abstract class Character(pname : String) extends Seenable {
         direction = d
     }
 
-
+    def init : Unit = {}
 }
 
 object Empty_character extends Character("") {}
 class Opponent(pname : String) extends Character(pname) {}
-class Player(pname : String) extends Character(pname) {
+object Player extends Character(readLine()) {
     is_main = true
+    override def init() = {
+        Func.give(this,new Dracarpe("Dracarpe"))
+        Func.give(this,new Poissocarpe("Poissocarpe"))
+        Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        Func.give(this,new Galopan("Galopan"))
+        Func.give(this,new Dracarpe("Dracarpe"))
+        Func.give(this,new Mherbe("Mherbe"))
+    }
 }
 
 object Example_opponent1 extends Character("Serge") {
-    
+    override def init() = {
+        Func.give(this,new Poissocarpe("Poissocarpe"))
+        Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Poryodin("Poryodin"))
+        Func.give(this,new Kokicarpe("Kokicarpe"))
+        Func.give(this,new Alabri("Alabri"))
+        Func.give(this,new Alacool("Alacool"))
+    }
 }
