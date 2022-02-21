@@ -520,7 +520,7 @@ object Fenetre extends JFrame {
     }
 
     setFocusable(true)
-    addKeyListener(Touche_aide)
+    addKeyListener(Touche_déplacement)
 
     var bataille = new AffichageBataille ()
 
