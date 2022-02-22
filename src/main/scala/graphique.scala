@@ -561,8 +561,22 @@ object Fenetre extends JFrame {
     total_bataille.setLayout(new GridLayout(2,1))
     // total_bataille.add(bataille)
     total_bataille.add(map)
-    total_bataille.add(bas_fenetre)
     map.repaint()
+
+    def afficher_bataille () = {
+        Fenetre.remove(Fenetre.map)
+        Fenetre.add(Fenetre.bataille)
+        Fenetre.add(Fenetre.bas_fenetre)
+    }
+
+    def afficher_map () = {
+        Fenetre.remove(Fenetre.bas_fenetre)
+        Fenetre.remove(Fenetre.bataille)
+        Fenetre.add(Fenetre.map)
+        total_bataille.repaint()
+        Fenetre.requestFocus ()
+    }
+
 
     this.setContentPane(total_bataille)
     setVisible(true)

@@ -4,7 +4,7 @@ class Battle(p1 : Character,p2 : Character) {
     var other : Character = p2
     Fenetre.bataille.op = other
     var loop : Int = 1
-    var finished : Boolean = false
+    var finished : Boolean = true
     val r = scala.util.Random;
 
     // joueur qui joue en premier/second
@@ -12,7 +12,11 @@ class Battle(p1 : Character,p2 : Character) {
     var snd : Character = Empty_character
     def lose(p : Character):Unit = {finished = true
                                     if (p == you) {Fenetre.msgbox.print_msg("Mince, vous avez perdu")}
-                                    else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}}
+                                    else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}
+                                    Player.opp = Empty_character
+                                    println("out battle")
+                                    Fenetre.afficher_map ()
+                                    Player.in_battle = false}
 
     // actualise les pokémons sur le terrain si l'un est K.O , l'adversaire lance son premier pokémon vivant 
     def change:Unit = {
@@ -111,6 +115,7 @@ class Battle(p1 : Character,p2 : Character) {
 
     // Démarre la battle
     def start : Unit = {
+        Fenetre.afficher_bataille
         finished = false
         you.ip = 0; other.ip = 0; you.nb_alive = 0; other.nb_alive = 0
         for (i <- 0 to 5) {if (you.pokemons(i).alive) {you.nb_alive += 1};

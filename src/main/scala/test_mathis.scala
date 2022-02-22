@@ -1,4 +1,5 @@
-object test_mathis {
+object Test_mathis {
+
         def start()=
             Player.name = "Mathis la Saucisse"
             Player.init()
@@ -7,6 +8,10 @@ object test_mathis {
             Jardin_Kfet.add_character(Player,5,5)
             Jardin_Kfet.add_character(Example_opponent1,7,7)
             while (Player.x != 14) {
+                if (Player.in_battle) {
+                    var baston = new Battle(Player, Player.opp)
+                    baston.start
+                }
                 Thread.sleep(100)
             }
             

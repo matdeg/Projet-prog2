@@ -35,7 +35,7 @@ abstract class Character(pname : String) extends Seenable {
         pok.use_item(it)
     }
 
-    var pokemons : Array[Pokemon] = new Array[Pokemon](6)
+    var pokemons : Array[Pokemon] = Array (Empty_Pokemon,Empty_Pokemon,Empty_Pokemon,Empty_Pokemon,Empty_Pokemon,Empty_Pokemon)
 
     var money : Int = 0
 
@@ -73,6 +73,8 @@ abstract class Character(pname : String) extends Seenable {
 
 object Player extends Character(readLine()) {
     is_main = true
+    var in_battle = false
+    var opp : Character = Empty_character
     override def init() = {
         Func.give(this,new Dracarpe("Dracarpe"))
         Func.give(this,new Poissocarpe("Poissocarpe"))
@@ -85,7 +87,7 @@ object Player extends Character(readLine()) {
         var x2 = direction.newx(x)
         var y2 = direction.newy(y)
         current_area.tab(x2)(y2) match {
-            case chara : Character => var new_battle = new Battle(this,chara); new_battle.start
+            case chara : Character => opp = chara; in_battle = true; println("in battle")
         }
     }
 
@@ -100,11 +102,6 @@ object Player extends Character(readLine()) {
 object Empty_character extends Character("") {}
 object Example_opponent1 extends Character("Serge") {
     override def init() = {
-        Func.give(this,new Poissocarpe("Poissocarpe"))
         Func.give(this,new Salatard("Salatard"))
-        Func.give(this,new Poryodin("Poryodin"))
-        Func.give(this,new Kokicarpe("Kokicarpe"))
-        Func.give(this,new Alabri("Alabri"))
-        Func.give(this,new Alacool("Alacool"))
     }
 }

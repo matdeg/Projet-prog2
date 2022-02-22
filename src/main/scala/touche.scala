@@ -29,6 +29,7 @@ object Touche_deplacement extends JPanel with KeyListener {
             case 'q' => {Player.move(E)}
             case 's' => {Player.move(S)}
             case 'd' => {Player.move(O)}
+            case 'e' => {Player.interact}
             case _ => {}
         }
         Fenetre.map.repaint()
