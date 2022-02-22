@@ -149,20 +149,25 @@ class Battle(p1 : Character,p2 : Character) {
         }
         if (choix_menu == 1) {
             p.ip = second_choix
+            Fenetre.msgbox.print_msg(p.name + " envoie " + p.pokemons(p.ip).name + " !")
             if (p == you) {
-                Fenetre.msgbox.print_msg("Vous envoyez " + p.pokemons(p.ip).name + " !")
                 Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
-                Thread.sleep(1500)
             }
             else {
-                Fenetre.msgbox.print_msg("Il envoie " + p.pokemons(p.ip).name + " !")
+                
                 Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
-                Thread.sleep(1500)
             }
+            Thread.sleep(1500)
         }
         if (choix_menu == 2) {
             p.use_item(Func.id_items(p.current_items_id(second_choix)),p.pokemons(p.ip))
-            Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
+            if (p == you) {
+                Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
+            }
+            else {
+                
+                Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
+            }
         }
         
         
