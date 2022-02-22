@@ -448,9 +448,10 @@ class Menu_attaque extends JPanel {
         var bouton_enleve : List[Int] = List() 
         for (i <- 0 to 3) {
             if (p.current_items_id(i) != -1) {
-                bouton(i).setText(Func.id_items(p.current_items_id(i)).name)
+                bouton(i).setText(Func.id_items(p.current_items_id(i)).name + " : " + p.bag(p.current_items_id(i)))
                 bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img)
                 bouton(i).info = Func.id_items(p.current_items_id(i)).info
+                bouton(i).set_font("couleur/blanc.png")
             }
             else {
                 if (i > 1) {
@@ -466,12 +467,15 @@ class Menu_attaque extends JPanel {
         bouton4.setText("Suivant")
         bouton4.info = "Affiche la page suivante"
         bouton4.init_icone
+        bouton4.set_font("couleur/blanc.png")
         bouton5.setText("Précédent")
         bouton5.info = "Affiche la page précédente"
         bouton5.init_icone
+        bouton5.set_font("couleur/blanc.png")
         boutonr.setText("Retour")
         boutonr.info = "Permet de retourner au menu principal"
         boutonr.init_icone
+        boutonr.set_font("couleur/blanc.png")
 
         this.add(rangee_bouton_1)
         this.add(rangee_bouton_2)
