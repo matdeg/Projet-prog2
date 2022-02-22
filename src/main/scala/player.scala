@@ -48,11 +48,18 @@ abstract class Character(pname : String) extends Seenable {
     var direction : Direction = S
 
     def move(d : Direction) = {
-        current_area.tab(d.newx(x))(d.newy(y)) match {
+        if ((0 <= d.newx(x)  && d.newx(x) < current_area.w) && (0 <= d.newy(y)&& d.newy(y) < current_area.h)) {
+            current_area.tab(d.newx(x))(d.newy(y)) match {
             case Empty_seenable => 
                 current_area.tab(d.newx(x))(d.newy(y)) = this 
                 current_area.tab(x)(y) = Empty_seenable
                 x = d.newx(x); y = d.newy(y)
+            case it : Item =>  
+                current_area.tab(d.newx(x))(d.newy(y)) = this 
+                current_area.tab(x)(y) = Empty_seenable
+                x = d.newx(x); y = d.newy(y)
+            case _ => {}
+            }
         }
         direction = d
     }

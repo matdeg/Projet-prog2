@@ -1,4 +1,4 @@
-abstract class Item {
+abstract class Item extends Seenable {
     var x : Int = 0
     var y : Int = 0
     var current_area : Area = Empty_area
