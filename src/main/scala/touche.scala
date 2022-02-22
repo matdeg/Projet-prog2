@@ -19,19 +19,16 @@ object Touche_aide extends JPanel with KeyListener {
 
 object Touche_déplacement extends JPanel with KeyListener {
 
-    var abs = 0
-    var ord = 0
-
     def keyPressed (evt : KeyEvent) = {}
 
     def keyReleased (evt : KeyEvent) = {}
 
     def keyTyped (evt : KeyEvent) : Unit = {
         evt.getKeyChar match {
-            case 'z' => {ord += 5; println((abs, ord))}
-            case 'q' => {abs -= 5; println((abs, ord))}
-            case 's' => {ord -= 5; println((abs, ord))}
-            case 'd' => {abs += 5; println((abs, ord))}
+            case 'z' => {Player.move(N)}
+            case 'q' => {Player.move(E)}
+            case 's' => {Player.move(S)}
+            case 'd' => {Player.move(O)}
             case _ => {}
         }
     }
