@@ -4,7 +4,8 @@ object test_mathis {
             Player.init()
             Example_opponent1.init()
             for (i <- 0 to 10) Player.bag(i) = 2
-            Atrium.add_character(Player,5,5)
-            Atrium.add_character(Example_opponent1,7,7)
+            Jardin_Kfet.add_character(Player,5,5)
+            Jardin_Kfet.add_character(Example_opponent1,7,7)
+            
 }
     

@@ -518,13 +518,17 @@ class Menu_attaque extends JPanel {
 
 class AffichageMap extends JPanel {
 
-    var fond =  ImageIO.read(getClass.getResource("quadrillage.jpg"))
+    var tableau : Area = Jardin_Kfet
 
-    override def paintComponents (g : Graphics) : Unit = {
-        super.paintComponents(g)
+    override def paintComponent (g : Graphics) : Unit = {
+        super.paintComponent(g)
 
-        g.drawImage(fond, 0, 0, 800, 800, null)
-        g.fillRect(0,0,50,50)
+        for (i<-0 to 14) {
+            for (j<-0 to 9) {
+                g.drawImage(ImageIO.read(getClass.getResource(tableau.rev(j)(i).image)), i*50, j*50, 50, 50, null)
+            }
+        }
+        
     }
 
 }
@@ -533,6 +537,8 @@ object Fenetre extends JFrame {
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
     this.setResizable(false)
+    this.setUndecorated(true)
+    this.setLocation(100,50)
 
     override def setFocusable(b : Boolean) = {
         super.setFocusable(b)
@@ -554,6 +560,7 @@ object Fenetre extends JFrame {
     // total_bataille.add(bataille)
     total_bataille.add(map)
     total_bataille.add(bas_fenetre)
+    map.repaint()
 
     this.setContentPane(total_bataille)
     setVisible(true)
