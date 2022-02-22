@@ -516,6 +516,19 @@ class Menu_attaque extends JPanel {
     }
 }
 
+class AffichageMap extends JPanel {
+
+    var fond =  ImageIO.read(getClass.getResource("quadrillage.jpg"))
+
+    override def paintComponents (g : Graphics) : Unit = {
+        super.paintComponents(g)
+
+        g.drawImage(fond, 0, 0, 800, 800, null)
+        g.fillRect(0,0,50,50)
+    }
+
+}
+
 object Fenetre extends JFrame {
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
@@ -530,13 +543,16 @@ object Fenetre extends JFrame {
 
     var bataille = new AffichageBataille ()
 
+    var map = new AffichageMap ()
+
     var msgbox = new MsgBox ()
 
     var bas_fenetre = new Menu_attaque
 
     var total_bataille = new JPanel
     total_bataille.setLayout(new GridLayout(2,1))
-    total_bataille.add(bataille)
+    // total_bataille.add(bataille)
+    total_bataille.add(map)
     total_bataille.add(bas_fenetre)
 
     this.setContentPane(total_bataille)
