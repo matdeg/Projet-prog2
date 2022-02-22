@@ -44,8 +44,8 @@ abstract class Pokemon(pname : String) {
                 var dmg_taken = (max_hp.toDouble * (1.0/16.0)).toInt
                 hp = Func.max(0,hp - dmg_taken)
                 state match {
-                    case Burned => Fenetre.msgbox.print_msg(this.name + " est brulé, il perd " + dmg_taken.toString + " PV");Thread.sleep(2000)
-                    case Empoisonnement => Fenetre.msgbox.print_msg(this.name + " est empoisonné, il perd " + dmg_taken.toString + " PV");Thread.sleep(2000)
+                    case Burned => Fenetre.msgbox.print_msg(this.name + " est brulé, il perd " + dmg_taken.toString + " PV");Thread.sleep(1500)
+                    case Empoisonnement => Fenetre.msgbox.print_msg(this.name + " est empoisonné, il perd " + dmg_taken.toString + " PV");Thread.sleep(1500)
                 } 
             }
         } 
@@ -55,33 +55,33 @@ abstract class Pokemon(pname : String) {
     }
 
     def use_item(i : Item) = {
-        hp = Func.max(hp + i.regen,max_hp)
-        if (i.regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !");Thread.sleep(2000)}
+        hp = Func.min(hp + i.regen,max_hp)
+        if (i.regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !");Thread.sleep(1500)}
         if (hp == 0 && i.revive > 0) {hp = (max_hp.toDouble * i.revive).toInt;Fenetre.msgbox.print_msg(this.name + " peut retourner au combat !");
                                       Thread.sleep(1500)}
         if (i.buff_atk > 0) {atk_mult = Func.min(i.buff_atk + atk_mult,6)
-                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(2000)}
+                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1500)}
         if (i.buff_defense > 0) {defense_mult = Func.min(i.buff_defense + defense_mult,6)
-                                Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(2000)}
+                                Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1500)}
         if (i.buff_speed > 0) {speed_mult = Func.min(i.buff_speed + speed_mult,6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(2000)}
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1500)}
         if (i.buff_atk < 0) {atk_mult = Func.max(i.buff_atk + atk_mult,-6)
-                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(2000)}
+                            Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1500)}
         if (i.buff_defense < 0) {defense_mult = Func.max(i.buff_defense + defense_mult,-6)
-                                Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(2000)}
+                                Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1500)}
         if (i.buff_speed < 0) {speed_mult = Func.max(i.buff_speed + speed_mult,-6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(2000)}
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1500)}
         i.state_heal.foreach(x => if (state == x) {state = None_state;Fenetre.msgbox.print_msg(this.name + " n'a plus l'effet " + x.name);Thread.sleep(1500)})
     }
     def add_xp(exp : Int) = {
-        Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !");Thread.sleep(2000)
+        Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !");Thread.sleep(1500)
         xp += exp
         if (xp >= next_xp){
             while (xp >= next_xp) {
                 xp -= next_xp
                 lvl += 1
             }
-            Fenetre.msgbox.print_msg(this.name + " est monté au niveau " + lvl);Thread.sleep(2000)
+            Fenetre.msgbox.print_msg(this.name + " est monté au niveau " + lvl);Thread.sleep(1500)
         }
     }
 
@@ -92,35 +92,35 @@ abstract class Pokemon(pname : String) {
         var (bd,bdp) = a.buff_defense
         var (bs,bsp) = a.buff_speed
         if (!state.stun) {
-            Fenetre.msgbox.print_msg(this.name + " lance l'attaque " + a.name);Thread.sleep(2000)
+            Fenetre.msgbox.print_msg(this.name + " lance l'attaque " + a.name);Thread.sleep(1500)
             if (r.nextDouble > state.miss) {
                 if (r.nextFloat < ((a.precision).toFloat/100)) {
                     defenser.receive_attaque(a,this)
                     if (ba > 0 && r.nextDouble < bap) {atk_mult = Func.min(ba + atk_mult,6)
-                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(2000)}
+                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1500)}
                     if (bd > 0 && r.nextDouble < bdp) {defense_mult = Func.min(bd + defense_mult,6)
-                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(2000)}
+                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1500)}
                     if (bs > 0 && r.nextDouble < bsp) {speed_mult = Func.min(bs + speed_mult,6)
-                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(2000)}
+                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1500)}
                     if (ba < 0 && r.nextDouble < bap) {atk_mult = Func.max(ba + atk_mult,-6)
-                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(2000)}
+                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1500)}
                     if (bd < 0 && r.nextDouble < bdp) {defense_mult = Func.max(bd + defense_mult,-6)
-                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(2000)}
+                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1500)}
                     if (bs < 0 && r.nextDouble < bsp) {speed_mult = Func.max(bs + speed_mult,-6)
-                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(2000)}
+                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1500)}
                 }
                 else {
-                    Fenetre.msgbox.print_msg(this.name + " a raté l'attaque...");Thread.sleep(2000)
+                    Fenetre.msgbox.print_msg(this.name + " a raté l'attaque...");Thread.sleep(1500)
                 }
             }
             else{
-                Fenetre.msgbox.print_msg(this.name + " est paralysé, il n'a pas pu attaquer");Thread.sleep(2000)
+                Fenetre.msgbox.print_msg(this.name + " est paralysé, il n'a pas pu attaquer");Thread.sleep(1500)
             }
         }
         else{
             state match {
-                case Freeze => Fenetre.msgbox.print_msg(this.name + " est gelé, il ne peut pas attaquer");Thread.sleep(2000)
-                case Sommeil => Fenetre.msgbox.print_msg(this.name + " est endormi, il ne peut pas attaquer");Thread.sleep(2000)
+                case Freeze => Fenetre.msgbox.print_msg(this.name + " est gelé, il ne peut pas attaquer");Thread.sleep(1500)
+                case Sommeil => Fenetre.msgbox.print_msg(this.name + " est endormi, il ne peut pas attaquer");Thread.sleep(1500)
             }
         }
         if (!defenser.alive) {add_xp(defenser.xp_given)}
@@ -128,10 +128,10 @@ abstract class Pokemon(pname : String) {
     def receive_attaque(a: Attaque, atker : Pokemon):Unit = {
         var dmg_taken = (((0.4 * atker.lvl.toFloat + 2.0) * a.dmg.toFloat * atker.atk.toFloat / (50.0 * defense.toFloat) + 3.0) * (a.atype).affinites(ptype)).toInt
         if (a.dmg > 0) {
-            if ((a.atype).affinites(ptype) == 0.0) {Fenetre.msgbox.print_msg("Cette attaque n'est pas efficace...");Thread.sleep(2000)}
-            if ((a.atype).affinites(ptype) == 0.5) {Fenetre.msgbox.print_msg("Cette attaque n'est pas très efficace...");Thread.sleep(2000)}
-            if ((a.atype).affinites(ptype) == 2.0) {Fenetre.msgbox.print_msg("Cette attaque est super efficace!");Thread.sleep(2000)}
-            Fenetre.msgbox.print_msg(this.name + " perd " + dmg_taken.toString() + " PV !");Thread.sleep(2000)
+            if ((a.atype).affinites(ptype) == 0.0) {Fenetre.msgbox.print_msg("Cette attaque n'est pas efficace...");Thread.sleep(1500)}
+            if ((a.atype).affinites(ptype) == 0.5) {Fenetre.msgbox.print_msg("Cette attaque n'est pas très efficace...");Thread.sleep(1500)}
+            if ((a.atype).affinites(ptype) == 2.0) {Fenetre.msgbox.print_msg("Cette attaque est super efficace!");Thread.sleep(1500)}
+            Fenetre.msgbox.print_msg(this.name + " perd " + dmg_taken.toString() + " PV !");Thread.sleep(1500)
             hp = Func.max(hp - dmg_taken,0)
         }
         val r = scala.util.Random
@@ -139,33 +139,33 @@ abstract class Pokemon(pname : String) {
         var (dd,ddp) = a.debuff_defense
         var (ds,dsp) = a.debuff_speed
         if (da > 0 && r.nextDouble < dap) {atk_mult = Func.max(-da + atk_mult,-6)
-                              Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(2000)}
+                              Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1500)}
         if (dd > 0 && r.nextDouble < ddp) {defense_mult = Func.max(-dd + defense_mult,-6)
-                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(2000)}
+                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1500)}
         if (ds > 0 && r.nextDouble < dsp) {speed_mult = Func.max(-ds + speed_mult,-6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(2000)}
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1500)}
         if (da < 0 && r.nextDouble < dap) {atk_mult = Func.min(-da + atk_mult,6)
-                                Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(2000)}
+                                Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1500)}
         if (dd < 0 && r.nextDouble < ddp) {defense_mult = Func.min(-dd + defense_mult,6)
-                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(2000)}
+                                  Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1500)}
         if (ds < 0 && r.nextDouble < dsp) {speed_mult = Func.min(-ds + speed_mult,6)
-                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(2000)}
+                                Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1500)}
         var (astate,pstate) = a.pstate 
         if (pstate > 0) {
             if  (r.nextDouble < pstate) {
                 astate match{
-                    case Sommeil => Fenetre.msgbox.print_msg(this.name + " va s'endormir !");Thread.sleep(2000)
-                    case Freeze => Fenetre.msgbox.print_msg(this.name + " va être gelé!");Thread.sleep(2000)
-                    case Burned => Fenetre.msgbox.print_msg(this.name + " s'enflamme !");Thread.sleep(2000)
-                    case Paralysie => Fenetre.msgbox.print_msg(this.name + " est maintenant paralysé !");Thread.sleep(2000)
-                    case Empoisonnement => Fenetre.msgbox.print_msg(this.name + " est empoisonné !");Thread.sleep(2000)
+                    case Sommeil => Fenetre.msgbox.print_msg(this.name + " va s'endormir !");Thread.sleep(1500)
+                    case Freeze => Fenetre.msgbox.print_msg(this.name + " va être gelé!");Thread.sleep(1500)
+                    case Burned => Fenetre.msgbox.print_msg(this.name + " s'enflamme !");Thread.sleep(1500)
+                    case Paralysie => Fenetre.msgbox.print_msg(this.name + " est maintenant paralysé !");Thread.sleep(1500)
+                    case Empoisonnement => Fenetre.msgbox.print_msg(this.name + " est empoisonné !");Thread.sleep(1500)
                 }
                 if (astate == state || state == None_state) {
                     state = astate 
                     remaining_time = astate.duration
                 }
                 else {
-                    Fenetre.msgbox.print_msg("Mais " + this.name + " a déjà un effet !");Thread.sleep(2000)
+                    Fenetre.msgbox.print_msg("Mais " + this.name + " a déjà un effet !");Thread.sleep(1500)
                 }
             }
         }
@@ -175,7 +175,7 @@ abstract class Pokemon(pname : String) {
         else {
             Fenetre.bataille.print_pok_op(this)
         }
-        if (hp == 0) {Fenetre.msgbox.print_msg(this.name + " est KO !");Thread.sleep(2000); maitre.nb_alive -= 1}
+        if (hp == 0) {Fenetre.msgbox.print_msg(this.name + " est KO !");Thread.sleep(1500); maitre.nb_alive -= 1}
     }
 }
 

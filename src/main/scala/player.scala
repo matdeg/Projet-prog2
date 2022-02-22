@@ -28,6 +28,12 @@ abstract class Character(pname : String) extends Seenable {
         if (page == 0) {page = (nb_distinct_items - 1)/4}
         else {page -= 1} 
     }
+    def use_item(it : Item, pok : Pokemon) = {
+        bag(it.id) -= 1
+        Fenetre.msgbox.print_msg(name + " utilise " + it.name)
+        Thread.sleep(1500)
+        pok.use_item(it)
+    }
 
     var pokemons : Array[Pokemon] = new Array[Pokemon](6)
 
@@ -51,8 +57,10 @@ abstract class Character(pname : String) extends Seenable {
     def init : Unit = {}
 }
 
-object Empty_character extends Character("") {}
-class Opponent(pname : String) extends Character(pname) {}
+
+
+
+
 object Player extends Character(readLine()) {
     is_main = true
     override def init() = {
@@ -63,8 +71,23 @@ object Player extends Character(readLine()) {
         Func.give(this,new Dracarpe("Dracarpe"))
         Func.give(this,new Mherbe("Mherbe"))
     }
+    def interact() = {
+        var x2 = direction.newx(x)
+        var y2 = direction.newy(y)
+        current_area.tab(x2)(y2) match {
+            case chara : Character => var new_battle = new Battle(this,chara); new_battle.start
+        }
+    }
+
+    
 }
 
+
+
+
+
+
+object Empty_character extends Character("") {}
 object Example_opponent1 extends Character("Serge") {
     override def init() = {
         Func.give(this,new Poissocarpe("Poissocarpe"))

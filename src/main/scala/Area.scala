@@ -17,13 +17,15 @@ abstract class Area {
     var tab : Array[Array[Seenable]] = Array.fill(h,w){ Empty_seenable }
     def add_character (p : Character, i : Int, j : Int) = {
         p.current_area = this
-        tab(i)(j) = p 
+        tab(i)(j) = p
+        p.x = i
+        p.y = j
     }
 }
 
 object Empty_area extends Area {}
 
 object Atrium extends Area {
-    
+
 }
 

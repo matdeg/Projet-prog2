@@ -21,7 +21,7 @@ class Battle(p1 : Character,p2 : Character) {
             else {
                 you.ip = -1
                 Fenetre.msgbox.print_msg("Vous changez de Pokemon... \n Il vous en reste " + you.nb_alive.toString)
-                Thread.sleep(2000)
+                Thread.sleep(1500)
                 while ((you.ip == -1) || !you.pokemons(you.ip).alive) {
                     if (you.ip == -1) {Fenetre.msgbox.print_msg("Veuillez choisir un pokémon :")}
                     else {Fenetre.msgbox.print_msg("Ce pokémon n'est pas apte à retourner au combat, veuillez choisir un pokémon :")}
@@ -38,10 +38,10 @@ class Battle(p1 : Character,p2 : Character) {
             if (other.nb_alive == 0) {lose(other)}
             else {
                 Fenetre.msgbox.print_msg("Il change de Pokemon... Il lui en reste " + other.nb_alive.toString)
-                Thread.sleep(2000)
+                Thread.sleep(1500)
                 while (!other.pokemons(other.ip).alive) {other.ip += 1}
                 Fenetre.msgbox.print_msg("Il envoie " + other.pokemons(other.ip).name)
-                Thread.sleep(2000)
+                Thread.sleep(1500)
                 Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
             }
         }
@@ -105,7 +105,7 @@ class Battle(p1 : Character,p2 : Character) {
             case -1 => menu_principal
             case 4 => {you.next_page; menu_sac}
             case 5 => {you.back_page; menu_sac}
-            case _ => {println(Func.id_items(you.current_items_id(choix_objet)).name); (0,0)}
+            case _ => {(2,you.current_items_id(choix_objet))}
         }
     }
 
@@ -152,13 +152,20 @@ class Battle(p1 : Character,p2 : Character) {
             if (p == you) {
                 Fenetre.msgbox.print_msg("Vous envoyez " + p.pokemons(p.ip).name + " !")
                 Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
+                Thread.sleep(1500)
             }
             else {
                 Fenetre.msgbox.print_msg("Il envoie " + p.pokemons(p.ip).name + " !")
                 Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
+                Thread.sleep(1500)
             }
-            Thread.sleep(2000)
         }
+        if (choix_menu == 2) {
+            p.use_item(Func.id_items(p.current_items_id(second_choix)),p.pokemons(p.ip))
+            Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
+        }
+        
+        
     }
 }
 
