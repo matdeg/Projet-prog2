@@ -523,12 +523,14 @@ class AffichageMap extends JPanel {
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
 
-        for (i<-0 to 14) {
-            for (j<-0 to 9) {
-                g.drawImage(ImageIO.read(getClass.getResource(tableau.rev(j)(i).image)), i*50, j*50, 50, 50, null)
-            }
+        var image_player = Player.direction match {
+            case N => "player_nord.png"
+            case S => "player_sud.png"
+            case E => "player_ouest.png"
+            case O => "player_est.png"
         }
         
+        g.drawImage(ImageIO.read(getClass.getResource(image_player)), Player.x*50, Player.y*50, 50, 50, null)
     }
 
 }
@@ -545,7 +547,7 @@ object Fenetre extends JFrame {
     }
 
     setFocusable(true)
-    addKeyListener(Touche_aide)
+    addKeyListener(Touche_deplacement)
 
     var bataille = new AffichageBataille ()
 

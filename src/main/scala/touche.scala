@@ -17,7 +17,7 @@ object Touche_aide extends JPanel with KeyListener {
     }
 }
 
-object Touche_déplacement extends JPanel with KeyListener {
+object Touche_deplacement extends JPanel with KeyListener {
 
     def keyPressed (evt : KeyEvent) = {}
 
@@ -31,6 +31,7 @@ object Touche_déplacement extends JPanel with KeyListener {
             case 'd' => {Player.move(O)}
             case _ => {}
         }
+        Fenetre.map.repaint()
     }
 
 }
