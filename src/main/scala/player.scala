@@ -1,5 +1,10 @@
 abstract class Character(pname : String) extends Seenable {
 
+    var img_est = ""
+    var img_nord = ""
+    var img_ouest = ""
+    var img_sud = ""
+
     // true s'il s'agit du joueur 
     var is_main : Boolean = false
 
@@ -75,6 +80,11 @@ object Player extends Character(readLine()) {
     is_main = true
     var in_battle = false
     var opp : Character = Empty_character
+
+    img_est = "player_est.png"
+    img_nord = "player_nord.png"
+    img_ouest = "player_ouest.png"
+    img_sud = "player_sud.png"
     override def init() = {
         Func.give(this,new Dracarpe("Dracarpe"))
         Func.give(this,new Poissocarpe("Poissocarpe"))
@@ -101,6 +111,11 @@ object Player extends Character(readLine()) {
 
 object Empty_character extends Character("") {}
 object Example_opponent1 extends Character("Serge") {
+
+    img_est = "random_guy.png"
+    img_nord = "random_guy.png"
+    img_ouest = "random_guy.png"
+    img_sud = "random_guy.png"
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
     }
