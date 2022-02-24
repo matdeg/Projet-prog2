@@ -522,15 +522,21 @@ class AffichageMap extends JPanel {
 
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
-
-        var image_player = Player.direction match {
-            case N => "player_nord.png"
-            case S => "player_sud.png"
-            case E => "player_ouest.png"
-            case O => "player_est.png"
-        }
         
-        g.drawImage(ImageIO.read(getClass.getResource(image_player)), Player.x*50, Player.y*50, 50, 50, null)
+        for (i <- 0 to 9){
+            for (j <- 0 to 14){
+                tableau.tab(j)(i) match {
+                    case chara : Character => var image_chara = chara.direction match {
+                                                               case N => chara.img_nord
+                                                               case S => chara.img_sud
+                                                               case E => chara.img_ouest
+                                                               case O => chara.img_est
+                                               }
+                                               g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
+                    case Empty_seenable => {}
+                }
+            }
+        }
     }
 
 }
