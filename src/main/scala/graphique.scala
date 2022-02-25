@@ -518,7 +518,7 @@ class Menu_attaque extends JPanel {
 
 class AffichageMap extends JPanel {
 
-    var tableau : Area = Jardin_Kfet
+    var tableau : Area = Jardin_BasDroit
     
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)

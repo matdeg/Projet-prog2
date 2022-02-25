@@ -326,7 +326,7 @@ class Rhinocarpe(pname : String) extends Pokemon(pname) {
 class Salatard(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
     image = "pokemons/salatard.png"
-    lvl = 5
+    lvl = 7
     hp = max_hp
     base_atk = 50
     base_defense = 47

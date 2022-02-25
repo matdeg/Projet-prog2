@@ -64,11 +64,12 @@ abstract class Area {
 
 object Empty_area extends Area {}
 
-object Jardin_Kfet extends Area {
+object Jardin_BasDroit extends Area {
     img = "tableaux/Tableau_BasDroit.png"
 
     area_nord = Jardin_MilieuDroit
-    
+    area_ouest = Jardin_BasMilieu
+
     for (i <- 0 to 14) {
         tab(i)(9) = Mur
     }
@@ -88,6 +89,58 @@ object Jardin_Kfet extends Area {
         tab(10)(j) = Buisson
     }
 }
+object Jardin_BasMilieu extends Area {
+    img = "tableaux/Tableau_BasMilieu.png"
+
+    area_nord = Jardin_MilieuMilieu
+    area_est = Jardin_BasDroit
+    area_ouest = Jardin_BasGauche
+}
+
+object Jardin_MilieuMilieu extends Area {
+    img = "tableaux/Tableau_MilieuMilieu.png"
+
+    area_nord = Jardin_HautMilieu
+    area_est = Jardin_MilieuDroit
+    area_ouest = Jardin_MilieuGauche
+    area_sud = Jardin_BasMilieu
+}
+
+object Jardin_BasGauche extends Area {
+    img = "tableaux/Tableau_BasGauche.png"
+    area_nord = Jardin_MilieuGauche
+    area_est = Jardin_BasMilieu
+}
+
+object Jardin_MilieuGauche extends Area {
+    img = "tableaux/Tableau_MilieuGauche.png"
+    area_nord = Jardin_HautGauche
+    area_est = Jardin_MilieuMilieu
+    area_sud = Jardin_BasGauche
+}
+
+object Jardin_HautGauche extends Area {
+    img = "tableaux/Tableau_HautGauche.png"
+    area_est = Jardin_HautMilieu
+    area_sud = Jardin_MilieuGauche
+}
+
+object Jardin_HautMilieu extends Area {
+    img = "tableaux/Tableau_HautMilieu.png"
+    area_est = Jardin_HautDroit
+    area_ouest = Jardin_HautGauche
+    area_sud = Jardin_MilieuMilieu
+}
+
+object Jardin_HautDroit extends Area {
+    img = "tableaux/Tableau_HautDroit.png"
+    area_ouest = Jardin_HautMilieu
+    area_sud = Jardin_MilieuDroit
+}
+
 object Jardin_MilieuDroit extends Area {
     img = "tableaux/Tableau_MilieuDroit.png"
+    area_nord = Jardin_HautDroit
+    area_ouest = Jardin_MilieuMilieu
+    area_sud = Jardin_BasDroit
 }

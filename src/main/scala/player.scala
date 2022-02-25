@@ -106,8 +106,8 @@ object Player extends Character(readLine()) {
             (x2,y2) match {
                 case (x2,y2) if (x2 < 0) => Player.current_area.area_ouest.add_character(Player,14,y)
                 case (x2,y2) if (y2 < 0) => Player.current_area.area_nord.add_character(Player,x,9)
-                case (x2,y2) if (x2 > 0) => Player.current_area.area_est.add_character(Player,0,y)
-                case (x2,y2) if (y2 > 0) => Player.current_area.area_sud.add_character(Player,x,0)
+                case (x2,y2) if (x2 > 14) => Player.current_area.area_est.add_character(Player,0,y)
+                case (x2,y2) if (y2 > 9) => Player.current_area.area_sud.add_character(Player,x,0)
             }
             Fenetre.changement_map()
         }
