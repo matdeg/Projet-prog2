@@ -97,7 +97,7 @@ object Player extends Character(readLine()) {
         var x2 = direction.newx(x)
         var y2 = direction.newy(y)
         current_area.tab(x2)(y2) match {
-            case chara : Character => opp = chara; in_battle = true; println("in battle")
+            case chara : Character => opp = chara; in_battle = true;
         }
     }
 

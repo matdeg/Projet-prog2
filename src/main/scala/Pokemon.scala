@@ -288,9 +288,9 @@ class Magilangue(pname : String) extends Pokemon(pname) {
 class Poissocarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 44
     image = "pokemons/poissocarpe.png"
-    lvl = 5
+    lvl = 6
     hp = max_hp
-    base_atk = 450
+    base_atk = 45
     base_defense = 47
     base_speed = 43
     ptype = Eau
@@ -332,7 +332,7 @@ class Salatard(pname : String) extends Pokemon(pname) {
     base_defense = 47
     base_speed = 47
     ptype = Feu
-    attaques = Array(Flammèche,Pistolet_a_O,Feu_follet,Bulles_d_O)
+    attaques = Array(Flammèche,Pistolet_a_O,Fouet_lianes,Bulles_d_O)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
 }
 

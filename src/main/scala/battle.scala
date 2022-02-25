@@ -3,7 +3,8 @@ class Battle(p1 : Character,p2 : Character) {
     Fenetre.bataille.you = you
     var other : Character = p2
     Fenetre.bataille.op = other
-    var loop : Int = 1
+    var loop : Int = 0
+    var nb_changement_joueur : Int = 0
     var finished : Boolean = true
     val r = scala.util.Random;
 
@@ -96,6 +97,7 @@ class Battle(p1 : Character,p2 : Character) {
                             Fenetre.msgbox.print_msg("Ce pokémon est déjà sur le terrain"); Thread.sleep(1500)
                             menu_pokemon()
                           }
+                        nb_changement_joueur += 1
                         (1,choix_pokemon)
                       } 
         }
@@ -126,7 +128,11 @@ class Battle(p1 : Character,p2 : Character) {
         while (!finished) {
             var (choix_menu,second_choix) = menu_principal()       
             var choix_menu_op = 0
-            var second_choix_op = r.nextInt(4)
+            var second_choix_op = IA.choix_attaque(other,nb_changement_joueur,loop)
+            for (i <- 0 to 3) {
+                println(IA.fonction_gain_attaque_bot(other,i,nb_changement_joueur,loop))
+            }
+            println("")
             this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
         }
     }

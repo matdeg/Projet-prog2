@@ -75,7 +75,7 @@ object Déflagration extends Attaque{
 }
 
 object Fouet_lianes extends Attaque{
-    dmg = 45
+    dmg = 90
     pp = 35
     precision = 100
     name = "fouet lianes"
