@@ -519,9 +519,11 @@ class Menu_attaque extends JPanel {
 class AffichageMap extends JPanel {
 
     var tableau : Area = Jardin_Kfet
-
+    
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
+
+        g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
         
         for (i <- 0 to 9){
             for (j <- 0 to 14){
@@ -533,7 +535,7 @@ class AffichageMap extends JPanel {
                                                                case O => chara.img_est
                                                }
                                                g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
-                    case Empty_seenable => {}
+                    case _ => {}
                 }
             }
         }
@@ -559,13 +561,16 @@ object Fenetre extends JFrame {
 
     var map = new AffichageMap ()
 
+    def changement_map() = {
+        map.tableau = Player.current_area
+    }
+
     var msgbox = new MsgBox ()
 
     var bas_fenetre = new Menu_attaque
 
     var total_bataille = new JPanel
     total_bataille.setLayout(new GridLayout(2,1))
-    // total_bataille.add(bataille)
     total_bataille.add(map)
     map.repaint()
 

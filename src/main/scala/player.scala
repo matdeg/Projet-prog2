@@ -96,12 +96,23 @@ object Player extends Character(readLine()) {
     def interact() = {
         var x2 = direction.newx(x)
         var y2 = direction.newy(y)
-        current_area.tab(x2)(y2) match {
-            case chara : Character => opp = chara; in_battle = true;
+        if (0 <= x2 && x2 <= 14 && 0 <= y2 && y2 <= 9) {
+            current_area.tab(x2)(y2) match {
+                case chara : Character => opp = chara; in_battle = true;
+            }
         }
+        else {
+            Player.current_area.tab(Player.x)(Player.y) = Empty_seenable
+            (x2,y2) match {
+                case (x2,y2) if (x2 < 0) => Player.current_area.area_ouest.add_character(Player,14,y)
+                case (x2,y2) if (y2 < 0) => Player.current_area.area_nord.add_character(Player,x,9)
+                case (x2,y2) if (x2 > 0) => Player.current_area.area_est.add_character(Player,0,y)
+                case (x2,y2) if (y2 > 0) => Player.current_area.area_sud.add_character(Player,x,0)
+            }
+            Fenetre.changement_map()
+        }
+        
     }
-
-    
 }
 
 
