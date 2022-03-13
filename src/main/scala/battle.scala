@@ -1,11 +1,5 @@
 class Battle(p1 : Character,p2 : Character) {
-    var sauvage : Boolean = false
-
-    p2 match {
-        case n : Nature => sauvage = true
-        case _ => {} 
-    }
-
+    
     var you : Character = p1
     Fenetre.bataille.you = you
     var other : Character = p2
@@ -132,9 +126,16 @@ class Battle(p1 : Character,p2 : Character) {
 
         // gestion menu - boutons
         while (!finished) {
-            var (choix_menu,second_choix) = menu_principal()       
+            var (choix_menu,second_choix) = menu_principal()
+       
             var choix_menu_op = 0
-            var second_choix_op = IA.choix_attaque(other,nb_changement_joueur,loop)
+            var second_choix_op = 0
+
+            other match {
+                case nat : Nature => second_choix_op = r.nextInt(4)
+                case _ =>  second_choix_op = IA.choix_attaque(other,nb_changement_joueur,loop)
+            }
+            
             for (i <- 0 to 3) {
                 println(IA.fonction_gain_attaque_bot(other,i,nb_changement_joueur,loop))
             }

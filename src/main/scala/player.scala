@@ -93,8 +93,6 @@ abstract class Character(pname : String) extends Seenable {
 object Player extends Character(readLine()) {
     is_main = true
     
-    
-
     img_est = "player_est.png"
     img_nord = "player_nord.png"
     img_ouest = "player_ouest.png"
@@ -142,8 +140,6 @@ object Player extends Character(readLine()) {
 class Nature(a : Area) extends Character("Nature") {
     Func.give(this,Func.pokemon_herbe(a))
 }
-
-
 
 object Empty_character extends Character("") {}
 object Example_opponent1 extends Character("Serge") {
