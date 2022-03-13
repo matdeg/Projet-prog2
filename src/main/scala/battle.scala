@@ -1,4 +1,11 @@
 class Battle(p1 : Character,p2 : Character) {
+    var sauvage : Boolean = false
+
+    p2 match {
+        case n : Nature => sauvage = true
+        case _ => {} 
+    }
+
     var you : Character = p1
     Fenetre.bataille.you = you
     var other : Character = p2
@@ -15,7 +22,6 @@ class Battle(p1 : Character,p2 : Character) {
                                     if (p == you) {Fenetre.msgbox.print_msg("Mince, vous avez perdu")}
                                     else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}
                                     Player.opp = Empty_character
-                                    println("out battle")
                                     Fenetre.afficher_map ()
                                     Player.in_battle = false}
 
@@ -111,7 +117,7 @@ class Battle(p1 : Character,p2 : Character) {
             case -1 => menu_principal
             case 4 => {you.next_page; menu_sac}
             case 5 => {you.back_page; menu_sac}
-            case _ => {(2,you.current_items_id(choix_objet))}
+            case _ => {(2,choix_objet)}
         }
     }
 

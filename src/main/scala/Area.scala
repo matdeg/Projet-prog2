@@ -59,7 +59,7 @@ abstract class Area {
         tab(i)(j) = p
         p.x = i
         p.y = j
-    }
+    }   
 }
 
 object Empty_area extends Area {}
@@ -70,14 +70,11 @@ object Jardin_BasDroit extends Area {
     area_nord = Jardin_MilieuDroit
     area_ouest = Jardin_BasMilieu
 
-    for (i <- 0 to 14) {
-        tab(i)(9) = Mur
-    }
+
+    Func.draw(tab,Mur,0,9,14,9)
     tab(7)(9) = new Porte(S,Empty_area)
     tab(9)(9) = new Panneau("Bibliothèque")
-    for (j <- 0 to 9) {
-        tab(14)(j) = Mur
-    }
+    Func.draw(tab,Mur,14,0,14,9)
     tab(14)(3) = new Panneau("Kfet")
     tab(14)(5) = new Porte(E,Empty_area)
     tab(14)(6) = new Porte(E,Empty_area)
@@ -85,9 +82,10 @@ object Jardin_BasDroit extends Area {
         tab(i)(2) = Buisson
         tab(i)(6) = Buisson
     }
-    for (j <- 3 to 5) {
-        tab(10)(j) = Buisson
-    }
+    Func.draw(tab,Buisson,10,3,10,5)
+
+    Func.draw(rev,Sol_jardin,0,0,14,9)
+    Func.draw(rev,Herbe,0,2,10,6)
 }
 object Jardin_BasMilieu extends Area {
     img = "tableaux/Tableau_BasMilieu.png"
@@ -95,6 +93,19 @@ object Jardin_BasMilieu extends Area {
     area_nord = Jardin_MilieuMilieu
     area_est = Jardin_BasDroit
     area_ouest = Jardin_BasGauche
+
+    Func.draw(tab,Mur,0,9,14,9)
+    tab(7)(9) = new Porte(S,Empty_area)
+    tab(9)(9) = new Panneau("Bibliothèque")
+    Func.draw(tab,Mur,0,2,0,9)
+    for (i <- 4 to 14; if (11 <= i || i <= 7)) {
+        tab(i)(2) = Buisson
+        tab(i)(6) = Buisson
+    }
+    Func.draw(tab,Buisson,4,3,4,5)
+
+    Func.draw(rev,Sol_jardin,0,0,14,9)
+    Func.draw(rev,Herbe,4,2,14,6)
 }
 
 object Jardin_MilieuMilieu extends Area {
@@ -104,12 +115,31 @@ object Jardin_MilieuMilieu extends Area {
     area_est = Jardin_MilieuDroit
     area_ouest = Jardin_MilieuGauche
     area_sud = Jardin_BasMilieu
+
+    Func.draw(tab,Buisson,4,0,4,7)
+    Func.draw(tab,Buisson,4,7,7,7)
+    Func.draw(tab,Buisson,11,7,14,7)
+    Func.draw(tab,Lac,5,0,14,2)
+
+
+    Func.draw(rev,Sol_jardin,0,0,14,9)
+    Func.draw(rev,Herbe,4,0,14,7)
+    
 }
 
 object Jardin_BasGauche extends Area {
     img = "tableaux/Tableau_BasGauche.png"
     area_nord = Jardin_MilieuGauche
     area_est = Jardin_BasMilieu
+
+    Func.draw(tab,Mur,0,0,0,9)
+    Func.draw(tab,Mur,0,9,14,9)
+    Func.draw(tab,Mur,14,2,14,9)
+
+    Func.draw(tab,Mur,0,2,6,2)
+    Func.draw(tab,Mur,8,2,14,2)
+
+    Func.draw(rev,Sol_jardin,0,0,14,9)
 }
 
 object Jardin_MilieuGauche extends Area {
@@ -117,12 +147,34 @@ object Jardin_MilieuGauche extends Area {
     area_nord = Jardin_HautGauche
     area_est = Jardin_MilieuMilieu
     area_sud = Jardin_BasGauche
+
+    tab(5)(2) = Mur
+    tab(5)(5) = Mur
+    tab(5)(8) = Mur
+    tab(9)(2) = Mur
+    tab(9)(5) = Mur
+    tab(9)(8) = Mur
+    Func.draw(tab,Mur,0,0,0,9)
+    Func.draw(rev,Sol_jardin,0,0,14,9)
 }
 
 object Jardin_HautGauche extends Area {
     img = "tableaux/Tableau_HautGauche.png"
     area_est = Jardin_HautMilieu
     area_sud = Jardin_MilieuGauche
+
+    tab(5)(2) = Mur
+    tab(5)(5) = Mur
+    tab(5)(8) = Mur
+    tab(9)(2) = Mur
+    tab(9)(5) = Mur
+    tab(9)(8) = Mur
+    Func.draw(tab,Mur,0,0,14,0)
+    Func.draw(tab,Mur,0,0,0,9)
+    tab(7)(0) = new Porte(N,Empty_area)
+    tab(9)(0) = new Panneau("Atrium")
+
+    Func.draw(rev,Sol_jardin,0,0,14,9)
 }
 
 object Jardin_HautMilieu extends Area {
@@ -130,6 +182,12 @@ object Jardin_HautMilieu extends Area {
     area_est = Jardin_HautDroit
     area_ouest = Jardin_HautGauche
     area_sud = Jardin_MilieuMilieu
+
+    Func.draw(tab,Mur,0,0,14,0)
+    Func.draw(tab,Lac,5,7,14,9)
+
+    Func.draw(rev,Sol_jardin,0,0,14,9)
+    Func.draw(rev,Herbe,4,6,4,9)
 }
 
 object Jardin_HautDroit extends Area {

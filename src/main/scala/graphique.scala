@@ -480,7 +480,7 @@ class Menu_attaque extends JPanel {
         this.add(rangee_bouton_1)
         this.add(rangee_bouton_2)
         if (p.page == 0) {
-            if (p.nb_distinct_items > 4 * (p.page + 1)) {
+            if (p.nb_distinct_items > 4) {
                 rangee_retour.add(bouton4)
             }
         }

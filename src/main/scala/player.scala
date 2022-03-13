@@ -1,5 +1,8 @@
 abstract class Character(pname : String) extends Seenable {
 
+    var opp : Character = Empty_character
+    var in_battle = false
+    val r = scala.util.Random;
     var img_est = ""
     var img_nord = ""
     var img_ouest = ""
@@ -54,17 +57,28 @@ abstract class Character(pname : String) extends Seenable {
 
     def move(d : Direction) = {
         if ((0 <= d.newx(x)  && d.newx(x) < current_area.w) && (0 <= d.newy(y)&& d.newy(y) < current_area.h)) {
+
             current_area.tab(d.newx(x))(d.newy(y)) match {
             case Empty_seenable => 
                 current_area.tab(d.newx(x))(d.newy(y)) = this 
                 current_area.tab(x)(y) = Empty_seenable
                 x = d.newx(x); y = d.newy(y)
+
+                current_area.rev(x)(y) match {
+                    case Herbe => if (r.nextDouble() < 0.1) {
+                                    opp = new Nature(current_area); in_battle = true
+                                }
+                    case _ => {}
+                }
+
             case it : Item =>  
                 current_area.tab(d.newx(x))(d.newy(y)) = this 
                 current_area.tab(x)(y) = Empty_seenable
                 x = d.newx(x); y = d.newy(y)
             case _ => {}
             }
+
+
         }
         direction = d
     }
@@ -78,8 +92,8 @@ abstract class Character(pname : String) extends Seenable {
 
 object Player extends Character(readLine()) {
     is_main = true
-    var in_battle = false
-    var opp : Character = Empty_character
+    
+    
 
     img_est = "player_est.png"
     img_nord = "player_nord.png"
@@ -99,24 +113,35 @@ object Player extends Character(readLine()) {
         if (0 <= x2 && x2 <= 14 && 0 <= y2 && y2 <= 9) {
             current_area.tab(x2)(y2) match {
                 case chara : Character => opp = chara; in_battle = true;
+                case _ => {}
             }
         }
         else {
-            Player.current_area.tab(Player.x)(Player.y) = Empty_seenable
+            var newx : Int = 0
+            var newy : Int = 0  
+            var new_area : Area = Empty_area  
             (x2,y2) match {
-                case (x2,y2) if (x2 < 0) => Player.current_area.area_ouest.add_character(Player,14,y)
-                case (x2,y2) if (y2 < 0) => Player.current_area.area_nord.add_character(Player,x,9)
-                case (x2,y2) if (x2 > 14) => Player.current_area.area_est.add_character(Player,0,y)
-                case (x2,y2) if (y2 > 9) => Player.current_area.area_sud.add_character(Player,x,0)
+                case (x2,y2) if (x2 < 0) => newx = 14; newy = y; new_area = current_area.area_ouest
+                case (x2,y2) if (y2 < 0) => newx = x; newy = 9; new_area = current_area.area_nord
+                case (x2,y2) if (x2 > 14) => newx = 0; newy = y; new_area = current_area.area_est
+                case (x2,y2) if (y2 > 9) => newx = x; newy = 0; new_area = current_area.area_sud
             }
-            Fenetre.changement_map()
+            new_area.tab(newx)(newy) match {
+                case Empty_seenable => {current_area.tab(x)(y) = Empty_seenable;
+                                        new_area.add_character(Player,newx,newy); 
+                                       x = newx; y = newy;
+                                       current_area = new_area; Fenetre.changement_map()}
+                case _ => {}
+            }
         }
         
     }
 }
 
 
-
+class Nature(a : Area) extends Character("Nature") {
+    Func.give(this,Func.pokemon_herbe(a))
+}
 
 
 

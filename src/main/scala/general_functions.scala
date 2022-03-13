@@ -55,4 +55,20 @@ object Func {
                 pok.maitre = p
                 p.nb_pokemons += 1
             }
+
+    def draw [N](tab : Array[Array[N]], x : N, a : Int, b : Int, c : Int, d : Int) = {
+        for (i <- a to c){
+            for (j <- b to d) {
+                tab(i)(j) = x
+            }
+        }
+    }
+
+
+    def pokemon_herbe(a : Area) = {
+        a match {
+            case Jardin_BasDroit => var a = new Salatard("Salatard S"); a.lvl = 1; a.init; a
+            case _ => var a = new Salatard("Salatard S2"); a.lvl = 1; a.init; a
+        }
+    }
 }

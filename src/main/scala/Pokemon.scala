@@ -177,6 +177,10 @@ abstract class Pokemon(pname : String) {
         }
         if (hp == 0) {Fenetre.msgbox.print_msg(this.name + " est KO !");Thread.sleep(1500); maitre.nb_alive -= 1}
     }
+
+    def init() = {
+        hp = max_hp
+    }
 }
 
 object Empty_Pokemon extends Pokemon("") {}
