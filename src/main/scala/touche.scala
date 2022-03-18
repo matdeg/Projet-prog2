@@ -13,11 +13,16 @@ object Touche extends JPanel with KeyListener {
     def keyTyped (evt : KeyEvent) : Unit = {
         evt.getKeyChar match {
             case 'a' => {aide = !aide}
-            case 'z' => {Player.move(N)}
-            case 'q' => {Player.move(E)}
-            case 's' => {Player.move(S)}
-            case 'd' => {Player.move(O)}
-            case 'e' => {Player.interact}
+            case _ => if (!Player.in_battle) {
+                evt.getKeyChar match {
+                    case 'z' => {Player.move(N)}
+                    case 'q' => {Player.move(E)}
+                    case 's' => {Player.move(S)}
+                    case 'd' => {Player.move(O)}
+                    case 'e' => {Player.interact}
+                    case _ => {}
+                }
+            }
             case _ => {}
         }
         Fenetre.map.repaint()

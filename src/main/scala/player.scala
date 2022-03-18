@@ -66,6 +66,8 @@ abstract class Character(pname : String) extends Seenable {
 
                 current_area.rev(x)(y) match {
                     case Herbe => if (r.nextDouble() < 0.1) {
+                                    println("nature")
+                                    Fenetre.bas_fenetre.interruption_menu_map = true
                                     opp = new Nature(current_area); in_battle = true
                                 }
                     case _ => {}
@@ -110,7 +112,7 @@ object Player extends Character(readLine()) {
         var y2 = direction.newy(y)
         if (0 <= x2 && x2 <= 14 && 0 <= y2 && y2 <= 9) {
             current_area.tab(x2)(y2) match {
-                case chara : Character => opp = chara; in_battle = true;
+                case chara : Character => opp = chara; Fenetre.bas_fenetre.interruption_menu_map = true; in_battle = true;
                 case _ => {}
             }
         }

@@ -19,7 +19,8 @@ class Battle(p1 : Character,p2 : Character) {
                                     else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}
                                     Player.opp = Empty_character
                                     Fenetre.afficher_map ()
-                                    Player.in_battle = false}
+                                    Player.in_battle = false
+                                    Fenetre.bas_fenetre.print_menu_base ()}
 
     // permet de fuir le combat
     def fuite : Unit = {
@@ -124,6 +125,7 @@ class Battle(p1 : Character,p2 : Character) {
 
     // Démarre la battle
     def start : Unit = {
+        println("start")
         Fenetre.afficher_bataille
         finished = false
         you.ip = 0; other.ip = 0; you.nb_alive = 0; other.nb_alive = 0

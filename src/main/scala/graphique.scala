@@ -300,6 +300,7 @@ class Menu_attaque extends JPanel {
     rangee_retour.add(boutonr)
 
     var choix_menu = -2
+    var interruption_menu_map = false
 
     def print_menu_base () : Int = {
 
@@ -347,13 +348,14 @@ class Menu_attaque extends JPanel {
 
         choix_menu = -2
 
-        while (choix_menu == -2) {
+        while (choix_menu == -2 && !interruption_menu_map) {
             Thread.sleep(100)
         }
 
         this.remove(rangee_bouton_1)
         this.remove(rangee_bouton_2)
 
+        interruption_menu_map = false
         choix_menu
     }
 
@@ -595,15 +597,18 @@ object Fenetre extends JFrame {
     map.repaint()
 
     def afficher_bataille () = {
+        println("bataille")
+        Fenetre.remove(Fenetre.bas_fenetre)
         Fenetre.remove(Fenetre.map)
         Fenetre.add(Fenetre.bataille)
         Fenetre.add(Fenetre.bas_fenetre)
     }
 
     def afficher_map () = {
-        Fenetre.remove(Fenetre.bas_fenetre)
         Fenetre.remove(Fenetre.bataille)
+        Fenetre.remove(Fenetre.bas_fenetre)
         Fenetre.add(Fenetre.map)
+        Fenetre.add(Fenetre.bas_fenetre)
         total_bataille.repaint()
         Fenetre.requestFocus ()
     }
