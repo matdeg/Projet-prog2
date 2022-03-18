@@ -150,5 +150,8 @@ object Example_opponent1 extends Character("Serge") {
     img_sud = "random_guy.png"
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        Func.give(this,new Rhinocarpe("Rhinocarpe"))
     }
 }

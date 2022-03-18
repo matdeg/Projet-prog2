@@ -5,7 +5,9 @@ class Battle(p1 : Character,p2 : Character) {
     var other : Character = p2
     Fenetre.bataille.op = other
     var loop : Int = 0
-    var nb_changement_joueur : Int = 0
+    var f1_changement_joueur : Double = 0
+    var f2_changement_joueur : Double = 0
+    var f3_changement_joueur : Double = 0
     var finished : Boolean = true
     val r = scala.util.Random;
 
@@ -97,7 +99,6 @@ class Battle(p1 : Character,p2 : Character) {
                             Fenetre.msgbox.print_msg("Ce pokémon est déjà sur le terrain"); Thread.sleep(1500)
                             menu_pokemon()
                           }
-                        nb_changement_joueur += 1
                         (1,choix_pokemon)
                       } 
         }
@@ -133,11 +134,11 @@ class Battle(p1 : Character,p2 : Character) {
 
             other match {
                 case nat : Nature => second_choix_op = r.nextInt(4)
-                case _ =>  second_choix_op = IA.choix_attaque(other,nb_changement_joueur,loop)
+                case _ =>  second_choix_op = IA.choix_attaque(other,f1_changement_joueur,loop)
             }
             
             for (i <- 0 to 3) {
-                println(IA.fonction_gain_attaque_bot(other,i,nb_changement_joueur,loop))
+                println(IA.fonction_gain_attaque_bot(other,i,f1_changement_joueur,loop))
             }
             println("")
             this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
@@ -164,6 +165,9 @@ class Battle(p1 : Character,p2 : Character) {
     def play(p : Character,q : Character,choix_menu : Int,second_choix : Int) = {
         if (choix_menu == 0 && p.pokemons(p.ip).alive) {
             p.pokemons(p.ip).cast_attaque(second_choix,q.pokemons(q.ip))
+            f1_changement_joueur = f2_changement_joueur
+            f2_changement_joueur = f3_changement_joueur
+            f3_changement_joueur = (f3_changement_joueur/2.0)
         }
         if (choix_menu == 1) {
             p.ip = second_choix
@@ -175,6 +179,9 @@ class Battle(p1 : Character,p2 : Character) {
                 
                 Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
             }
+            f1_changement_joueur = f2_changement_joueur
+            f2_changement_joueur = f3_changement_joueur
+            f3_changement_joueur = (f3_changement_joueur/2.0) + 0.5
             Thread.sleep(1500)
         }
         if (choix_menu == 2) {
@@ -186,6 +193,9 @@ class Battle(p1 : Character,p2 : Character) {
                 
                 Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
             }
+            f1_changement_joueur = f2_changement_joueur
+            f2_changement_joueur = f3_changement_joueur
+            f3_changement_joueur = (f3_changement_joueur/2.0)
         }
         
         

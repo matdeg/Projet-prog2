@@ -62,7 +62,7 @@ object Repli extends Attaque{
     precision = 100
     name = "Repli"
     atype = Eau
-    buff_defense = (1,1.0)
+    buff_defense = (2,1.0)
 }
 
 object Déflagration extends Attaque{
