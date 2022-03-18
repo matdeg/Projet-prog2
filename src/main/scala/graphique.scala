@@ -212,7 +212,7 @@ class Bouton extends JButton with MouseListener {
     this.addMouseListener(this)
 
     def mouseEntered (e : MouseEvent) : Unit = {
-        if (Touche_aide.aide) {
+        if (Touche.aide) {
             Fenetre.msgbox.print_msg(info)
         }
         
@@ -303,21 +303,41 @@ class Menu_attaque extends JPanel {
 
     def print_menu_base () : Int = {
 
-        Fenetre.msgbox.save = "Que voulez vous faire ?"
-        bouton0.setText("Attaque")
-        bouton0.set_font("couleur/rouge.jpeg")
-        bouton0.info = "Permet de lancer les attaques"
-        bouton1.setText("Pokémon")
-        bouton1.set_font("couleur/vert.png")
-        bouton1.info = "Permet de changer de Pokéfusion"
-        bouton2.setText("Sac")
-        bouton2.set_font("couleur/jaune.jpg")
-        bouton2.info = "Permet d'utiliser des objets"
-        bouton3.setText("Fuite")
-        bouton3.set_font("couleur/bleu.jpg")
-        bouton3.info = "Permet de fuir le combat"
-        for (i <- 0 to 3) {
-            bouton(i).init_icone
+        if (Player.in_battle) {
+            Fenetre.msgbox.save = "Que voulez vous faire ?"
+            bouton0.setText("Attaque")
+            bouton0.set_font("couleur/rouge.jpeg")
+            bouton0.info = "Permet de lancer les attaques"
+            bouton1.setText("Pokémon")
+            bouton1.set_font("couleur/vert.png")
+            bouton1.info = "Permet de changer de Pokéfusion"
+            bouton2.setText("Sac")
+            bouton2.set_font("couleur/jaune.jpg")
+            bouton2.info = "Permet d'utiliser des objets"
+            bouton3.setText("Fuite")
+            bouton3.set_font("couleur/bleu.jpg")
+            bouton3.info = "Permet de fuir le combat"
+            for (i <- 0 to 3) {
+                bouton(i).init_icone
+            }
+        }
+        else {
+            Fenetre.msgbox.save = ""
+            bouton0.setText("Pokédex")
+            bouton0.set_font("couleur/rouge.jpeg")
+            bouton0.info = "Permet d'accéder au Pokédex'"
+            bouton1.setText("Pokémon")
+            bouton1.set_font("couleur/vert.png")
+            bouton1.info = "Permet d'interagir avec les Pokémons'"
+            bouton2.setText("Sac")
+            bouton2.set_font("couleur/jaune.jpg")
+            bouton2.info = "Permet d'utiliser des objets"
+            bouton3.setText("Sauvegarde")
+            bouton3.set_font("couleur/bleu.jpg")
+            bouton3.info = "Permet de sauvegarder le jeu"
+            for (i <- 0 to 3) {
+                bouton(i).init_icone
+            }
         }
 
         this.add(rangee_bouton_1)
@@ -555,7 +575,7 @@ object Fenetre extends JFrame {
     }
 
     setFocusable(true)
-    addKeyListener(Touche_deplacement)
+    addKeyListener(Touche)
 
     var bataille = new AffichageBataille ()
 

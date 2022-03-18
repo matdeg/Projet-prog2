@@ -21,6 +21,11 @@ class Battle(p1 : Character,p2 : Character) {
                                     Fenetre.afficher_map ()
                                     Player.in_battle = false}
 
+    // permet de fuir le combat
+    def fuite : Unit = {
+        lose(you)
+    }
+    
     // actualise les pokémons sur le terrain si l'un est K.O , l'adversaire lance son premier pokémon vivant 
     def change:Unit = {
         if (!you.pokemons(you.ip).alive){
@@ -65,6 +70,7 @@ class Battle(p1 : Character,p2 : Character) {
             case 0 => menu_attaque()
             case 1 => menu_pokemon()
             case 2 => menu_sac()
+            case 3 => {fuite ; (0, 0)}
         }
     }
 
