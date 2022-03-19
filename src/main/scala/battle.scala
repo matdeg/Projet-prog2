@@ -20,7 +20,7 @@ class Battle(p1 : Character,p2 : Character) {
                                     Player.opp = Empty_character
                                     Fenetre.afficher_map ()
                                     Player.in_battle = false
-                                    Fenetre.bas_fenetre.print_menu_base ()}
+                                    Test_mathis.choix = Fenetre.bas_fenetre.print_menu_base ()}
 
     // permet de fuir le combat
     def fuite : Unit = {
@@ -71,7 +71,7 @@ class Battle(p1 : Character,p2 : Character) {
             case 0 => menu_attaque()
             case 1 => menu_pokemon()
             case 2 => menu_sac()
-            case 3 => {fuite ; (0, 0)}
+            case 3 => (3, 0)
         }
     }
 
@@ -136,10 +136,14 @@ class Battle(p1 : Character,p2 : Character) {
         // gestion menu - boutons
         while (!finished) {
             var (choix_menu,second_choix) = menu_principal()
-       
+            
             var choix_menu_op = 0
             var second_choix_op = 0
 
+            if (choix_menu == 3) {
+                lose(you)
+            } 
+            else {
             other match {
                 case nat : Nature => second_choix_op = r.nextInt(4)
                 case _ =>  second_choix_op = IA.choix_attaque(other,f1_changement_joueur,loop)
@@ -150,6 +154,7 @@ class Battle(p1 : Character,p2 : Character) {
             }
             println("")
             this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
+            }
         }
     }
     // détermine qui joue en premier selon les choix des deux joueurs. et lance le tour
