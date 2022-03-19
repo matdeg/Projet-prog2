@@ -32,9 +32,9 @@ abstract class Pokemon(pname : String) {
     val iv_defense : Int = r.nextInt(30) 
     val iv_speed : Int = r.nextInt(30) 
     def max_hp = {((((base_max_hp + iv_hp) * 2 + 10).toDouble * lvl.toDouble) / 100.0).toInt + lvl + 10}
-    def atk = {((((((base_atk + iv_atk) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(atk_mult)).toInt} 
-    def defense = {((((((base_defense + iv_defense) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(defense_mult)).toInt} 
-    def speed = {((((((base_speed + iv_speed) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(speed_mult)).toInt} 
+    def atk = {((((((base_atk + iv_atk) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(atk_mult + state.matk)).toInt} 
+    def defense = {((((((base_defense + iv_defense) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(defense_mult + state.mdef)).toInt} 
+    def speed = {((((((base_speed + iv_speed) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(speed_mult + state.mspeed)).toInt} 
 
     // reload each information linked to state
     def reload_state = {

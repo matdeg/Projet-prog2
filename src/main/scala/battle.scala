@@ -111,6 +111,24 @@ class Battle(p1 : Character,p2 : Character) {
         }
     }
 
+    def menu_pokemon_after_item(choix_objet : Int) : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un pokémon :")
+        var choix_pokemon = -2
+        var item_id = you.current_items_id(choix_objet)
+        var item = Func.id_items(item_id)
+        choix_pokemon = Fenetre.bas_fenetre.print_menu_pokemon(you)
+        choix_pokemon match {
+            case -1 => menu_sac
+            case _ => if (!item.is_usable(you.pokemons(choix_pokemon))) {
+                        Fenetre.msgbox.print_msg("Cet objet n'est pas utilisable sur ce pokémon"); Thread.sleep(1500)
+                        menu_pokemon_after_item(choix_objet)
+                      }
+                      else {
+                        (2,choix_objet * 6 + choix_pokemon)
+                      } 
+        }
+    }    
+
     def menu_sac() : (Int, Int) = {
         Fenetre.msgbox.print_msg("Choisissez un objet :")
         var choix_objet = -2
@@ -119,7 +137,7 @@ class Battle(p1 : Character,p2 : Character) {
             case -1 => menu_principal
             case 4 => {you.next_page; menu_sac}
             case 5 => {you.back_page; menu_sac}
-            case _ => {(2,choix_objet)}
+            case _ => {menu_pokemon_after_item(choix_objet)}
         }
     }
 
@@ -141,6 +159,8 @@ class Battle(p1 : Character,p2 : Character) {
             var second_choix_op = 0
 
             if (choix_menu == 3) {
+                Fenetre.msgbox.print_msg(you.name + " s'enfuit !")
+                Thread.sleep(1200)
                 lose(you)
             } 
             else {
@@ -178,39 +198,33 @@ class Battle(p1 : Character,p2 : Character) {
     def play(p : Character,q : Character,choix_menu : Int,second_choix : Int) = {
         if (choix_menu == 0 && p.pokemons(p.ip).alive) {
             p.pokemons(p.ip).cast_attaque(second_choix,q.pokemons(q.ip))
+            Fenetre.bataille.print_pok_perso(you.pokemons(you.ip))
+            Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
             f1_changement_joueur = f2_changement_joueur
             f2_changement_joueur = f3_changement_joueur
             f3_changement_joueur = (f3_changement_joueur/2.0)
         }
         if (choix_menu == 1) {
             p.ip = second_choix
+            Fenetre.bataille.print_pok_perso(you.pokemons(you.ip))
+            Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
             Fenetre.msgbox.print_msg(p.name + " envoie " + p.pokemons(p.ip).name + " !")
-            if (p == you) {
-                Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
-            }
-            else {
-                
-                Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
-            }
             f1_changement_joueur = f2_changement_joueur
             f2_changement_joueur = f3_changement_joueur
             f3_changement_joueur = (f3_changement_joueur/2.0) + 0.5
             Thread.sleep(1500)
         }
         if (choix_menu == 2) {
-            p.use_item(Func.id_items(p.current_items_id(second_choix)),p.pokemons(p.ip))
-            if (p == you) {
-                Fenetre.bataille.print_pok_perso(p.pokemons(p.ip))
-            }
-            else {
-                
-                Fenetre.bataille.print_pok_op(p.pokemons(p.ip))
-            }
+            var choix_item = second_choix / 6
+            var choix_pok = second_choix - choix_item
+            p.use_item(Func.id_items(p.current_items_id(choix_item)),p.pokemons(choix_pok))
             f1_changement_joueur = f2_changement_joueur
             f2_changement_joueur = f3_changement_joueur
             f3_changement_joueur = (f3_changement_joueur/2.0)
         }
         
+        Fenetre.bataille.print_pok_perso(you.pokemons(you.ip))
+        Fenetre.bataille.print_pok_op(other.pokemons(other.ip))
         
     }
 }

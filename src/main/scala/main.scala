@@ -4,7 +4,7 @@ import java.util.Random
 
 object MyProgram {
     def main(args: Array[String]): Unit = {
-        Test_mathis.start
+        Test_mathis.game
         println("fin")
     }
 }

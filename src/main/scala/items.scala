@@ -16,6 +16,9 @@ abstract class Item extends Seenable {
     var held_speed : Int = 0
     var state_heal : Array[States] = Array()
     var info = ""
+    def is_usable(p : Pokemon) : Boolean = {
+        p.alive
+    } 
 }
 
 object Empty_item extends Item {}
@@ -50,6 +53,9 @@ class Revive extends Item {
     revive = 0.5
     id = 3
     info = "Résurrecte le Pokéfusion avec la moitié de sa vie"
+    override def is_usable (p : Pokemon) = {
+        !p.alive
+    }
 }
 
 class Max_revive extends Item {
@@ -59,6 +65,9 @@ class Max_revive extends Item {
     revive = 1
     id = 4
     info = "Résurrecte le Pokéfusion avec la totalité de sa vie"
+    override def is_usable (p : Pokemon) = {
+        !p.alive
+    }
 }
 
 class Antidote extends Item {
@@ -68,6 +77,9 @@ class Antidote extends Item {
     id = 5
     state_heal = Array(Empoisonnement)
     info = "Soigne l'empoisonnement"
+    override def is_usable (p : Pokemon) = {
+        (p.state == Empoisonnement) 
+    }
 }
 
 class Awakening extends Item {
@@ -77,6 +89,9 @@ class Awakening extends Item {
     id = 6
     state_heal = Array(Sommeil)
     info = "Réveille le Pokéfusion"
+    override def is_usable (p : Pokemon) = {
+        (p.state == Sommeil) 
+    }
 }
 
 class Burn_heal extends Item {
@@ -86,6 +101,9 @@ class Burn_heal extends Item {
     id = 7
     state_heal = Array(Burned)
     info = "Soigne la brulure"
+    override def is_usable (p : Pokemon) = {
+        (p.state == Burned) 
+    }
 }
 
 class Ice_heal extends Item {
@@ -95,6 +113,9 @@ class Ice_heal extends Item {
     id = 8
     state_heal = Array(Freeze)
     info = "Soigne le gel"
+    override def is_usable (p : Pokemon) = {
+        (p.state == Freeze) 
+    }
 }
 
 class Paralyze_heal extends Item {
@@ -104,6 +125,9 @@ class Paralyze_heal extends Item {
     id = 9
     state_heal = Array(Paralysie)
     info = "Soigne la paralysie"
+    override def is_usable (p : Pokemon) = {
+        (p.state == Paralysie) 
+    }
 }
 
 class Full_heal extends Item {
@@ -113,4 +137,7 @@ class Full_heal extends Item {
     id = 10
     state_heal = Array(Paralysie,Empoisonnement,Sommeil,Burned,Freeze)
     info = "Soigne tous les états"
+    override def is_usable (p : Pokemon) = {
+        (p.state != None_state) 
+    }
 }
