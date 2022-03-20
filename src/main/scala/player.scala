@@ -155,5 +155,8 @@ object Example_opponent1 extends Character("Serge") {
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        for(i <- bag.indices) {
+            bag(i) = 1
+        }
     }
 }

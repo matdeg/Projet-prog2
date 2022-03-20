@@ -143,7 +143,6 @@ class Battle(p1 : Character,p2 : Character) {
 
     // Démarre la battle
     def start : Unit = {
-        println("start")
         Fenetre.afficher_bataille
         finished = false
         you.ip = 0; other.ip = 0; you.nb_alive = 0; other.nb_alive = 0
@@ -166,13 +165,10 @@ class Battle(p1 : Character,p2 : Character) {
             else {
             other match {
                 case nat : Nature => second_choix_op = r.nextInt(4)
-                case _ =>  second_choix_op = IA.choix_attaque(other,f1_changement_joueur,loop)
+                case _ => var (a,b) = IA.best_move(other,f1_changement_joueur,loop)
+                          choix_menu_op = a
+                          second_choix_op = b
             }
-            
-            for (i <- 0 to 3) {
-                println(IA.fonction_gain_attaque_bot(other,i,f1_changement_joueur,loop))
-            }
-            println("")
             this.turn(choix_menu,second_choix,choix_menu_op,second_choix_op)
             }
         }

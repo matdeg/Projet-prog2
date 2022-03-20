@@ -5,13 +5,13 @@ object Func {
 
     // multiplicateur de stat en fonction de l'indice de modification
     def mult_a: Int => Double = {
-        case 0 => 1
+        case 0 => 1.0
         case 1 => 1.5 
-        case 2 => 2
+        case 2 => 2.0
         case 3 => 2.5
-        case 4 => 3
+        case 4 => 3.0
         case 5 => 3.5
-        case 6 => 4
+        case 6 => 4.0
         case -1 => 0.66
         case -2 => 0.5
         case -3 => 0.4
@@ -51,6 +51,13 @@ object Func {
     }
 
     def give(p : Character, pok : Pokemon) = {
+                pok.init()
+                p.pokemons(p.nb_pokemons) = pok
+                pok.maitre = p
+                p.nb_pokemons += 1
+            }
+
+    def give_as_it_is(p : Character, pok : Pokemon) = {
                 p.pokemons(p.nb_pokemons) = pok
                 pok.maitre = p
                 p.nb_pokemons += 1

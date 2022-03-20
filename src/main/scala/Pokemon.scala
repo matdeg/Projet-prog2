@@ -215,7 +215,7 @@ class Dracarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 44
     image = "pokemons/dracarpe.png"
     hp = max_hp
-    lvl = 5
+    lvl = 50
     base_atk = 55
     base_defense = 40
     base_speed = 40

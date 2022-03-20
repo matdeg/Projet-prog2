@@ -44,7 +44,6 @@ object Test_mathis {
         def game() : (Int,Int) = {
             while (!Game.finished) {
                 if (Player.in_battle) {
-                    println("baston")
                     var baston = new Battle(Player, Player.opp)
                     baston.start
                 }
