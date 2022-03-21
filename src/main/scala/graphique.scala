@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent
 import java.awt.RenderingHints.Key
 import javax.swing.Timer
 import java.awt.event.FocusEvent
+import javax.swing.LookAndFeel
 
 class AffichageBataille extends JPanel {
 
@@ -261,7 +262,7 @@ class Bouton extends JButton with MouseListener {
 
 }
 
-class Menu_attaque extends JPanel {
+class Menu extends JPanel {
 
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS))
     add(Fenetre.msgbox)
@@ -536,6 +537,49 @@ class Menu_attaque extends JPanel {
         
         choix_menu
     }
+
+    def print_menu_pokedex () = {
+
+        Fenetre.requestFocus
+        
+        Fenetre.msgbox.save = "Bienvenue dans le Pokédex"
+
+        bouton4.setText("Suivant")
+        bouton4.info = "Affiche la page suivante"
+        bouton4.init_icone
+        bouton4.set_font("couleur/blanc.png")
+        bouton5.setText("Précédent")
+        bouton5.info = "Affiche la page précédente"
+        bouton5.init_icone
+        bouton5.set_font("couleur/blanc.png")
+        boutonr.setText("Retour")
+        boutonr.info = "Retour menu principal"
+        boutonr.init_icone
+        boutonr.set_font("couleur/blanc.png")
+
+        rangee_retour.remove(boutonr)
+        rangee_retour.add(bouton4)
+        rangee_retour.add(boutonr)
+        rangee_retour.add(bouton5)
+
+        this.add(rangee_retour)
+
+        this.updateUI
+
+        choix_menu = -2
+
+        while (choix_menu == -2) {
+            Thread.sleep(100)
+        }
+
+        this.remove(rangee_retour)
+        rangee_retour.remove(bouton4)
+        rangee_retour.remove(bouton5)
+        rangee_bouton_3.add(bouton4)
+        rangee_bouton_3.add(bouton5)
+
+        choix_menu
+    }
 }
 
 class AffichageMap extends JPanel {
@@ -565,6 +609,23 @@ class AffichageMap extends JPanel {
 
 }
 
+class AffichagePokedex extends JPanel {
+
+    this.setFont(new Font("Helvetica Neue", Font.BOLD, 17))
+
+    override def paintComponent (g : Graphics) : Unit = {
+        super.paintComponent(g)
+
+        g.setColor(Color.BLACK)
+        g.fillRect(0, 0, this.getWidth, this.getHeight)
+        g.setColor(Color.CYAN)
+        g.drawRect(5, 5, this.getWidth-10, this.getHeight-10)
+        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).name, 15, 30)
+        g.drawImage(ImageIO.read(getClass.getResource(Pokedex.liste_pokemon(Pokedex.current_pokemon).image)), 50, 50, null)
+    }
+
+}
+
 object Fenetre extends JFrame {
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
@@ -581,6 +642,8 @@ object Fenetre extends JFrame {
 
     var bataille = new AffichageBataille ()
 
+    var info = new AffichagePokedex ()
+
     var map = new AffichageMap ()
 
     def changement_map() = {
@@ -589,31 +652,41 @@ object Fenetre extends JFrame {
 
     var msgbox = new MsgBox ()
 
-    var bas_fenetre = new Menu_attaque
+    var bas_fenetre = new Menu
 
-    var total_bataille = new JPanel
-    total_bataille.setLayout(new GridLayout(2,1))
-    total_bataille.add(map)
+    var total = new JPanel
+    total.setLayout(new GridLayout(2,1))
+    total.add(map)
     map.repaint()
 
     def afficher_bataille () = {
-        Fenetre.remove(Fenetre.bas_fenetre)
-        Fenetre.remove(Fenetre.map)
-        Fenetre.add(Fenetre.bataille)
-        Fenetre.add(Fenetre.bas_fenetre)
+        total.remove(Fenetre.bas_fenetre)
+        total.remove(Fenetre.map)
+        total.add(Fenetre.bataille)
+        total.add(Fenetre.bas_fenetre)
     }
 
     def afficher_map () = {
-        Fenetre.remove(Fenetre.bataille)
-        Fenetre.remove(Fenetre.bas_fenetre)
-        Fenetre.add(Fenetre.map)
-        Fenetre.add(Fenetre.bas_fenetre)
-        total_bataille.repaint()
+        total.remove(Fenetre.bataille)
+        total.remove(Fenetre.info)
+        total.remove(Fenetre.bas_fenetre)
+        total.add(Fenetre.map)
+        total.add(Fenetre.bas_fenetre)
+        total.repaint()
         Fenetre.requestFocus ()
     }
 
+    def afficher_pokedex () = {
+        total.remove(Fenetre.bas_fenetre)
+        total.remove(Fenetre.map)
+        total.add(Fenetre.info)
+        total.add(Fenetre.bas_fenetre)
+        info.repaint()
+        println("pokedex")
+    }
 
-    this.setContentPane(total_bataille)
+
+    this.setContentPane(total)
     setVisible(true)
 
 }
