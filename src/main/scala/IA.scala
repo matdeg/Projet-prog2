@@ -134,7 +134,7 @@ object IA {
     def best_move (p : Character,f_changement_joueur : Double, loop : Int) = {
         var (will_die,dmg) = danger(p)
         if (will_die) {
-            var best_item = -1 
+            var best_num = -1 
             var best_page = 0
             var num_on_page : Int = -1
             var score_hp_healed = 0.0
@@ -145,15 +145,16 @@ object IA {
                     p.page += 1
                     num_on_page = 0
                 } 
+                
                 var i_score = Func.min(hp_to_heal,Func.id_items(i).regen).toDouble + (1.0 / Func.id_items(i).regen)
                 if (i_score > score_hp_healed) {
                     score_hp_healed = i_score
-                    best_item = i
+                    best_num = num_on_page
                     best_page = p.page
                 }
             }
             if (score_hp_healed.toInt >= dmg) {
-                (2,6 * best_item + p.ip)                
+                (2,6 * best_num + p.ip)                
             }
             else {
                 (0,choix_attaque(p,f_changement_joueur,loop))        

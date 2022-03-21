@@ -597,7 +597,6 @@ object Fenetre extends JFrame {
     map.repaint()
 
     def afficher_bataille () = {
-        println("bataille")
         Fenetre.remove(Fenetre.bas_fenetre)
         Fenetre.remove(Fenetre.map)
         Fenetre.add(Fenetre.bataille)

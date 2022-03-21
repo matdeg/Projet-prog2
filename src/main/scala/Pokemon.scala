@@ -4,37 +4,60 @@ abstract class Pokemon(pname : String) {
     val r = scala.util.Random;
     var name = pname
     var image = ""
+
+    // stats en lien avec le niveau du pokémon 
     var lvl = 5
     var xp = 0
+    var base_xp_given = 70
+    var xp_given = lvl * base_xp_given / 7
+    def next_xp = {3 * lvl * lvl}
+
+    // stats de base de combat propre au pokémon
     var base_max_hp = 0
-    var hp = 0
     var base_atk = 0
     var base_defense = 0
     var base_speed = 0
-    var base_xp_given : Int = 70
-    var xp_given : Int = lvl * base_xp_given / 7
+
+    // PV du pokémon, non fixe 
+    var hp = 0
+    def alive = {!(hp == 0)}
+    
+    // type du pokémon
     var ptype : Ttype = Normal
+
+    // attaques du pokémons, nombre de lancer possibles
     var attaques = new Array[Attaque](4)
     var pp_list = new Array[Int](4)
+
+    // objet tenu par le pokémon
     var held_item : Item = Empty_item
+
+    // multiplicateur de statistiques
     var atk_mult = 0
     var defense_mult = 0 
     var speed_mult = 0
+
+    // dresseur du pokémon
     var maitre : Character = Empty_character 
-    def alive = {!(hp == 0)}
+
+    // état du pokémon (brûlure etc...)
     var state : States = None_state
     var remaining_time : Int = 0
-    def next_xp = {3 * lvl * lvl}
-
+    
     // iv = individual value -> different stats between pokemons of the same specy
     val iv_hp : Int = r.nextInt(30) 
     val iv_atk : Int = r.nextInt(30) 
     val iv_defense : Int = r.nextInt(30) 
     val iv_speed : Int = r.nextInt(30) 
+
+    // calcul des statistiques
     def max_hp = {((((base_max_hp + iv_hp) * 2 + 10).toDouble * lvl.toDouble) / 100.0).toInt + lvl + 10}
     def atk = {((((((base_atk + iv_atk) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(atk_mult + state.matk)).toInt} 
     def defense = {((((((base_defense + iv_defense) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(defense_mult + state.mdef)).toInt} 
     def speed = {((((((base_speed + iv_speed) * 2 + 10).toDouble * lvl.toDouble) / 100.0) + lvl.toDouble + 10.0) * Func.mult_a(speed_mult + state.mspeed)).toInt} 
+
+
+
 
     // reload each information linked to state
     def reload_state = {
@@ -54,9 +77,13 @@ abstract class Pokemon(pname : String) {
         }
     }
 
+
+
+    // utilise l'item i sur soi-même, ce morceau de code n'est malheureusement pas factoriable, bien qu'il en ait l'air SE
     def use_item(i : Item) = {
+        var hp_regened = Func.min(i.regen, max_hp - hp)
         hp = Func.min(hp + i.regen,max_hp)
-        if (i.regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré de la vie !");Thread.sleep(1500)}
+        if (i.regen > 0) {Fenetre.msgbox.print_msg(this.name + " a récupéré " + hp_regened.toString + " PV !");Thread.sleep(1500)}
         if (hp == 0 && i.revive > 0) {hp = (max_hp.toDouble * i.revive).toInt;Fenetre.msgbox.print_msg(this.name + " peut retourner au combat !");
                                       Thread.sleep(1500)}
         if (i.buff_atk > 0) {atk_mult = Func.min(i.buff_atk + atk_mult,6)
@@ -73,6 +100,10 @@ abstract class Pokemon(pname : String) {
                                 Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1500)}
         i.state_heal.foreach(x => if (state == x) {state = None_state;Fenetre.msgbox.print_msg(this.name + " n'a plus l'effet " + x.name);Thread.sleep(1500)})
     }
+
+
+
+    // ajoute un montant d'xp au pokémon, il monte de niveau si nécessaire
     def add_xp(exp : Int) = {
         Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !");Thread.sleep(1500)
         xp += exp
@@ -85,29 +116,39 @@ abstract class Pokemon(pname : String) {
         }
     }
 
-    def cast_attaque(i : Int,defenser : Pokemon) = {
-        var a = attaques(i); 
-        pp_list(i) -= 1 
+
+
+    // applique les effets de l'attaque a sur le pokémon lanceur
+    def buffs_attack(a : Attaque) = {
         var (ba,bap) = a.buff_atk
         var (bd,bdp) = a.buff_defense
         var (bs,bsp) = a.buff_speed
+        if (ba > 0 && r.nextDouble < bap) {atk_mult = Func.min(ba + atk_mult,6)
+                    Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1500)}
+        if (bd > 0 && r.nextDouble < bdp) {defense_mult = Func.min(bd + defense_mult,6)
+                    Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1500)}
+        if (bs > 0 && r.nextDouble < bsp) {speed_mult = Func.min(bs + speed_mult,6)
+                    Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1500)}
+        if (ba < 0 && r.nextDouble < bap) {atk_mult = Func.max(ba + atk_mult,-6)
+                    Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1500)}
+        if (bd < 0 && r.nextDouble < bdp) {defense_mult = Func.max(bd + defense_mult,-6)
+                    Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1500)}
+        if (bs < 0 && r.nextDouble < bsp) {speed_mult = Func.max(bs + speed_mult,-6)
+                    Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1500)}
+    }
+
+
+
+    // tentes de lancer l'attaque i sur defenser, si l'attaque n'échoue pas, lance lands_attack et receive_attack
+    def cast_attaque(i : Int,defenser : Pokemon) = {
+        var a = attaques(i); 
+        pp_list(i) -= 1 
         if (!state.stun) {
             Fenetre.msgbox.print_msg(this.name + " lance l'attaque " + a.name);Thread.sleep(1500)
             if (r.nextDouble > state.miss) {
                 if (r.nextFloat < ((a.precision).toFloat/100)) {
                     defenser.receive_attaque(a,this)
-                    if (ba > 0 && r.nextDouble < bap) {atk_mult = Func.min(ba + atk_mult,6)
-                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " augmente !");Thread.sleep(1500)}
-                    if (bd > 0 && r.nextDouble < bdp) {defense_mult = Func.min(bd + defense_mult,6)
-                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1500)}
-                    if (bs > 0 && r.nextDouble < bsp) {speed_mult = Func.min(bs + speed_mult,6)
-                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1500)}
-                    if (ba < 0 && r.nextDouble < bap) {atk_mult = Func.max(ba + atk_mult,-6)
-                                        Fenetre.msgbox.print_msg("L'attaque de " + this.name + " diminue...");Thread.sleep(1500)}
-                    if (bd < 0 && r.nextDouble < bdp) {defense_mult = Func.max(bd + defense_mult,-6)
-                                            Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1500)}
-                    if (bs < 0 && r.nextDouble < bsp) {speed_mult = Func.max(bs + speed_mult,-6)
-                                        Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1500)}
+                    buffs_attack(a)
                 }
                 else {
                     Fenetre.msgbox.print_msg(this.name + " a raté l'attaque...");Thread.sleep(1500)
@@ -125,16 +166,10 @@ abstract class Pokemon(pname : String) {
         }
         if (!defenser.alive) {add_xp(defenser.xp_given)}
     }
-    def receive_attaque(a: Attaque, atker : Pokemon):Unit = {
-        var dmg_taken = (((0.4 * atker.lvl.toFloat + 2.0) * a.dmg.toFloat * atker.atk.toFloat / (50.0 * defense.toFloat) + 3.0) * (a.atype).affinites(ptype)).toInt
-        if (a.dmg > 0) {
-            if ((a.atype).affinites(ptype) == 0.0) {Fenetre.msgbox.print_msg("Cette attaque n'est pas efficace...");Thread.sleep(1500)}
-            if ((a.atype).affinites(ptype) == 0.5) {Fenetre.msgbox.print_msg("Cette attaque n'est pas très efficace...");Thread.sleep(1500)}
-            if ((a.atype).affinites(ptype) == 2.0) {Fenetre.msgbox.print_msg("Cette attaque est super efficace!");Thread.sleep(1500)}
-            Fenetre.msgbox.print_msg(this.name + " perd " + dmg_taken.toString() + " PV !");Thread.sleep(1500)
-            hp = Func.max(hp - dmg_taken,0)
-        }
-        val r = scala.util.Random
+
+
+
+    def debuffs_attack(a : Attaque) = {
         var (da,dap) = a.debuff_atk
         var (dd,ddp) = a.debuff_defense
         var (ds,dsp) = a.debuff_speed
@@ -150,33 +185,53 @@ abstract class Pokemon(pname : String) {
                                   Fenetre.msgbox.print_msg("La défense de " + this.name + " augmente !");Thread.sleep(1500)}
         if (ds < 0 && r.nextDouble < dsp) {speed_mult = Func.min(-ds + speed_mult,6)
                                 Fenetre.msgbox.print_msg("La vitesse de " + this.name + " augmente !");Thread.sleep(1500)}
+    }
+
+
+
+    // applique les changements d'états dûs à l'attaque a
+    def state_attack(a : Attaque) = {
         var (astate,pstate) = a.pstate 
-        if (pstate > 0) {
-            if  (r.nextDouble < pstate) {
-                astate match{
-                    case Sommeil => Fenetre.msgbox.print_msg(this.name + " va s'endormir !");Thread.sleep(1500)
-                    case Freeze => Fenetre.msgbox.print_msg(this.name + " va être gelé!");Thread.sleep(1500)
-                    case Burned => Fenetre.msgbox.print_msg(this.name + " s'enflamme !");Thread.sleep(1500)
-                    case Paralysie => Fenetre.msgbox.print_msg(this.name + " est maintenant paralysé !");Thread.sleep(1500)
-                    case Empoisonnement => Fenetre.msgbox.print_msg(this.name + " est empoisonné !");Thread.sleep(1500)
-                }
-                if (astate == state || state == None_state) {
-                    state = astate 
-                    remaining_time = astate.duration
-                }
-                else {
-                    Fenetre.msgbox.print_msg("Mais " + this.name + " a déjà un effet !");Thread.sleep(1500)
-                }
+        if  (r.nextDouble < pstate) {
+            astate match{
+                case Sommeil => Fenetre.msgbox.print_msg(this.name + " va s'endormir !");Thread.sleep(1500)
+                case Freeze => Fenetre.msgbox.print_msg(this.name + " va être gelé!");Thread.sleep(1500)
+                case Burned => Fenetre.msgbox.print_msg(this.name + " s'enflamme !");Thread.sleep(1500)
+                case Paralysie => Fenetre.msgbox.print_msg(this.name + " est maintenant paralysé !");Thread.sleep(1500)
+                case Empoisonnement => Fenetre.msgbox.print_msg(this.name + " est empoisonné !");Thread.sleep(1500)
+            }
+            if (astate == state || state == None_state) {
+                state = astate 
+                remaining_time = astate.duration
+            }
+            else {
+                Fenetre.msgbox.print_msg("Mais " + this.name + " a déjà un effet !");Thread.sleep(1500)
             }
         }
-        if (this.maitre.is_main) {
-            Fenetre.bataille.print_pok_perso(this)
+    }
+
+
+
+    //applique les effets de l'attaque sur le receveur
+    def receive_attaque(a: Attaque, atker : Pokemon):Unit = {
+
+        //gestion des dégats/efficacité de l'attaque
+        var dmg_taken = (((0.4 * atker.lvl.toFloat + 2.0) * a.dmg.toFloat * atker.atk.toFloat / (50.0 * defense.toFloat) + 3.0) * (a.atype).affinites(ptype)).toInt
+        if (a.dmg > 0) {
+            if ((a.atype).affinites(ptype) == 0.0) {Fenetre.msgbox.print_msg("Cette attaque n'est pas efficace...");Thread.sleep(1500)}
+            if ((a.atype).affinites(ptype) == 0.5) {Fenetre.msgbox.print_msg("Cette attaque n'est pas très efficace...");Thread.sleep(1500)}
+            if ((a.atype).affinites(ptype) == 2.0) {Fenetre.msgbox.print_msg("Cette attaque est super efficace!");Thread.sleep(1500)}
+            Fenetre.msgbox.print_msg(this.name + " perd " + dmg_taken.toString() + " PV !");Thread.sleep(1500)
+            hp = Func.max(hp - dmg_taken,0)
         }
-        else {
-            Fenetre.bataille.print_pok_op(this)
-        }
+        
+        debuffs_attack(a)
+        state_attack(a)
+        maitre.current_battle.reload_icon
         if (hp == 0) {Fenetre.msgbox.print_msg(this.name + " est KO !");Thread.sleep(1500); maitre.nb_alive -= 1}
     }
+
+
 
     def init() = {
         hp = max_hp

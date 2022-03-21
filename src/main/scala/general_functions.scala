@@ -21,9 +21,6 @@ object Func {
         case x => if (x > 6) {4} else {0.25}
     }
 
-    def mult(i : Int) = {
-        (Func.mult_a(i)).toFloat
-    }
     def max(a : Int,b : Int) ={
         if (a >= b) {a} else {b}
     }
@@ -71,11 +68,106 @@ object Func {
         }
     }
 
-
     def pokemon_herbe(a : Area) = {
         a match {
             case Jardin_BasDroit => var a = new Salatard("Salatard S"); a.lvl = 1; a.init; a
             case _ => var a = new Salatard("Salatard S2"); a.lvl = 1; a.init; a
         }
     }
+
+    // lance le menu de choix de pokémon sans retour en arrière possible
+    def menu_pokemon_force() : Unit = {
+        Fenetre.msgbox.print_msg("Veuillez choisir un pokémon :")
+        Player.ip = Fenetre.bas_fenetre.print_menu_pokemon(Player) 
+        Player.ip match {
+            case -1 => menu_pokemon_force()
+            case i if (!Player.pokemons(i).alive) => {
+                Fenetre.msgbox.print_msg("Ce pokémon n'est pas apte à retourner au combat, veuillez choisir un pokémon"); Thread.sleep(800)
+                menu_pokemon_force()
+            }
+            case _ => {}
+        }
+    }
+
+    // lance le menu principal, attaque, pokemons, sac, fuite
+    def menu_principal() : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Que voulez vous faire ?")
+        var choix_menu = -2
+        choix_menu = Fenetre.bas_fenetre.print_menu_base
+        choix_menu match {
+            case 0 => menu_attaque()
+            case 1 => menu_pokemon()
+            case 2 => menu_sac()
+            case 3 => (3, 0)
+            case _ => (0,0)
+        }
+    }
+
+    // le joueur choisit entre 4 attaques
+    def menu_attaque() : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Choisissez une attaque :")
+        var choix_attaque = -2
+        choix_attaque = Fenetre.bas_fenetre.print_menu_attaque(Player.pokemons(Player.ip))
+        choix_attaque match {
+            case -1 => menu_principal()
+            case _ => if (Player.pokemons(Player.ip).pp_list(choix_attaque) == 0) {
+                        Fenetre.msgbox.print_msg("Vous ne pouvez plus lancer cette attaque"); Thread.sleep(1500)
+                        menu_attaque()
+                      }
+                      else {
+                        (0,choix_attaque)
+                      } 
+        }
+    }
+
+    // le joueur choisit quel pokémon lancer dans le menu
+    def menu_pokemon() : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un pokémon :")
+        var choix_pokemon = -2
+        choix_pokemon = Fenetre.bas_fenetre.print_menu_pokemon(Player)
+        choix_pokemon match {
+            case -1 => menu_principal
+            case i if (!Player.pokemons(i).alive) => {
+                        Fenetre.msgbox.print_msg("Ce pokémon n'est pas apte à retourner au combat"); Thread.sleep(1500)
+                        menu_pokemon()
+                    }
+            case i if (i == Player.ip) => {
+                            Fenetre.msgbox.print_msg("Ce pokémon est déjà sur le terrain"); Thread.sleep(1500)
+                            menu_pokemon()
+                    }
+            case i => (1,i) 
+        } 
+    }
+
+    // le joueur choisit sur quel pokémon utiliser l'objet 
+    def menu_pokemon_after_item(choix_objet : Int) : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un pokémon :")
+        var choix_pokemon = -2
+        var item_id = Player.current_items_id(choix_objet)
+        var item = Func.id_items(item_id)
+        choix_pokemon = Fenetre.bas_fenetre.print_menu_pokemon(Player)
+        choix_pokemon match {
+            case -1 => menu_sac
+            case i if (!item.is_usable(Player.pokemons(i))) => {
+                        Fenetre.msgbox.print_msg("Cet objet n'est pas utilisable sur ce pokémon"); Thread.sleep(1500)
+                        menu_pokemon_after_item(choix_objet)
+                      }
+            case i => (2,choix_objet * 6 + choix_pokemon)
+        }
+    }    
+
+    //le joueur choisit un objet, le 2e entier est (6 * id_objet + id_pokemon) selon quel pokémon est choisi pour l'objet
+    def menu_sac() : (Int, Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un objet :")
+        var choix_objet = -2
+        choix_objet = Fenetre.bas_fenetre.print_menu_objet(Player)
+        choix_objet match {
+            case -1 => menu_principal
+            case 4 => {Player.next_page; menu_sac}
+            case 5 => {Player.back_page; menu_sac}
+            case _ => {menu_pokemon_after_item(choix_objet)}
+        }
+    }
+
+
 }

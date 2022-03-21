@@ -57,30 +57,24 @@ abstract class Character(pname : String) extends Seenable {
 
     def move(d : Direction) = {
         if ((0 <= d.newx(x)  && d.newx(x) < current_area.w) && (0 <= d.newy(y)&& d.newy(y) < current_area.h)) {
-
             current_area.tab(d.newx(x))(d.newy(y)) match {
             case Empty_seenable => 
                 current_area.tab(d.newx(x))(d.newy(y)) = this 
                 current_area.tab(x)(y) = Empty_seenable
                 x = d.newx(x); y = d.newy(y)
-
                 current_area.rev(x)(y) match {
                     case Herbe => if (r.nextDouble() < 0.1) {
-                                    println("nature")
                                     Fenetre.bas_fenetre.interruption_menu_map = true
                                     opp = new Nature(current_area); in_battle = true
                                 }
                     case _ => {}
                 }
-
             case it : Item =>  
                 current_area.tab(d.newx(x))(d.newy(y)) = this 
                 current_area.tab(x)(y) = Empty_seenable
                 x = d.newx(x); y = d.newy(y)
             case _ => {}
             }
-
-
         }
         direction = d
     }
@@ -112,7 +106,11 @@ object Player extends Character(readLine()) {
         var y2 = direction.newy(y)
         if (0 <= x2 && x2 <= 14 && 0 <= y2 && y2 <= 9) {
             current_area.tab(x2)(y2) match {
-                case chara : Character => opp = chara; Fenetre.bas_fenetre.interruption_menu_map = true; in_battle = true;
+                case chara : Character => {
+                        opp = chara
+                        Fenetre.bas_fenetre.interruption_menu_map = true
+                        in_battle = true
+                    }
                 case _ => {}
             }
         }
@@ -127,10 +125,12 @@ object Player extends Character(readLine()) {
                 case (x2,y2) if (y2 > 9) => newx = x; newy = 0; new_area = current_area.area_sud
             }
             new_area.tab(newx)(newy) match {
-                case Empty_seenable => {current_area.tab(x)(y) = Empty_seenable;
-                                        new_area.add_character(Player,newx,newy); 
-                                       x = newx; y = newy;
-                                       current_area = new_area; Fenetre.changement_map()}
+                case Empty_seenable => {
+                        current_area.tab(x)(y) = Empty_seenable;
+                        new_area.add_character(Player,newx,newy); 
+                        x = newx; y = newy;
+                        current_area = new_area; Fenetre.changement_map()
+                    }
                 case _ => {}
             }
         }
