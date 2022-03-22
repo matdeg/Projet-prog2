@@ -106,6 +106,7 @@ abstract class Pokemon(pname : String) {
     // ajoute un montant d'xp au pokémon, il monte de niveau si nécessaire
     def add_xp(exp : Int) = {
         Fenetre.msgbox.print_msg(this.name + " a gagné " + exp.toString + " points d'expérience !");Thread.sleep(1500)
+        var ex_max_hp = max_hp
         xp += exp
         if (xp >= next_xp){
             while (xp >= next_xp) {
@@ -114,6 +115,7 @@ abstract class Pokemon(pname : String) {
             }
             Fenetre.msgbox.print_msg(this.name + " est monté au niveau " + lvl);Thread.sleep(1500)
         }
+        hp += max_hp - ex_max_hp
     }
 
 
