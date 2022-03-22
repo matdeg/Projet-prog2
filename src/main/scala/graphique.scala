@@ -25,6 +25,7 @@ import java.awt.RenderingHints.Key
 import javax.swing.Timer
 import java.awt.event.FocusEvent
 import javax.swing.LookAndFeel
+import java.awt.Label
 
 class AffichageBataille extends JPanel {
 
@@ -266,6 +267,7 @@ class Menu extends JPanel {
 
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS))
     add(Fenetre.msgbox)
+    this.setFont(new Font("Helvetica Neue", Font.BOLD, 17))
 
     var bouton0 = new Bouton
     var bouton1 = new Bouton
@@ -538,11 +540,29 @@ class Menu extends JPanel {
         choix_menu
     }
 
+    var label_list = Array(new Label("label0"), new Label("label1"), new Label("label2"), new Label("label3"), new Label("label4"), new Label("label4"), new Label("label5"))
+
     def print_menu_pokedex () = {
 
         Fenetre.requestFocus
         
         Fenetre.msgbox.save = "Bienvenue dans le Pokédex"
+
+        for (i <- 1 to (6 - Pokedex.nb_boutons + Pokedex.current_bouton)) {
+            label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).name)
+            label_list(i-1).setBackground(Color.WHITE)
+            this.add(label_list(i-1))
+        }
+        for (i <- 0 to (Pokedex.nb_boutons - Pokedex.current_bouton -1)) {
+            label_list(Pokedex.current_bouton + i).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i).name)
+            if (i == 0) {
+                label_list(Pokedex.current_bouton).setBackground(Color.CYAN)
+            }
+            else {
+                label_list(Pokedex.current_bouton + i).setBackground(Color.WHITE)
+            }
+            this.add(label_list(Pokedex.current_bouton + i))
+        }
 
         bouton4.setText("Suivant")
         bouton4.info = "Affiche la page suivante"
@@ -558,9 +578,9 @@ class Menu extends JPanel {
         boutonr.set_font("couleur/blanc.png")
 
         rangee_retour.remove(boutonr)
-        rangee_retour.add(bouton4)
-        rangee_retour.add(boutonr)
         rangee_retour.add(bouton5)
+        rangee_retour.add(boutonr)
+        rangee_retour.add(bouton4)
 
         this.add(rangee_retour)
 
@@ -572,7 +592,8 @@ class Menu extends JPanel {
             Thread.sleep(100)
         }
 
-        this.remove(rangee_retour)
+        this.removeAll
+        this.add(Fenetre.msgbox)
         rangee_retour.remove(bouton4)
         rangee_retour.remove(bouton5)
         rangee_bouton_3.add(bouton4)
@@ -621,6 +642,7 @@ class AffichagePokedex extends JPanel {
         g.setColor(Color.CYAN)
         g.drawRect(5, 5, this.getWidth-10, this.getHeight-10)
         g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).name, 15, 30)
+        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).ptype.name, 15, 150)
         g.drawImage(ImageIO.read(getClass.getResource(Pokedex.liste_pokemon(Pokedex.current_pokemon).image)), 50, 50, null)
     }
 
@@ -682,7 +704,6 @@ object Fenetre extends JFrame {
         total.add(Fenetre.info)
         total.add(Fenetre.bas_fenetre)
         info.repaint()
-        println("pokedex")
     }
 
 

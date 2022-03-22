@@ -1,10 +1,14 @@
 import java.awt.dnd.DragSource
 abstract class Ttype {
+
+    var name = "Type"
     // fonction définissant les types efficaces ou non
     def affinites(t:Ttype) = 1.0
 }
 
 object Feu extends Ttype {
+    
+    name = "Feu"
     override def affinites(t:Ttype) = {
         t match {
             case Plante => 2.0
@@ -21,6 +25,8 @@ object Feu extends Ttype {
 }
 
 object Eau extends Ttype {
+
+    name = "Eau"
     override def affinites(t:Ttype) = {
         t match {
             case Feu => 2.0
@@ -35,6 +41,8 @@ object Eau extends Ttype {
 }
 
 object Plante extends Ttype {
+
+    name = "Plante"
     override def affinites(t:Ttype) = {
         t match {
             case Eau => 2.0
@@ -53,6 +61,8 @@ object Plante extends Ttype {
 }
 
 object Electrik extends Ttype {
+
+    name = "Elektrik"
     override def affinites(t:Ttype) = {
         t match {
             case Eau => 2.0
@@ -68,6 +78,8 @@ object Electrik extends Ttype {
 }
 
 object Glace extends Ttype {
+
+    name = "Glace"
     override def affinites(t:Ttype) = {
         t match {
             case Plante => 2.0
@@ -84,6 +96,8 @@ object Glace extends Ttype {
 }
 
 object Combat extends Ttype {
+
+    name = "Combat"
     override def affinites(t:Ttype) = {
         t match {
             case Normal => 2.0
@@ -102,6 +116,8 @@ object Combat extends Ttype {
 }
 
 object Poison extends Ttype {
+
+    name = "Poison"
     override def affinites(t:Ttype) = {
         t match {
             case Normal => 2.0
@@ -116,6 +132,8 @@ object Poison extends Ttype {
 }
 
 object Sol extends Ttype {
+
+    name = "Sol"
     override def affinites(t:Ttype) = {
         t match {
             case Feu => 2.0
@@ -132,6 +150,8 @@ object Sol extends Ttype {
 }
 
 object Vol extends Ttype {
+
+    name = "Vol"
     override def affinites(t:Ttype) = {
         t match {
             case Plante => 2.0
@@ -146,6 +166,8 @@ object Vol extends Ttype {
 }
 
 object Psy extends Ttype {
+
+    name = "Psy"
     override def affinites(t:Ttype) = {
         t match {
             case Poison => 2.0
@@ -159,6 +181,8 @@ object Psy extends Ttype {
 }
 
 object Insecte extends Ttype {
+
+    name = "Insecte"
     override def affinites(t:Ttype) = {
         t match {
             case Plante => 2.0
@@ -176,6 +200,8 @@ object Insecte extends Ttype {
 }
 
 object Roche extends Ttype {
+
+    name = "Roche"
     override def affinites(t:Ttype) = {
         t match {
             case Feu => 2.0
@@ -191,6 +217,8 @@ object Roche extends Ttype {
 }
 
 object Spectre extends Ttype {
+
+    name = "Roche"
     override def affinites(t:Ttype) = {
         t match {
             case Psy => 2.0
@@ -204,6 +232,8 @@ object Spectre extends Ttype {
 }
 
 object Dragon extends Ttype {
+
+    name = "Dragon"
     override def affinites(t:Ttype) = {
         t match {
             case Dragon => 2.0
@@ -214,6 +244,8 @@ object Dragon extends Ttype {
 }
 
 object Tenebres extends Ttype {
+
+    name = "Tenebres"
     override def affinites(t:Ttype) = {
         t match {
             case Psy => 2.0
@@ -227,6 +259,8 @@ object Tenebres extends Ttype {
 }
 
 object Acier extends Ttype {
+
+    name = "Acier"
     override def affinites(t:Ttype) = {
         t match {
             case Roche => 2.0
@@ -241,6 +275,8 @@ object Acier extends Ttype {
 
 
 object Normal extends Ttype {
+
+    name = "Normal"
     override def affinites(t:Ttype) = {
         t match {
             case Roche => 0.5

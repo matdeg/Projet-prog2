@@ -41,8 +41,8 @@ object Pokedex {
             Fenetre.afficher_pokedex()
             var choix = Fenetre.bas_fenetre.print_menu_pokedex()
             choix match {
-                case 4 => previous
-                case 5 => next
+                case 5 => previous
+                case 4 => next
                 case -1 => in_pokedex = false
             }
         }
