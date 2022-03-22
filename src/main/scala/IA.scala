@@ -1,4 +1,4 @@
-class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double) {
+class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double, x6 : Double, x7 : Double) {
 
     def meilleure_atq_direct_selon_joueur(p : Pokemon, q: Pokemon) = {
         var meilleure = 0
@@ -14,6 +14,35 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
             }
         }
         (meilleure,best_dmg*p.ptype.affinites(q.ptype))
+    }
+
+    def meilleure_atq_direct(p : Pokemon, q: Pokemon) = {
+        var meilleure = 0
+        var best_dmg = 0 
+        for (i <- 0 to 3) {
+            var atq = p.attaques(i)
+            if (atq.dmg > 0) {
+                var dmg_dealt = (((0.4 * p.lvl.toFloat + 2.0) * atq.dmg.toFloat * p.atk.toFloat / (50.0 * q.defense.toFloat) + 3.0) * atq.atype.affinites(q.ptype)).toInt
+                if (dmg_dealt > best_dmg) {
+                    best_dmg = dmg_dealt
+                    meilleure = i
+                }
+            }
+        }
+        (meilleure,best_dmg)
+    }
+
+    def min_max_degat(p : Pokemon, q : Character) = {
+        var min = 10000
+        var imax = 0
+        for (i <- 0 to 5 if q.pokemons(i).alive) {
+            var (i_atq,dmg_atq) = meilleure_atq_direct(p,q.pokemons(i))
+            if (dmg_atq < min) {
+                min = dmg_atq 
+                imax = i
+            } 
+        }
+        (imax,min) 
     }
 
     def joueur_aime_pokemon(p : Pokemon,q : Pokemon) = {
@@ -56,7 +85,9 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
             if (atq.dmg > 0) {
                 dmg_dealt = (((0.4 * p_pok.lvl.toDouble + 2.0) * atq.dmg.toDouble * p_pok.atk.toDouble / (50.0 * qi.defense.toDouble) + 3.0) * (atq.atype).affinites(qi.ptype))
             }
-            var rapport_dmg = (dmg_dealt / qi.hp.toInt) 
+
+            var prob_atq = (atq.precision.toDouble/100.0)
+            var rapport_dmg =  (1 - scala.math.pow((1 - prob_atq),x7)) * (dmg_dealt / qi.hp) 
 
             var quotient_vie_restante = (p_pok.hp.toDouble / p_pok.max_hp.toDouble)
 
@@ -117,12 +148,30 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
     }
 
     def danger(p : Character) = {
-        var (atq_ind, best_dmg) = meilleure_atq_direct_selon_joueur(Player.pokemons(Player.ip),p.pokemons(p.ip))
+        var (atq_ind, best_dmg) = meilleure_atq_direct(Player.pokemons(Player.ip),p.pokemons(p.ip))
         (best_dmg.toInt > p.pokemons(p.ip).hp, best_dmg.toInt)
     }
 
+    def change_pokemon(p : Character) = {
+        var (imax,dmg) = min_max_degat(Player.pokemons(Player.ip),p)
+        (1,imax)
+    }
+
+    def can_kill(p : Character) = {
+        var (i_atq,best_dmg) = meilleure_atq_direct(p.pokemons(p.ip),Player.pokemons(Player.ip))
+        if (best_dmg >= Player.pokemons(Player.ip).hp) {
+            (true,i_atq)
+        }
+        else {
+            (false,0)
+        }
+    }
+
+
     def best_move (p : Character,f_changement_joueur : Double, loop : Int) = {
         var (will_die,dmg) = danger(p)
+        var (peut_tuer,i_atq_kill) = can_kill(p)
+        println(will_die,dmg)
         if (will_die) {
             var best_num = -1 
             var best_page = 0
@@ -143,12 +192,24 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
                     best_page = p.page
                 }
             }
-            if (score_hp_healed.toInt >= dmg) {
-                (2,6 * best_num + p.ip)                
+            if (peut_tuer && p.pokemons(p.ip).speed > Player.pokemons(Player.ip).speed) {
+                (0,i_atq_kill)
             }
             else {
-                (0,choix_attaque(p,f_changement_joueur,loop))        
+                if (score_hp_healed.toInt >= (dmg.toDouble + x6 * p.pokemons(p.ip).max_hp).toInt) {
+                    (2,6 * best_num + p.ip)                
+                }
+                else {
+                    if (p.pokemons(p.ip).speed > Player.pokemons(Player.ip).speed) {
+                        (0,choix_attaque(p,f_changement_joueur,loop))  
+                    }
+                    else {
+                        change_pokemon(p)
+                    }     
+                }
             }
+
+            
         }
         else {
             (0,choix_attaque(p,f_changement_joueur,loop))

@@ -8,7 +8,7 @@ abstract class Character(pname : String) extends Seenable {
     var img_ouest = ""
     var img_sud = ""
 
-    var ia = new IA(1,1,1,1,1,1)
+    var ia = new IA(1,1,1,1,1,1,0,1)
 
     // true s'il s'agit du joueur 
     var is_main : Boolean = false
@@ -153,7 +153,7 @@ object Example_opponent1 extends Character("Serge") {
     img_ouest = "random_guy.png"
     img_sud = "random_guy.png"
 
-    ia = new IA(100,1,1,1,1,1)
+    ia = new IA(2,1,1,1,1,1,0,1000)
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))

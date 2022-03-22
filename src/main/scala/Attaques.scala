@@ -67,7 +67,7 @@ object Repli extends Attaque{
 
 object Déflagration extends Attaque{
     dmg = 110
-    pp = 1
+    pp = 5
     precision = 85
     name = "Déflagration"
     atype = Feu
