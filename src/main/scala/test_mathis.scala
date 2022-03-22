@@ -35,7 +35,7 @@ object Test_mathis {
                     choix = -1
                     choix = Fenetre.bas_fenetre.print_menu_base()
                 }
-                Thread.sleep(100)
+                Thread.sleep(10)
             }
             (0,0)
         }

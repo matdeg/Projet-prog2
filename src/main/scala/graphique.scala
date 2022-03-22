@@ -541,6 +541,7 @@ class Menu extends JPanel {
             this.add(label_list(Pokedex.current_bouton + i))
         }
 
+
         bouton4.setText("Suivant")
         bouton4.info = "Affiche la page suivante"
         bouton4.init_icone
@@ -562,6 +563,7 @@ class Menu extends JPanel {
         this.add(rangee_retour)
 
         this.updateUI
+        
 
         choix_menu = -2
 

@@ -1,4 +1,4 @@
-object IA {
+class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double) {
 
     def meilleure_atq_direct_selon_joueur(p : Pokemon, q: Pokemon) = {
         var meilleure = 0
@@ -95,20 +95,10 @@ object IA {
 
             var multiplicateur_debuff_atk = (Func.mult_a(qi.atk_mult - atq_dba) / Func.mult_a(qi.atk_mult))
             var score_debuff_atk = p_atq_dba * scala.math.pow(quotient_vie_restante_adv,2) * (multiplicateur_debuff_atk - 1.0)
-            //if (i == q.ip) {
-              //  println("Les stats de l'attaque " + atq.name + " sont : ")
-              //  println(rapport_dmg)
-              //  println(score_buff_atk)
-              //  println(score_buff_def)
-              //  println(score_buff_speed)
-              //  println(score_debuff_atk)
-              //  println(score_debuff_def)  
-            //}
-            score += p_changement(i) * (rapport_dmg + score_buff_atk + score_buff_def + score_buff_speed + score_debuff_atk + score_debuff_def)
+            score += p_changement(i) * (x0 * rapport_dmg + x1 * score_buff_atk + x2 * score_buff_def + x3 * score_buff_speed + x4 * score_debuff_atk + x5 * score_debuff_def)
         }
     } 
     
-        //println("")
 
         score
     }
