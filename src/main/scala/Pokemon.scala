@@ -4,8 +4,9 @@ abstract class Pokemon(pname : String) {
     val r = scala.util.Random;
     var name = pname
     var image = ""
+    var description = ""
 
-    // stats en lien avec le niveau du pokémon 
+    // stats en lien avec le niveau du pokémon
     var lvl = 5
     var xp = 0
     var base_xp_given = 70
@@ -253,6 +254,7 @@ class Alabri(pname : String) extends Pokemon(pname) {
     ptype = Psy
     attaques = Array(Bouclier,Hate,Psyko,Pistolet_a_O)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Maintenir la situation financière de sa daronne est son principal objectif de vie."
 }
 
 class Alacool(pname : String) extends Pokemon(pname) {
@@ -266,6 +268,7 @@ class Alacool(pname : String) extends Pokemon(pname) {
     ptype = Psy
     attaques = Array(Tornade,Hate,Psyko,Bec_vrille)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Très peu stressé, il vote Philippe Poutou et Mélenchon au second tour."
 }
 
 class Dracarpe(pname : String) extends Pokemon(pname) {
@@ -279,6 +282,7 @@ class Dracarpe(pname : String) extends Pokemon(pname) {
     ptype = Feu
     attaques = Array(Déflagration,Lance_flammes,Pistolet_a_O,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Les expériences foireuses du département de Chimie ont fait naître cette carpe cracheuse de feu"
 }
 
 class Galopan(pname : String) extends Pokemon(pname) {
@@ -292,6 +296,7 @@ class Galopan(pname : String) extends Pokemon(pname) {
     ptype = Feu
     attaques = Array(Feu_follet,Flammèche,Hate,Fouet_lianes)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Le département de biologie avait pour mission de créer la chenille la plus rapide du monde, une 1 chevau"
 }
 
 class Kokicarpe(pname : String) extends Pokemon(pname) {
@@ -305,6 +310,7 @@ class Kokicarpe(pname : String) extends Pokemon(pname) {
     ptype = Eau
     attaques = Array(Pistolet_a_O,Surf,Repli,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Il est le résultat d'une commande de carpe blindée de l'armée à l'ENS"
 }
 
 class Mcool(pname : String) extends Pokemon(pname) {
@@ -318,6 +324,7 @@ class Mcool(pname : String) extends Pokemon(pname) {
     ptype = Psy
     attaques = Array(Tornade,Psyko,Bec_vrille,Hate)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Papa de Alacool"
 }
 
 class Mherbe(pname : String) extends Pokemon(pname) {
@@ -331,6 +338,7 @@ class Mherbe(pname : String) extends Pokemon(pname) {
     ptype = Psy
     attaques = Array(Fouet_lianes,Hate,Yoga,Psyko)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Papa de Alaherbe"
 }
 
 class Magilangue(pname : String) extends Pokemon(pname) {
@@ -344,6 +352,7 @@ class Magilangue(pname : String) extends Pokemon(pname) {
     ptype = Psy
     attaques = Array(Bouclier,Pistolet_a_O,Psyko,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Pokémon dont les performances sont connues de la moitié de l'humanité"
 }
 
 class Poissocarpe(pname : String) extends Pokemon(pname) {
@@ -357,6 +366,7 @@ class Poissocarpe(pname : String) extends Pokemon(pname) {
     ptype = Eau
     attaques = Array(Surf,Pistolet_a_O,Repli,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Il s'agit de la carpe originelle, la carpe cosmique, la grande carpe, la care verte, la réincarantion de la carpe enchantrice, qui s'est proposée comme candidat à l'élection présidentielle de l'étang Carpe"
 }
 
 class Poryodin(pname : String) extends Pokemon(pname) {
@@ -370,6 +380,7 @@ class Poryodin(pname : String) extends Pokemon(pname) {
     ptype = Psy
     attaques = Array(Tornade,Blizzard,Psyko,Hate)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "Personne ne veut savoir comment ce truc est né"
 }
 
 class Rhinocarpe(pname : String) extends Pokemon(pname) {
@@ -383,6 +394,7 @@ class Rhinocarpe(pname : String) extends Pokemon(pname) {
     ptype = Roche
     attaques = Array(Jet_pierres,Pistolet_a_O,Repli,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "expérience ratée d'une fusion entre un rhinocéros et une carpe"
 }
 class Salatard(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
@@ -395,6 +407,7 @@ class Salatard(pname : String) extends Pokemon(pname) {
     ptype = Feu
     attaques = Array(Flammèche,Pistolet_a_O,Fouet_lianes,Bulles_d_O)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    description = "gnnnnééé : le seul son qui peut sortir de sa bouche"
 }
 
 class Starstar(pname : String) extends Pokemon(pname) {
@@ -410,6 +423,7 @@ class Starstar(pname : String) extends Pokemon(pname) {
     attaques = Array(Trempette,Trempette,Trempette,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     state = None_state
+    description = "Le saviez-vous ? Star veut dire étoile en anglais, Le saviez-vous ? Star veut dire étoile en anglais"
 }
 
 class Tentapan(pname : String) extends Pokemon(pname) {
@@ -424,6 +438,7 @@ class Tentapan(pname : String) extends Pokemon(pname) {
     attaques = Array(Trempette,Trempette,Trempette,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     state = None_state
+    description = ""
 }
 
 class Torgogo(pname : String) extends Pokemon(pname) {
@@ -438,4 +453,5 @@ class Torgogo(pname : String) extends Pokemon(pname) {
     attaques = Array(Trempette,Trempette,Trempette,Trempette)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     state = None_state
+    description = "Vous étiez vous déjà demandé à quoi ressemblait un Smogogo rempli d'eau ?" 
 }
