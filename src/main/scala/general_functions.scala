@@ -1,3 +1,33 @@
+import java.awt.{BorderLayout, Dimension, Graphics, Color, Font, Graphics2D, Image}
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JButton
+import javax.swing.JScrollPane
+import javax.swing.JTextArea
+import javax.swing.JPanel
+import javax.imageio.ImageIO
+import java.io.File
+import java.io.IOException
+import java.awt.image.BufferedImage
+import java.awt.GridLayout
+import javax.swing.BoxLayout
+import java.text.AttributedString
+import java.net.CookieStore
+import java.awt.event.ActionListener
+import java.awt.event.ActionEvent
+import java.awt.event.MouseEvent
+import java.lang.Thread
+import javax.swing.SwingConstants
+import java.awt.event.MouseListener
+import java.awt.event.KeyListener
+import java.awt.event.KeyEvent
+import java.awt.RenderingHints.Key
+import javax.swing.Timer
+import java.awt.event.FocusEvent
+import javax.swing.LookAndFeel
+import java.awt.Label
+import java.awt.FontMetrics
+
 object Func {
 
     // permet de retrouver un item à partir de son id
@@ -169,5 +199,39 @@ object Func {
         }
     }
 
+    def print_string(s : String, x : Int, y : Int, g : Graphics, m : FontMetrics) : Unit = {
 
+        var nb_ligne = 1 + (m.stringWidth(s)/(750 - x))
+        println(m.stringWidth(s))
+        println(nb_ligne)
+        var dbt = 0
+        var hauteur = m.getHeight() + 5
+        var new_y = y
+        var i = 0
+        var last_space = 0
+
+        if (nb_ligne > 1) {
+            while (last_space < s.length) {
+                while (m.stringWidth(s.substring(dbt, i)) < 700 - x && i < s.length-1) {
+                    i += 1
+                    if (s(i) == ' ') {
+                        last_space = i
+                    }
+                }
+                if (i == s.length - 1) {
+                    g.drawString(s.substring(dbt, i+1), x, new_y)
+                    last_space = s.length
+                }
+                else {
+                    g.drawString(s.substring(dbt, last_space+1), x, new_y)
+                    dbt = last_space+1
+                    i = dbt
+                    new_y += hauteur
+                }
+            }
+        }
+        else {
+            g.drawString(s, x, y)
+        }
+    }
 }

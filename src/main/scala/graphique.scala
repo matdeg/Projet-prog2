@@ -610,6 +610,7 @@ class AffichageMap extends JPanel {
 class AffichagePokedex extends JPanel {
 
     this.setFont(new Font("Helvetica Neue", Font.BOLD, 17))
+    var mesure = getFontMetrics(new Font("Helvetica Neue", Font.BOLD, 17))
 
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
@@ -618,9 +619,10 @@ class AffichagePokedex extends JPanel {
         g.fillRect(0, 0, this.getWidth, this.getHeight)
         g.setColor(Color.CYAN)
         g.drawRect(5, 5, this.getWidth-10, this.getHeight-10)
-        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).name, 15, 30)
-        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).ptype.name, 15, 150)
-        g.drawImage(ImageIO.read(getClass.getResource(Pokedex.liste_pokemon(Pokedex.current_pokemon).image)), 50, 50, null)
+        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).name, 300, 50)
+        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).ptype.name, 400, 200)
+        Func.print_string(Pokedex.liste_pokemon(Pokedex.current_pokemon).description, 50, 250, g, mesure)
+        g.drawImage(ImageIO.read(getClass.getResource(Pokedex.liste_pokemon(Pokedex.current_pokemon).image)), 100, 100, null)
     }
 
 }
