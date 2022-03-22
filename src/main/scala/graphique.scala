@@ -362,29 +362,6 @@ class Menu extends JPanel {
         choix_menu
     }
 
-    def associe_couleur (t : Ttype) : String = {
-        t match {
-            case Acier => "types/Acier.jpg"
-            case Combat => "types/Combat.jpg"
-            case Dragon => "types/Dragon.png"
-            case Eau => "types/Eau.png"
-            case Electrik => "types/Electrik.jpg"
-            case Feu => "types/Feu.jpeg"
-            case Glace => "types/Glace.png"
-            case Insecte => "types/Insecte.png"
-            case Vol => "types/Vol.jpeg"
-            case Plante => "types/Plante.jpg"
-            case Poison => "types/Poison.png"
-            case Psy => "types/Psy.png"
-            case Roche => "types/Roche.png"
-            case Sol => "types/Sol.jpg"
-            case Spectre => "types/Spectre.jpg"
-            case Tenebres => "types/Tenebres.jpg"
-            case Normal => "types/Normal.jpg"
-            case _ => "couleur/multicolor.jpeg"
-        }
-    }
-
     def print_menu_attaque (p : Pokemon) : Int = {
 
         Fenetre.requestFocus
@@ -392,7 +369,7 @@ class Menu extends JPanel {
         Fenetre.msgbox.save = "Choisissez une attaque :"
         for (i <- 0 to 3) {
             bouton(i).setText(p.attaques(i).name + "   " + p.pp_list(i).toString + "/" + p.attaques(i).pp.toString)
-            bouton(i).set_font(associe_couleur(p.attaques(i).atype))
+            bouton(i).set_font(p.attaques(i).atype.image)
             bouton(i).init_icone()
             bouton(i).info = "Dégats bruts : " + p.attaques(i).dmg.toString + "   " + "Precision : " + p.attaques(i).precision.toString 
         }
@@ -425,7 +402,7 @@ class Menu extends JPanel {
         Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
         for (i <- 0 to 5) {
             bouton(i).setText(p.pokemons(i).name)
-            bouton(i).set_font(associe_couleur(p.pokemons(i).ptype))
+            bouton(i).set_font(p.pokemons(i).ptype.image)
             bouton(i).set_icone(p.pokemons(i).image)
             bouton(i).info = "Hp : " +  p.pokemons(i).hp.toString + "/" + p.pokemons(i).max_hp.toString + "   " + "Atk : " + p.pokemons(i).atk.toString + "   Dfs : " + p.pokemons(i).defense.toString + "   Spd : " + p.pokemons(i).speed.toString
         }
