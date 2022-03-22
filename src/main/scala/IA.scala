@@ -1,4 +1,4 @@
-class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double, x6 : Double, x7 : Double) {
+class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double, x6 : Double, x7 : Double,x8 : Double) {
 
     def meilleure_atq_direct_selon_joueur(p : Pokemon, q: Pokemon) = {
         var meilleure = 0
@@ -121,12 +121,18 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
             var multiplicateur_debuff_def = (Func.mult_a(qi.defense_mult - atq_dbd) / Func.mult_a(qi.defense_mult))
             var score_debuff_def = p_atq_dbd * scala.math.pow(quotient_vie_restante_adv,2) * (multiplicateur_debuff_def - 1.0)
 
+            var (state_to_apply,prob_state) = atq.pstate 
+            var score_state = 0.0
+            if (Player.pokemons(Player.ip).state == None_state) {
+                score_state = prob_state * scala.math.pow(quotient_vie_restante_adv,2)
+            }
+
             //score associé au debuff d'attaque
             var (atq_dba,p_atq_dba) = atq.debuff_atk
 
             var multiplicateur_debuff_atk = (Func.mult_a(qi.atk_mult - atq_dba) / Func.mult_a(qi.atk_mult))
             var score_debuff_atk = p_atq_dba * scala.math.pow(quotient_vie_restante_adv,2) * (multiplicateur_debuff_atk - 1.0)
-            score += p_changement(i) * (x0 * rapport_dmg + x1 * score_buff_atk + x2 * score_buff_def + x3 * score_buff_speed + x4 * score_debuff_atk + x5 * score_debuff_def)
+            score += p_changement(i) * (x0 * rapport_dmg + x1 * score_buff_atk + x2 * score_buff_def + x3 * score_buff_speed + x4 * score_debuff_atk + x5 * score_debuff_def + x8 * score_state)
         }
     } 
     

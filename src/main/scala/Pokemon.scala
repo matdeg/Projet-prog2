@@ -405,7 +405,7 @@ class Salatard(pname : String) extends Pokemon(pname) {
     base_defense = 47
     base_speed = 47
     ptype = Feu
-    attaques = Array(Flammèche,Pistolet_a_O,Fouet_lianes,Bulles_d_O)
+    attaques = Array(Feu_follet,Pistolet_a_O,Fouet_lianes,Bulles_d_O)
     pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "gnnnnééé : le seul son qui peut sortir de sa bouche"
 }
