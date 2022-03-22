@@ -202,8 +202,6 @@ object Func {
     def print_string(s : String, x : Int, y : Int, g : Graphics, m : FontMetrics) : Unit = {
 
         var nb_ligne = 1 + (m.stringWidth(s)/(750 - x))
-        println(m.stringWidth(s))
-        println(nb_ligne)
         var dbt = 0
         var hauteur = m.getHeight() + 5
         var new_y = y
