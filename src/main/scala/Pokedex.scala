@@ -37,13 +37,15 @@ object Pokedex {
 
     def start : Unit = {
         var in_pokedex = true
+        Fenetre.afficher_pokedex()
+        Fenetre.bas_fenetre.ajouter_menu_pokedex()
         while (in_pokedex) {
-            Fenetre.afficher_pokedex()
-            var choix = Fenetre.bas_fenetre.print_menu_pokedex()
+            Fenetre.info.repaint()
+            var choix = Fenetre.bas_fenetre.refresh_menu_pokedex()
             choix match {
                 case 5 => previous
                 case 4 => next
-                case -1 => in_pokedex = false
+                case -1 => in_pokedex = false; Fenetre.bas_fenetre.enlever_menu_pokedex()
             }
         }
     }

@@ -519,7 +519,7 @@ class Menu extends JPanel {
 
     var label_list = Array(new Label("label0"), new Label("label1"), new Label("label2"), new Label("label3"), new Label("label4"), new Label("label4"), new Label("label5"))
 
-    def print_menu_pokedex () = {
+    def ajouter_menu_pokedex () = {
 
         Fenetre.requestFocus
         
@@ -563,7 +563,19 @@ class Menu extends JPanel {
         this.add(rangee_retour)
 
         this.updateUI
-        
+    }
+
+    def refresh_menu_pokedex () = {
+
+        Fenetre.requestFocus
+
+        for (i <- 1 to (6 - Pokedex.nb_boutons + Pokedex.current_bouton)) {
+            label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).name)
+        }
+        for (i <- 0 to (Pokedex.nb_boutons - Pokedex.current_bouton -1)) {
+            label_list(Pokedex.current_bouton + i).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i).name)
+        }
+        label_list(Pokedex.current_bouton).setBackground(Color.CYAN)
 
         choix_menu = -2
 
@@ -571,14 +583,20 @@ class Menu extends JPanel {
             Thread.sleep(100)
         }
 
-        this.removeAll
-        this.add(Fenetre.msgbox)
+        label_list(Pokedex.current_bouton).setBackground(Color.WHITE)
+
+        choix_menu
+    }
+
+    def enlever_menu_pokedex () = {
+
         rangee_retour.remove(bouton4)
         rangee_retour.remove(bouton5)
         rangee_bouton_3.add(bouton4)
         rangee_bouton_3.add(bouton5)
+        this.removeAll
+        this.add(Fenetre.msgbox)
 
-        choix_menu
     }
 }
 
@@ -617,12 +635,11 @@ class AffichagePokedex extends JPanel {
 
     this.setFont(new Font("Helvetica Neue", Font.BOLD, 17))
     var mesure = getFontMetrics(new Font("Helvetica Neue", Font.BOLD, 17))
+    this.setBackground(Color.BLACK)
 
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
 
-        g.setColor(Color.BLACK)
-        g.fillRect(0, 0, this.getWidth, this.getHeight)
         g.setColor(Color.CYAN)
         g.drawRect(5, 5, this.getWidth-10, this.getHeight-10)
         g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).name, 300, 50)
@@ -688,7 +705,7 @@ object Fenetre extends JFrame {
         total.remove(map)
         total.add(info)
         total.add(bas_fenetre)
-        info.repaint()
+        total.repaint()
     }
 
 
