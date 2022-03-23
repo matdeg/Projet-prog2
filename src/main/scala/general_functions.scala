@@ -30,6 +30,8 @@ import java.awt.FontMetrics
 
 object Func {
 
+    val r = scala.util.Random;
+
     // permet de retrouver un item à partir de son id
     var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal)
 
@@ -199,11 +201,29 @@ object Func {
         }
     }
 
+    def menu_sac_hors_combat() : (Int, Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un objet :")
+        var choix_objet = -2
+        choix_objet = Fenetre.bas_fenetre.print_menu_objet(Player)
+        choix_objet match {
+            case -1 => (-1,0)
+            case 4 => {Player.next_page; menu_sac}
+            case 5 => {Player.back_page; menu_sac}
+            case _ => {menu_pokemon_after_item(choix_objet)}
+        }
+    }
+
+    // echange les pokémons i et j du joueur p
     def echange(p : Character, i : Int, j : Int) = {
         var pok_tampon = p.pokemons(i)
         p.pokemons(i) = p.pokemons(j)
         p.pokemons(j) = pok_tampon
     }
+
+    def pokemon_lac() = {
+        var a = new Poissocarpe("Poissocarpe"); a.lvl = 1; a.init; a
+    }
+
 
     def print_string(s : String, x : Int, y : Int, g : Graphics, m : FontMetrics) : Unit = {
 

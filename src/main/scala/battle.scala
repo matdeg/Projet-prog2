@@ -21,6 +21,7 @@ class Battle(other : Character) {
 
     // le personnage p perd, met fin au combat
     def lose(p : Character):Unit = {finished = true
+                                    Player.is_fishing = false
                                     if (p.is_main) {Fenetre.msgbox.print_msg("Mince, vous avez perdu")}
                                     else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}
                                     Player.opp = Empty_character

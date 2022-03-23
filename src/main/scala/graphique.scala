@@ -595,10 +595,14 @@ class AffichageMap extends JPanel {
             for (j <- 0 to 14){
                 tableau.tab(j)(i) match {
                     case chara : Character => var image_chara = chara.direction match {
-                                                               case N => chara.img_nord
-                                                               case S => chara.img_sud
-                                                               case E => chara.img_ouest
-                                                               case O => chara.img_est
+                                                            case N if (chara.is_fishing)=> "player_peche_nord.png"
+                                                            case S if (chara.is_fishing)=> "player_peche_sud.png"
+                                                            case E if (chara.is_fishing)=> "player_peche_ouest.png"
+                                                            case O if (chara.is_fishing)=> "player_peche_est.png"
+                                                            case N => chara.img_nord
+                                                            case S => chara.img_sud
+                                                            case E => chara.img_ouest
+                                                            case O => chara.img_est
                                                }
                                                g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
                     case _ => {}
