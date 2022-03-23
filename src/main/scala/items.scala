@@ -49,7 +49,6 @@ class Hyper_potion extends Item {
 class Revive extends Item {
     name = "revive"
     img = "items/medicine/revive.png"
-    regen = 0
     revive = 0.5
     id = 3
     info = "Résurrecte le Pokéfusion avec la moitié de sa vie"
@@ -61,7 +60,6 @@ class Revive extends Item {
 class Max_revive extends Item {
     name = "max revive"
     img = "items/medicine/max-revive.png"
-    regen = 0
     revive = 1
     id = 4
     info = "Résurrecte le Pokéfusion avec la totalité de sa vie"
@@ -73,7 +71,6 @@ class Max_revive extends Item {
 class Antidote extends Item {
     name = "antidote"
     img = "items/medicine/antidote.png"
-    regen = 0
     id = 5
     state_heal = Array(Empoisonnement)
     info = "Soigne l'empoisonnement"
@@ -85,7 +82,6 @@ class Antidote extends Item {
 class Awakening extends Item {
     name = "awakening"
     img = "items/medicine/awakening.png"
-    regen = 0
     id = 6
     state_heal = Array(Sommeil)
     info = "Réveille le Pokéfusion"
@@ -97,7 +93,6 @@ class Awakening extends Item {
 class Burn_heal extends Item {
     name = "burn-heal"
     img = "items/medicine/burn-heal.png"
-    regen = 0
     id = 7
     state_heal = Array(Burned)
     info = "Soigne la brulure"
@@ -109,7 +104,6 @@ class Burn_heal extends Item {
 class Ice_heal extends Item {
     name = "ice heal"
     img = "items/medicine/ice-heal.png"
-    regen = 0
     id = 8
     state_heal = Array(Freeze)
     info = "Soigne le gel"
@@ -121,7 +115,6 @@ class Ice_heal extends Item {
 class Paralyze_heal extends Item {
     name = "paralyze heal"
     img = "items/medicine/paralyze-heal.png"
-    regen = 0
     id = 9
     state_heal = Array(Paralysie)
     info = "Soigne la paralysie"
@@ -133,11 +126,20 @@ class Paralyze_heal extends Item {
 class Full_heal extends Item {
     name = "full heal"
     img = "items/medicine/full-heal.png"
-    regen = 0
     id = 10
     state_heal = Array(Paralysie,Empoisonnement,Sommeil,Burned,Freeze)
     info = "Soigne tous les états"
     override def is_usable (p : Pokemon) = {
         (p.state != None_state) 
+    }
+}
+
+class Fishing_rod extends Item {
+    name = "fishing-rod"
+    img = "items/key-item/fishing-rod.png"
+    id = 11
+    info = "Permet de pêcher des carpes"
+    override def is_usable (p : Pokemon) = {
+        false
     }
 }

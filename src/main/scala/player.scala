@@ -8,6 +8,11 @@ abstract class Character(pname : String) extends Seenable {
     var img_ouest = ""
     var img_sud = ""
 
+    
+    var is_fishing = false
+
+    var ia = new IA(1,1,1,1,1,1,0,1,1)
+
     // true s'il s'agit du joueur 
     var is_main : Boolean = false
 
@@ -20,7 +25,9 @@ abstract class Character(pname : String) extends Seenable {
 
     // sac d'objet et page courante dans l'affichage du sac en combat
     var page : Int = 0
-    var bag : Array[Int] = new Array[Int](11)
+    var bag : Array[Int] = new Array[Int](12)
+
+    def has_fishing_rod() = {bag(11) > 0}
 
     // donne un tableau qui contient les id d'items de la page courante
     def current_items_id = {Func.choose(bag,page * 4, (page + 1) * 4)}
@@ -55,8 +62,15 @@ abstract class Character(pname : String) extends Seenable {
 
     var direction : Direction = S
 
+    def fish() = {
+        var x = r.nextDouble
+        if (x > 0.9) {
+            opp = new Lac_opp; in_battle = true
+        }
+    }
+
     def move(d : Direction) = {
-        if ((0 <= d.newx(x)  && d.newx(x) < current_area.w) && (0 <= d.newy(y)&& d.newy(y) < current_area.h)) {
+        if ((0 <= d.newx(x)  && d.newx(x) < current_area.w) && (0 <= d.newy(y)&& d.newy(y) < current_area.h) && (!is_fishing)) {
             current_area.tab(d.newx(x))(d.newy(y)) match {
             case Empty_seenable => 
                 current_area.tab(d.newx(x))(d.newy(y)) = this 
@@ -76,7 +90,7 @@ abstract class Character(pname : String) extends Seenable {
             case _ => {}
             }
         }
-        direction = d
+        if (!is_fishing) direction = d
     }
 
     def init : Unit = {}
@@ -100,7 +114,9 @@ object Player extends Character(readLine()) {
         Func.give(this,new Galopan("Galopan"))
         Func.give(this,new Dracarpe("Dracarpe"))
         Func.give(this,new Mherbe("Mherbe"))
+        for(i <- bag.indices) {bag(i) = 1}
     }
+
     def interact() = {
         var x2 = direction.newx(x)
         var y2 = direction.newy(y)
@@ -110,6 +126,10 @@ object Player extends Character(readLine()) {
                         opp = chara
                         Fenetre.bas_fenetre.interruption_menu_map = true
                         in_battle = true
+                    }
+                case Lac if (has_fishing_rod) => {
+                        Fenetre.bas_fenetre.interruption_menu_map = true
+                        is_fishing = true
                     }
                 case _ => {}
             }
@@ -143,6 +163,10 @@ class Nature(a : Area) extends Character("Nature") {
     Func.give(this,Func.pokemon_herbe(a))
 }
 
+class Lac_opp extends Character("Nature") {
+    Func.give(this,Func.pokemon_lac)
+}
+
 object Empty_character extends Character("") {}
 object Example_opponent1 extends Character("Serge") {
 
@@ -150,6 +174,8 @@ object Example_opponent1 extends Character("Serge") {
     img_nord = "random_guy.png"
     img_ouest = "random_guy.png"
     img_sud = "random_guy.png"
+
+    ia = new IA(2,1,1,1,1,1,0,1,100)
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))

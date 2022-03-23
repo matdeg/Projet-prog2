@@ -21,6 +21,7 @@ class Battle(other : Character) {
 
     // le personnage p perd, met fin au combat
     def lose(p : Character):Unit = {finished = true
+                                    Player.is_fishing = false
                                     if (p.is_main) {Fenetre.msgbox.print_msg("Mince, vous avez perdu")}
                                     else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}
                                     Player.opp = Empty_character
@@ -104,7 +105,7 @@ class Battle(other : Character) {
             else {
             other match {
                 case nat : Nature => second_choix_op = r.nextInt(4)
-                case _ => var (a,b) = IA.best_move(other,f1_changement_joueur,loop)
+                case _ => var (a,b) = other.ia.best_move(other,f1_changement_joueur,loop)
                           choix_menu_op = a
                           second_choix_op = b
             }
