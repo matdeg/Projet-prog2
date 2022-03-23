@@ -661,27 +661,27 @@ object Fenetre extends JFrame {
     map.repaint()
 
     def afficher_bataille () = {
-        total.remove(Fenetre.bas_fenetre)
-        total.remove(Fenetre.map)
-        total.add(Fenetre.bataille)
-        total.add(Fenetre.bas_fenetre)
+        total.remove(bas_fenetre)
+        total.remove(map)
+        total.add(bataille)
+        total.add(bas_fenetre)
     }
 
     def afficher_map () = {
-        total.remove(Fenetre.bataille)
-        total.remove(Fenetre.info)
-        total.remove(Fenetre.bas_fenetre)
-        total.add(Fenetre.map)
-        total.add(Fenetre.bas_fenetre)
+        total.remove(bataille)
+        total.remove(info)
+        total.remove(bas_fenetre)
+        total.add(map)
+        total.add(bas_fenetre)
         total.repaint()
-        Fenetre.requestFocus ()
+        this.requestFocus ()
     }
 
     def afficher_pokedex () = {
-        total.remove(Fenetre.bas_fenetre)
-        total.remove(Fenetre.map)
-        total.add(Fenetre.info)
-        total.add(Fenetre.bas_fenetre)
+        total.remove(bas_fenetre)
+        total.remove(map)
+        total.add(info)
+        total.add(bas_fenetre)
         info.repaint()
     }
 

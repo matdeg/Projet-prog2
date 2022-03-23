@@ -1,6 +1,4 @@
 import java.nio.channels.SeekableByteChannel
-class Seenable {}
-object Empty_seenable extends Seenable {}
 
 abstract class Direction {def newx( x : Int) = x; def newy(y : Int) = y }
 object N extends Direction {override def newx(x : Int) = x;
@@ -12,37 +10,33 @@ object S extends Direction {override def newx(x : Int) = x;
 object O extends Direction {override def newx(x : Int) = x + 1;
                             override def newy(y : Int) = y}
 
-class Revetement {
-}
 
-object Empty_Revetement extends Revetement {
-}
+class Revetement {}
 
-object Sol_jardin extends Revetement {
-}
+object Empty_Revetement extends Revetement {}
 
-object Herbe extends Revetement {
-}
+object Sol_jardin extends Revetement {}
 
-object Lac extends Seenable {
+object Herbe extends Revetement {}
 
-}
 
-object Mur extends Seenable {
-}
+class Seenable {}
 
-object Buisson extends Seenable {
+object Empty_seenable extends Seenable {}
 
-}
+object Lac extends Seenable {}
+
+object Mur extends Seenable {}
+
+object Buisson extends Seenable {}
 
 class Porte(d : Direction, de : Area) extends Seenable {
     var direction : Direction = d
     var destination : Area = de
 }
 
-class Panneau(msg : String) extends Seenable {
+class Panneau(msg : String) extends Seenable {}
 
-}
 
 abstract class Area {
     var area_nord : Area = Empty_area
