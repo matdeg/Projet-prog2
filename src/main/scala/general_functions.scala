@@ -199,6 +199,12 @@ object Func {
         }
     }
 
+    def echange(p : Character, i : Int, j : Int) = {
+        var pok_tampon = p.pokemons(i)
+        p.pokemons(i) = p.pokemons(j)
+        p.pokemons(j) = pok_tampon
+    }
+
     def print_string(s : String, x : Int, y : Int, g : Graphics, m : FontMetrics) : Unit = {
 
         var nb_ligne = 1 + (m.stringWidth(s)/(750 - x))
