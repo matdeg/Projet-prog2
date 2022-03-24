@@ -263,9 +263,9 @@ class Bouton extends JButton with MouseListener {
         if (icone != null) {
             g.drawImage(icone, (this.getWidth-mesure.stringWidth(getText))/2 - 80, (this.getHeight-mesure.getHeight())/2 - mesure.getAscent(), 70, 70, null)
             if (max_pv > 0) {
-                g.drawRect((this.getWidth-mesure.stringWidth(getText))/2 -5, (this.getHeight-mesure.getHeight())/2 + 2*mesure.getAscent(), 100, 10)
+                g.drawRect(this.getWidth/2 - 50, (this.getHeight-mesure.getHeight())/2 + 2*mesure.getAscent(), 100, 10)
                 g.setColor(Color.GREEN)
-                g.fillRect((this.getWidth-mesure.stringWidth(getText))/2 -4, (this.getHeight-mesure.getHeight())/2 + 2*mesure.getAscent()+1, 100*pv/max_pv -1, 9)
+                g.fillRect(this.getWidth/2 - 49, (this.getHeight-mesure.getHeight())/2 + 2*mesure.getAscent()+1, 100*pv/max_pv -1, 9)
             }
             
         }
