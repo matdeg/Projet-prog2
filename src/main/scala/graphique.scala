@@ -208,6 +208,8 @@ class Bouton extends JButton with MouseListener {
     var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
     var icone : BufferedImage = null
     var valeur = -2
+    var pv = 0
+    var max_pv = 100
 
     var info = "azerty"
 
@@ -237,8 +239,10 @@ class Bouton extends JButton with MouseListener {
         repaint ()
     }
     
-    def set_icone (s : String) : Unit = {
+    def set_icone (s : String, p : Int, m : Int) : Unit = {
         icone = ImageIO.read(getClass.getResource(s))
+        pv = p
+        max_pv = m
         repaint ()
     }
 
@@ -258,6 +262,12 @@ class Bouton extends JButton with MouseListener {
         g.drawString(getText, (this.getWidth-mesure.stringWidth(getText))/2, (this.getHeight-mesure.getHeight())/2 + mesure.getAscent())
         if (icone != null) {
             g.drawImage(icone, (this.getWidth-mesure.stringWidth(getText))/2 - 80, (this.getHeight-mesure.getHeight())/2 - mesure.getAscent(), 70, 70, null)
+            if (max_pv > 0) {
+                g.drawRect((this.getWidth-mesure.stringWidth(getText))/2 -5, (this.getHeight-mesure.getHeight())/2 + 2*mesure.getAscent(), 100, 10)
+                g.setColor(Color.GREEN)
+                g.fillRect((this.getWidth-mesure.stringWidth(getText))/2 -4, (this.getHeight-mesure.getHeight())/2 + 2*mesure.getAscent()+1, 100*pv/max_pv -1, 9)
+            }
+            
         }
     }
 
@@ -403,7 +413,7 @@ class Menu extends JPanel {
         for (i <- 0 to 5) {
             bouton(i).setText(p.pokemons(i).name)
             bouton(i).set_font(p.pokemons(i).ptype.image)
-            bouton(i).set_icone(p.pokemons(i).image)
+            bouton(i).set_icone(p.pokemons(i).image, p.pokemons(i).hp, p.pokemons(i).max_hp)
             bouton(i).info = "Hp : " +  p.pokemons(i).hp.toString + "/" + p.pokemons(i).max_hp.toString + "   " + "Atk : " + p.pokemons(i).atk.toString + "   Dfs : " + p.pokemons(i).defense.toString + "   Spd : " + p.pokemons(i).speed.toString
         }
         boutonr.setText("Retour")
@@ -451,7 +461,7 @@ class Menu extends JPanel {
         for (i <- 0 to 3) {
             if (p.current_items_id(i) != -1) {
                 bouton(i).setText(Func.id_items(p.current_items_id(i)).name + " : " + p.bag(p.current_items_id(i)))
-                bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img)
+                bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img, 0, -1)
                 bouton(i).info = Func.id_items(p.current_items_id(i)).info
                 if (Func.id_items(p.current_items_id(i)).is_usable(p.pokemons(p.ip))) {
                     bouton(i).set_font("couleur/blanc.png")
