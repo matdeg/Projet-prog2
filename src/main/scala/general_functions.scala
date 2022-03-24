@@ -100,13 +100,6 @@ object Func {
         }
     }
 
-    def pokemon_herbe(a : Area) = {
-        a match {
-            case Jardin_BasDroit => var a = new Salatard("Salatard S"); a.lvl = 1; a.init; a
-            case _ => var a = new Salatard("Salatard S2"); a.lvl = 1; a.init; a
-        }
-    }
-
     // lance le menu de choix de pokémon sans retour en arrière possible
     def menu_pokemon_force() : Unit = {
         Fenetre.msgbox.print_msg("Veuillez choisir un pokémon :")
@@ -133,6 +126,17 @@ object Func {
             case 3 => (3, 0)
             case _ => (0,0)
         }
+    }
+
+    def random_level() = {
+        var avg = 0
+        for (i <- 0 to (Player.nb_pokemons - 1)) {
+            avg += Player.pokemons(i).lvl
+        }
+        avg = avg / Player.nb_pokemons
+        var low = max(0,avg - 7)
+        var high = min(100,avg - 3)
+        r.nextInt(high - low + 1) + low
     }
 
     // le joueur choisit entre 4 attaques
@@ -221,7 +225,13 @@ object Func {
     }
 
     def pokemon_lac() = {
-        var a = new Poissocarpe("Poissocarpe"); a.lvl = 1; a.init; a
+        var a = new Poissocarpe("Poissocarpe"); a.lvl = random_level; a.init; a
+    }
+
+    def pokemon_herbe(a : Area) = {
+        a match {
+            case _ => var a = new Salatard("Salatard S"); a.lvl = random_level; a.init; a
+        }
     }
 
 

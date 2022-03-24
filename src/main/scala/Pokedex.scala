@@ -1,13 +1,13 @@
 object Pokedex {
 
-    var nb_pokemons : Int = 15
+    def nb_pokemons : Int = liste_pokemon.length
     var current_pokemon : Int = 0
     var nb_boutons : Int = 6
     var current_bouton : Int = 0
 
     var returnn : Boolean = false
 
-    var liste_pokemon : Array[Pokemon] = Array(new Alabri("Alabri"), new Alacool("Alacool"), new Dracarpe("Dracarpe"), new Galopan("Galopan"), new Kokicarpe("Kokicarpe"), new Mcool("Mcool"), new Mherbe("Mherbe"), new Magilangue("Magilangue"), new Poissocarpe("Poissocarpe"), new Poryodin("Poryodin"), new Rhinocarpe("Rhinocarpe"), new Salatard("Salatard"), new Starstar("Starstar"), new Tentapan("Tentapan"), new Torgogo("Torgogo"))
+    var liste_pokemon : Array[Pokemon] = Array(new Alabri("Alabri"), new Alacool("Alacool"), new Dracarpe("Dracarpe"), new Galopan("Galopan"), new Kokicarpe("Kokicarpe"), new Mcool("Mcool"), new Mherbe("Mherbe"), new Magilangue("Magilangue"), new Poissocarpe("Poissocarpe"), new Poryodin("Poryodin"), new Rhinocarpe("Rhinocarpe"), new Salatard("Salatard"), new Starstar("Starstar"), new Tentapan("Tentapan"), new Torgogo("Torgogo"), new Coconard(""),new Excelbok(""),new Exceli(""),new Exceloss(""),new Grobra(""),new Grofort(""),new Grolait(""),new Pabo(""),new Pacool(""),new Rapasbo(""),new Rondode(""))
     var encountered : Array[Boolean] = Array.fill[Boolean](100)(false)
 
 

@@ -35,7 +35,9 @@ class Porte(d : Direction, de : Area) extends Seenable {
     var destination : Area = de
 }
 
-class Panneau(msg : String) extends Seenable {}
+class Panneau(msg_ : String) extends Seenable {
+    var msg : String = msg_
+}
 
 
 abstract class Area {

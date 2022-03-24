@@ -542,12 +542,12 @@ class Menu extends JPanel {
         Fenetre.msgbox.save = "Bienvenue dans le Pokédex"
 
         for (i <- 1 to (6 - Pokedex.nb_boutons + Pokedex.current_bouton)) {
-            label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).name)
+            label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).species_name)
             label_list(i-1).setBackground(Color.WHITE)
             this.add(label_list(i-1))
         }
         for (i <- 0 to (Pokedex.nb_boutons - Pokedex.current_bouton -1)) {
-            label_list(Pokedex.current_bouton + i).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i).name)
+            label_list(Pokedex.current_bouton + i).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i).species_name)
             if (i == 0) {
                 label_list(Pokedex.current_bouton).setBackground(Color.CYAN)
             }
@@ -586,10 +586,10 @@ class Menu extends JPanel {
         Fenetre.requestFocus
 
         for (i <- 1 to (6 - Pokedex.nb_boutons + Pokedex.current_bouton)) {
-            label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).name)
+            label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).species_name)
         }
         for (i <- 0 to (Pokedex.nb_boutons - Pokedex.current_bouton -1)) {
-            label_list(Pokedex.current_bouton + i).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i).name)
+            label_list(Pokedex.current_bouton + i).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i).species_name)
         }
         label_list(Pokedex.current_bouton).setBackground(Color.CYAN)
 
@@ -629,16 +629,16 @@ class AffichageMap extends JPanel {
             for (j <- 0 to 14){
                 tableau.tab(j)(i) match {
                     case chara : Character => var image_chara = chara.direction match {
-                                                            case N if (chara.is_fishing)=> "player_peche_nord.png"
-                                                            case S if (chara.is_fishing)=> "player_peche_sud.png"
-                                                            case E if (chara.is_fishing)=> "player_peche_ouest.png"
-                                                            case O if (chara.is_fishing)=> "player_peche_est.png"
-                                                            case N => chara.img_nord
-                                                            case S => chara.img_sud
-                                                            case E => chara.img_ouest
-                                                            case O => chara.img_est
-                                               }
-                                               g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
+                                    case N if (chara.is_fishing)=> chara.img_nord_peche
+                                    case S if (chara.is_fishing)=> chara.img_sud_peche
+                                    case E if (chara.is_fishing)=> chara.img_ouest_peche
+                                    case O if (chara.is_fishing)=> chara.img_est_peche
+                                    case N => chara.img_nord
+                                    case S => chara.img_sud
+                                    case E => chara.img_ouest
+                                    case O => chara.img_est
+                    }
+                    g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
                     case _ => {}
                 }
             }
@@ -666,6 +666,9 @@ class AffichagePokedex extends JPanel {
             g.drawImage(ImageIO.read(getClass.getResource(c_pok.image)), 100, 100, null)
         }
         else {
+            g.drawString("unknown name", 300, 50)
+            g.drawString("unknown type", 400, 200)
+            Func.print_string("you have to see that pokemon somewhere to complete your pokedex", 50, 250, g, mesure)
             g.drawImage(ImageIO.read(getClass.getResource(c_pok.image_blanche)), 100, 100, null)
         }
         

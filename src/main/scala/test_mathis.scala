@@ -5,9 +5,11 @@ object Test_mathis {
         // DEBUT -- initialisation du jeu 
         Player.name = "Mathis la Saucisse"
         Player.init()
-        Example_opponent1.init()
+        Louis.init()
+        Schwoon.init()
         Jardin_BasDroit.add_character(Player,5,6)
-        Jardin_BasDroit.add_character(Example_opponent1,7,7)
+        Jardin_BasDroit.add_character(Louis,7,7)
+        Jardin_MilieuDroit.add_character(Schwoon,6,7)
         Fenetre.afficher_map ()
         // FIN -- initialisation du jeu
 

@@ -3,8 +3,9 @@ import java.awt.Taskbar.State
 abstract class Pokemon(pname : String) {
     val r = scala.util.Random;
     var name = pname
-    var image = ""
-    var image_blanche = "pokemons/alabri_blanc.png"
+    var species_name : String = ""
+    def image = "pokemons/" + species_name + ".png"
+    def image_blanche = "pokemons/" + species_name + "_blanc.png"
     var description = ""
 
     var id = 0
@@ -241,6 +242,7 @@ abstract class Pokemon(pname : String) {
 
     def init() = {
         hp = max_hp
+        pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     }
 }
 
@@ -248,228 +250,333 @@ object Empty_Pokemon extends Pokemon("") {}
 
 class Alabri(pname : String) extends Pokemon(pname) {
     base_max_hp = 50
-    image = "pokemons/alabri.png"
-    hp = max_hp
-    lvl = 5
+    species_name = "alabri"
     id = 0
     base_atk = 50
     base_defense = 56
     base_speed = 47
     ptype = Psy
     attaques = Array(Bouclier,Hate,Psyko,Pistolet_a_O)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Maintenir la situation financière de sa daronne est son principal objectif de vie."
 }
 
 class Alacool(pname : String) extends Pokemon(pname) {
     base_max_hp = 40
-    image = "pokemons/alacool.png"
-    hp = max_hp
-    lvl = 5
+    species_name = "alacool"
     id = 1
     base_atk = 47
     base_defense = 45
     base_speed = 56
     ptype = Psy
     attaques = Array(Tornade,Hate,Psyko,Bec_vrille)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Très peu stressé, il vote Philippe Poutou et Mélenchon au second tour."
 }
 
+
+
 class Dracarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 44
-    image = "pokemons/dracarpe.png"
-    hp = max_hp
-    lvl = 5
+    species_name = "dracarpe"
     id = 2
     base_atk = 55
     base_defense = 40
     base_speed = 40
     ptype = Feu
     attaques = Array(Déflagration,Lance_flammes,Pistolet_a_O,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Les expériences foireuses du département de Chimie ont fait naître cette carpe cracheuse de feu"
 }
 
 class Galopan(pname : String) extends Pokemon(pname) {
     base_max_hp = 44
-    image = "pokemons/galopan.png"
-    hp = max_hp
-    lvl = 5
+    species_name = "galopan"
     id = 3
     base_atk = 55
     base_defense = 50
     base_speed = 40
     ptype = Feu
     attaques = Array(Feu_follet,Flammèche,Hate,Fouet_lianes)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Le département de biologie avait pour mission de créer la chenille la plus rapide du monde, une 1 chevau"
 }
 
 class Kokicarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 40
-    image = "pokemons/kokicarpe.png"
-    lvl = 5
+    species_name = "kokicarpe"
     id = 4
-    hp = max_hp
     base_atk = 40
     base_defense = 55
     base_speed = 40
     ptype = Eau
     attaques = Array(Pistolet_a_O,Surf,Repli,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Il est le résultat d'une commande de carpe blindée de l'armée à l'ENS"
 }
 
 class Mcool(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
-    image = "pokemons/m.cool.png"
-    lvl = 5
+    species_name = "m.cool"
     id = 5
-    hp = max_hp
     base_atk = 40
     base_defense = 50
     base_speed = 45
     ptype = Psy
     attaques = Array(Tornade,Psyko,Bec_vrille,Hate)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Papa de Alacool"
 }
 
 class Mherbe(pname : String) extends Pokemon(pname) {
     base_max_hp = 40
-    image = "pokemons/m.herbe.png"
-    lvl = 5
+    species_name = "m.herbe"
     id = 6
-    hp = max_hp
     base_atk = 46
     base_defense = 47
     base_speed = 44
     ptype = Psy
     attaques = Array(Fouet_lianes,Hate,Yoga,Psyko)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Papa de Alaherbe"
 }
 
 class Magilangue(pname : String) extends Pokemon(pname) {
     base_max_hp = 56
-    image = "pokemons/magilangue.png"
-    lvl = 5
+    species_name = "magilangue"
     id = 7
-    hp = max_hp
     base_atk = 43
     base_defense = 51
     base_speed = 40
     ptype = Psy
     attaques = Array(Bouclier,Pistolet_a_O,Psyko,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Pokémon dont les performances sont connues de la moitié de l'humanité"
 }
 
 class Poissocarpe(pname : String) extends Pokemon(pname) {
-    base_max_hp = 44
-    image = "pokemons/poissocarpe.png"
-    lvl = 6
+    base_max_hp = 47
+    species_name = "poissocarpe"
     id = 8
-    hp = max_hp
-    base_atk = 45
+    base_atk = 50
     base_defense = 47
     base_speed = 43
     ptype = Eau
     attaques = Array(Surf,Pistolet_a_O,Repli,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Il s'agit de la carpe originelle, la carpe cosmique, la grande carpe, la care verte, la réincarantion de la carpe enchantrice, qui s'est proposée comme candidat à l'élection présidentielle de l'étang Carpe"
 }
 
 class Poryodin(pname : String) extends Pokemon(pname) {
     base_max_hp = 60
-    image = "pokemons/poryodin.png"
-    lvl = 5
+    species_name = "poryodin"
     id = 9
-    hp = max_hp
     base_atk = 51
     base_defense = 50
     base_speed = 50
     ptype = Psy
     attaques = Array(Tornade,Blizzard,Psyko,Hate)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "Personne ne veut savoir comment ce truc est né"
 }
 
 class Rhinocarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
-    image = "pokemons/rhinocarpe.png"
-    lvl = 5
+    species_name = "rhinocarpe"
     id = 10
-    hp = max_hp
     base_atk = 55
     base_defense = 45
     base_speed = 45
     ptype = Roche
     attaques = Array(Jet_pierres,Pistolet_a_O,Repli,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "expérience ratée d'une fusion entre un rhinocéros et une carpe"
 }
 class Salatard(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
-    image = "pokemons/salatard.png"
-    lvl = 5
+    species_name = "salatard"
     id = 11
-    hp = max_hp
     base_atk = 50
     base_defense = 47
     base_speed = 47
     ptype = Feu
     attaques = Array(Feu_follet,Pistolet_a_O,Fouet_lianes,Bulles_d_O)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
     description = "gnnnnééé : le seul son qui peut sortir de sa bouche"
 }
 
 class Starstar(pname : String) extends Pokemon(pname) {
-   base_max_hp = 50
-    
-    image = "pokemons/starstar.png"
-    hp = 30
-    lvl = 5
+    base_max_hp = 50
+    species_name = "starstar"
     id = 12
-    base_atk = 50
+    base_atk = 48
     base_defense = 50
-    base_speed = 200
+    base_speed = 46
     ptype = Eau
     attaques = Array(Trempette,Trempette,Trempette,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
-    state = None_state
     description = "Le saviez-vous ? Star veut dire étoile en anglais, Le saviez-vous ? Star veut dire étoile en anglais"
 }
 
 class Tentapan(pname : String) extends Pokemon(pname) {
-   base_max_hp = 50
-    image = "pokemons/tentapan.png"
-    hp = 30
-    lvl = 5
+    base_max_hp = 45
+    species_name = "tentapan"
     id = 13
-    base_atk = 50
-    base_defense = 50
-    base_speed = 200
+    base_atk = 45
+    base_defense = 60
+    base_speed = 43
     ptype = Eau
     attaques = Array(Trempette,Trempette,Trempette,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
-    state = None_state
     description = ""
 }
 
 class Torgogo(pname : String) extends Pokemon(pname) {
-   base_max_hp = 50
-    image = "pokemons/torgogo.png"
-    hp = 30
-    lvl = 5
+    base_max_hp = 50
+    species_name = "torgogo"
     id = 14
-    base_atk = 500
+    base_atk = 50
     base_defense = 50
-    base_speed = 200
+    base_speed = 50
     ptype = Poison
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)
-    pp_list = Array(attaques(0).pp,attaques(1).pp,attaques(2).pp,attaques(3).pp)
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
     state = None_state
     description = "Vous étiez vous déjà demandé à quoi ressemblait un Smogogo rempli d'eau ?" 
 }
+
+class Coconard(pname : String) extends Pokemon(pname) {
+    base_max_hp = 55
+    species_name = "coconard"
+    id = 15
+    base_atk = 45
+    base_defense = 55
+    base_speed = 43
+    ptype = Insecte
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "La politesse n'est pas son fort, il est très convoité par un certain pêcheur" 
+}
+
+class Excelbok(pname : String) extends Pokemon(pname) {
+    base_max_hp = 55
+    species_name = "excelbok"
+    id = 16
+    base_atk = 49
+    base_defense = 48
+    base_speed = 46
+    ptype = Normal
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Il est le résultat de l'expérience COAT sur un serpent" 
+}
+
+class Exceli(pname : String) extends Pokemon(pname) {
+    base_max_hp = 50
+    species_name = "exceli"
+    id = 17
+    base_atk = 52
+    base_defense = 46
+    base_speed = 47
+    ptype = Normal
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Il est le résultat de l'expérience COAT sur un pauvre écureuil" 
+}
+
+class Exceloss(pname : String) extends Pokemon(pname) {
+    base_max_hp = 60
+    species_name = "exceloss"
+    id = 18
+    base_atk = 60
+    base_defense = 50
+    base_speed = 50
+    ptype = Normal
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Il est le résultat de l'expérience COAT sur un dragon, il peut maintenant être acheté dans certains magasins" 
+}
+
+class Grobra(pname : String) extends Pokemon(pname) {
+    base_max_hp = 55
+    species_name = "grobra"
+    id = 19
+    base_atk = 60
+    base_defense = 48
+    base_speed = 47
+    ptype = Roche
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Sa télékynésie étant limitée par le poids des objets qu'il manipule, Kadabra a pris un abonnement basic-fit, il peut maintenant soulever ta daronne" 
+}
+
+class Grofort(pname : String) extends Pokemon(pname) {
+    base_max_hp = 50
+    species_name = "grofort"
+    id = 19
+    base_atk = 40
+    base_defense = 70
+    base_speed = 35
+    ptype = Roche
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Tout est dans son nom" 
+}
+
+class Grolait(pname : String) extends Pokemon(pname) {
+    base_max_hp = 50
+    species_name = "grolait"
+    id = 20
+    base_atk = 49
+    base_defense = 50 
+    base_speed = 45
+    ptype = Roche
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Tout est dans son nom" 
+}
+
+class Pabo(pname : String) extends Pokemon(pname) {
+    base_max_hp = 48
+    species_name = "pabo"
+    id = 21
+    base_atk = 49
+    base_defense = 50 
+    base_speed = 45
+    ptype = Insecte
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Cousin éloigné de grolait" 
+}
+
+class Pacool(pname : String) extends Pokemon(pname) {
+    base_max_hp = 48
+    species_name = "pacool"
+    id = 22
+    base_atk = 49
+    base_defense = 50 
+    base_speed = 45
+    ptype = Insecte
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Cousin éloigné de coconard, il est convoité par le même pêcheur" 
+}
+
+
+class Rapasbo(pname : String) extends Pokemon(pname) {
+    base_max_hp = 48
+    species_name = "rapasbo"
+    id = 23
+    base_atk = 49
+    base_defense = 50 
+    base_speed = 45
+    ptype = Vol
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "bruh" 
+}
+
+class Rondode(pname : String) extends Pokemon(pname) {
+    base_max_hp = 48
+    species_name = "rondode"
+    id = 24
+    base_atk = 49
+    base_defense = 50 
+    base_speed = 45
+    ptype = Normal
+    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    state = None_state
+    description = "Non ce n'est pas Kirby" 
+}
+
+
+
+
+
+
+

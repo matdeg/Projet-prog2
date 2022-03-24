@@ -2,11 +2,26 @@ abstract class Character(pname : String) extends Seenable {
 
     var opp : Character = Empty_character
     var in_battle = false
+
+    var file_name = ""
+
     val r = scala.util.Random;
-    var img_est = ""
-    var img_nord = ""
-    var img_ouest = ""
-    var img_sud = ""
+    def img_est = "character/" + file_name + "_est.png"
+    def img_nord = "character/" + file_name + "_nord.png"
+    def img_ouest = "character/" + file_name + "_ouest.png"
+    def img_sud = "character/" + file_name + "_sud.png"
+    def img_est_peche = "character/" + file_name + "_peche_est.png"
+    def img_nord_peche = "character/" + file_name + "_peche_nord.png"
+    def img_ouest_peche = "character/" + file_name + "_peche_ouest.png"
+    def img_sud_peche = "character/" + file_name + "_peche_sud.png"
+    def img_est_marche1 = "character/" + file_name + "_marche_est_1.png"
+    def img_nord_marche1 = "character/" + file_name + "_marche_nord_1.png"
+    def img_ouest_marche1 = "character/" + file_name + "_marche_ouest_1.png"
+    def img_sud_marche1 = "character/" + file_name + "_marche_sud_1.png"
+    def img_est_marche2 = "character/" + file_name + "_marche_est_2.png"
+    def img_nord_marche2 = "character/" + file_name + "_marche_nord_2.png"
+    def img_ouest_marche2 = "character/" + file_name + "_marche_ouest_2.png"
+    def img_sud_marche2 = "character/" + file_name + "_marche_sud_2.png"
 
     
     var is_fishing = false
@@ -103,10 +118,7 @@ abstract class Character(pname : String) extends Seenable {
 object Player extends Character(readLine()) {
     is_main = true
     
-    img_est = "player_est.png"
-    img_nord = "player_nord.png"
-    img_ouest = "player_ouest.png"
-    img_sud = "player_sud.png"
+    file_name = "player"
     override def init() = {
         Func.give(this,new Dracarpe("Dracarpe"))
         Func.give(this,new Poissocarpe("Poissocarpe"))
@@ -126,6 +138,10 @@ object Player extends Character(readLine()) {
                         opp = chara
                         Fenetre.bas_fenetre.interruption_menu_map = true
                         in_battle = true
+                    }
+                case panneau : Panneau => {
+                        Fenetre.msgbox.print_msg(panneau.msg)
+                        Thread.sleep(1000)
                     }
                 case Lac if (has_fishing_rod) => {
                         Fenetre.bas_fenetre.interruption_menu_map = true
@@ -168,14 +184,27 @@ class Lac_opp extends Character("Nature") {
 }
 
 object Empty_character extends Character("") {}
-object Example_opponent1 extends Character("Serge") {
+object Louis extends Character("louis") {
 
-    img_est = "random_guy.png"
-    img_nord = "random_guy.png"
-    img_ouest = "random_guy.png"
-    img_sud = "random_guy.png"
+    file_name = "louis"
 
-    ia = new IA(2,1,1,1,1,1,0,1,100)
+    ia = new IA(2,1,1,1,1,1,0,1,10)
+    override def init() = {
+        Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        for(i <- bag.indices) {
+            bag(i) = 1
+        }
+    }
+}
+
+object Schwoon extends Character("Stefan Schwoon") {
+
+    file_name = "scientifique"
+
+    ia = new IA(2,1,1,1,1,1,0,1,10)
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
