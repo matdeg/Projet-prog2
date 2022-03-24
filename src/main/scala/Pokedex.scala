@@ -8,6 +8,8 @@ object Pokedex {
     var returnn : Boolean = false
 
     var liste_pokemon : Array[Pokemon] = Array(new Alabri("Alabri"), new Alacool("Alacool"), new Dracarpe("Dracarpe"), new Galopan("Galopan"), new Kokicarpe("Kokicarpe"), new Mcool("Mcool"), new Mherbe("Mherbe"), new Magilangue("Magilangue"), new Poissocarpe("Poissocarpe"), new Poryodin("Poryodin"), new Rhinocarpe("Rhinocarpe"), new Salatard("Salatard"), new Starstar("Starstar"), new Tentapan("Tentapan"), new Torgogo("Torgogo"))
+    var encountered : Array[Boolean] = Array.fill[Boolean](100)(false)
+
 
     def next = {
         current_pokemon match {

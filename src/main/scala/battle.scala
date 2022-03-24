@@ -71,6 +71,7 @@ class Battle(other : Character) {
             }
         }
         change_other()
+        Pokedex.encountered(other.pokemons(other.ip).id) = true
         reload_icon()
     }
 

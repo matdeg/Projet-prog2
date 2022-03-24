@@ -4,7 +4,10 @@ abstract class Pokemon(pname : String) {
     val r = scala.util.Random;
     var name = pname
     var image = ""
+    var image_blanche = "pokemons/alabri_blanc.png"
     var description = ""
+
+    var id = 0
 
     // stats en lien avec le niveau du pokémon
     var lvl = 5
@@ -248,6 +251,7 @@ class Alabri(pname : String) extends Pokemon(pname) {
     image = "pokemons/alabri.png"
     hp = max_hp
     lvl = 5
+    id = 0
     base_atk = 50
     base_defense = 56
     base_speed = 47
@@ -262,6 +266,7 @@ class Alacool(pname : String) extends Pokemon(pname) {
     image = "pokemons/alacool.png"
     hp = max_hp
     lvl = 5
+    id = 1
     base_atk = 47
     base_defense = 45
     base_speed = 56
@@ -276,6 +281,7 @@ class Dracarpe(pname : String) extends Pokemon(pname) {
     image = "pokemons/dracarpe.png"
     hp = max_hp
     lvl = 5
+    id = 2
     base_atk = 55
     base_defense = 40
     base_speed = 40
@@ -290,6 +296,7 @@ class Galopan(pname : String) extends Pokemon(pname) {
     image = "pokemons/galopan.png"
     hp = max_hp
     lvl = 5
+    id = 3
     base_atk = 55
     base_defense = 50
     base_speed = 40
@@ -303,6 +310,7 @@ class Kokicarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 40
     image = "pokemons/kokicarpe.png"
     lvl = 5
+    id = 4
     hp = max_hp
     base_atk = 40
     base_defense = 55
@@ -317,6 +325,7 @@ class Mcool(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
     image = "pokemons/m.cool.png"
     lvl = 5
+    id = 5
     hp = max_hp
     base_atk = 40
     base_defense = 50
@@ -331,6 +340,7 @@ class Mherbe(pname : String) extends Pokemon(pname) {
     base_max_hp = 40
     image = "pokemons/m.herbe.png"
     lvl = 5
+    id = 6
     hp = max_hp
     base_atk = 46
     base_defense = 47
@@ -345,6 +355,7 @@ class Magilangue(pname : String) extends Pokemon(pname) {
     base_max_hp = 56
     image = "pokemons/magilangue.png"
     lvl = 5
+    id = 7
     hp = max_hp
     base_atk = 43
     base_defense = 51
@@ -359,6 +370,7 @@ class Poissocarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 44
     image = "pokemons/poissocarpe.png"
     lvl = 6
+    id = 8
     hp = max_hp
     base_atk = 45
     base_defense = 47
@@ -373,6 +385,7 @@ class Poryodin(pname : String) extends Pokemon(pname) {
     base_max_hp = 60
     image = "pokemons/poryodin.png"
     lvl = 5
+    id = 9
     hp = max_hp
     base_atk = 51
     base_defense = 50
@@ -387,6 +400,7 @@ class Rhinocarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
     image = "pokemons/rhinocarpe.png"
     lvl = 5
+    id = 10
     hp = max_hp
     base_atk = 55
     base_defense = 45
@@ -400,6 +414,7 @@ class Salatard(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
     image = "pokemons/salatard.png"
     lvl = 5
+    id = 11
     hp = max_hp
     base_atk = 50
     base_defense = 47
@@ -416,6 +431,7 @@ class Starstar(pname : String) extends Pokemon(pname) {
     image = "pokemons/starstar.png"
     hp = 30
     lvl = 5
+    id = 12
     base_atk = 50
     base_defense = 50
     base_speed = 200
@@ -431,6 +447,7 @@ class Tentapan(pname : String) extends Pokemon(pname) {
     image = "pokemons/tentapan.png"
     hp = 30
     lvl = 5
+    id = 13
     base_atk = 50
     base_defense = 50
     base_speed = 200
@@ -446,6 +463,7 @@ class Torgogo(pname : String) extends Pokemon(pname) {
     image = "pokemons/torgogo.png"
     hp = 30
     lvl = 5
+    id = 14
     base_atk = 500
     base_defense = 50
     base_speed = 200
