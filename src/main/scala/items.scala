@@ -17,7 +17,7 @@ abstract class Item extends Seenable {
     var state_heal : Array[States] = Array()
     var info = ""
     def is_usable(p : Pokemon) : Boolean = {
-        p.alive
+        p.alive && (p.hp != p.max_hp)
     } 
 }
 

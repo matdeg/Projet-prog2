@@ -33,7 +33,7 @@ object Func {
     val r = scala.util.Random;
 
     // permet de retrouver un item à partir de son id
-    var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal)
+    var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal, new Fishing_rod)
 
     // multiplicateur de stat en fonction de l'indice de modification
     def mult_a: Int => Double = {
