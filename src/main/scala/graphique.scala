@@ -658,10 +658,17 @@ class AffichagePokedex extends JPanel {
 
         g.setColor(Color.CYAN)
         g.drawRect(5, 5, this.getWidth-10, this.getHeight-10)
-        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).name, 300, 50)
-        g.drawString(Pokedex.liste_pokemon(Pokedex.current_pokemon).ptype.name, 400, 200)
-        Func.print_string(Pokedex.liste_pokemon(Pokedex.current_pokemon).description, 50, 250, g, mesure)
-        g.drawImage(ImageIO.read(getClass.getResource(Pokedex.liste_pokemon(Pokedex.current_pokemon).image)), 100, 100, null)
+        var c_pok = Pokedex.liste_pokemon(Pokedex.current_pokemon)
+        if (Pokedex.encountered(c_pok.id)) {
+            g.drawString(c_pok.name, 300, 50)
+            g.drawString(c_pok.ptype.name, 400, 200)
+            Func.print_string(c_pok.description, 50, 250, g, mesure)
+            g.drawImage(ImageIO.read(getClass.getResource(c_pok.image)), 100, 100, null)
+        }
+        else {
+            g.drawImage(ImageIO.read(getClass.getResource(c_pok.image_blanche)), 100, 100, null)
+        }
+        
     }
 
 }

@@ -198,7 +198,6 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
         var qi = Player.pokemons(Player.ip)
         var (will_die,dmg) = danger(p)
         var (peut_tuer,i_atq_kill) = can_kill(p)
-        println(will_die,dmg)
         if (will_die) {
             var best_num = -1 
             var best_page = 0
