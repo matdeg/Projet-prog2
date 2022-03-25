@@ -623,7 +623,7 @@ class AffichageMap extends JPanel {
     var which_frame : Int = 1
 
     def move_player(d : Direction) : Unit = {
-        animation = false
+        animation = true
         p_x = Player.x*50
         p_y = Player.y*50
         d match {
@@ -663,14 +663,13 @@ class AffichageMap extends JPanel {
                                 p_y += dy
                                 g.drawImage(image_animation1, p_x, p_y, 50, 50, null)
                                 which_frame = 3 - which_frame
-                                Thread.sleep(10)
                             }
                             case _ => {}
                         }
                     }
                 }
+                Thread.sleep(10)
             }
-            println("animation")
             animation = false
         }
         else {
@@ -696,8 +695,6 @@ class AffichageMap extends JPanel {
                 }
             }
         }
-        println(p_x)
-        println(p_y)
     }
 
 }
