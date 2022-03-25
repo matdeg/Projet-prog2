@@ -50,10 +50,10 @@ abstract class Pokemon(pname : String) {
     var remaining_time : Int = 0
     
     // iv = individual value -> different stats between pokemons of the same specy
-    val iv_hp : Int = r.nextInt(30) 
-    val iv_atk : Int = r.nextInt(30) 
-    val iv_defense : Int = r.nextInt(30) 
-    val iv_speed : Int = r.nextInt(30) 
+    val iv_hp : Int = r.nextInt(20) 
+    val iv_atk : Int = r.nextInt(20) 
+    val iv_defense : Int = r.nextInt(20) 
+    val iv_speed : Int = r.nextInt(20) 
 
     // calcul des statistiques
     def max_hp = {((((base_max_hp + iv_hp) * 2 + 10).toDouble * lvl.toDouble) / 100.0).toInt + lvl + 10}

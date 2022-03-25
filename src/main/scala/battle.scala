@@ -22,19 +22,17 @@ class Battle(other : Character) {
     // le personnage p perd, met fin au combat
     def lose(p : Character):Unit = {finished = true
                                     Player.is_fishing = false
-                                    if (p.is_main) {Fenetre.msgbox.print_msg("Mince, vous avez perdu")}
-                                    else {Fenetre.msgbox.print_msg("Bravo, vous avez gagné !")}
+                                    p match {
+                                        case Player => Fenetre.msgbox.print_msg("Mince, vous avez perdu")
+                                        case Empty_character => Fenetre.msgbox.print_msg("Vous êtes vraiment un trouillard")
+                                        case _ => Fenetre.msgbox.print_msg("Bravo, vous avez battu " + Player.opp.name + " !")
+                                    }
+                                    Thread.sleep(1000)
+                                    Fenetre.msgbox.print_msg("")
                                     Player.opp = Empty_character
                                     Fenetre.afficher_map ()
                                     Player.in_battle = false
                                     Test_mathis.choix = Fenetre.bas_fenetre.print_menu_base ()}
-
-
-    // permet de fuir le combat
-    def fuite : Unit = {
-        lose(Player)
-    }
-
 
     // actualise l'affichage des données du combat
     def reload_icon() = {
@@ -57,8 +55,6 @@ class Battle(other : Character) {
         }
     }
     
-
-
     // acualise le pokémon du joueur, il choisit quel pokémon envoyer
     def change:Unit = {
         if (!Player.pokemons(Player.ip).alive) {
@@ -74,8 +70,6 @@ class Battle(other : Character) {
         Pokedex.encountered(other.pokemons(other.ip).id) = true
         reload_icon()
     }
-
-
 
     // Démarre la battle
     def start : Unit = {
@@ -99,7 +93,7 @@ class Battle(other : Character) {
             if (choix_menu == 3) {
                 Fenetre.msgbox.print_msg(Player.name + " s'enfuit !")
                 Thread.sleep(1200)
-                lose(Player)
+                lose(Empty_character)
             } 
 
             // On gère le choix de l'adversaire via une IA, qui dépend de l'adversaire

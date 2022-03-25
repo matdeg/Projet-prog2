@@ -46,6 +46,7 @@ abstract class Area {
     var area_est : Area = Empty_area
     var area_ouest : Area = Empty_area
     var img = ""
+    var background = "background/jardin_flou.png"
     var w : Int = 15
     var h : Int = 10
     var rev : Array[Array[Revetement]] = Array.fill(w, h){ Empty_Revetement }

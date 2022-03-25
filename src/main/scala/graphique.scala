@@ -33,17 +33,13 @@ class AffichageBataille extends JPanel {
 
     var devant : BufferedImage = ImageIO.read(getClass.getResource("Devant.png"))
     var derriere : BufferedImage = ImageIO.read(getClass.getResource("Derriere.png"))
-    var env : BufferedImage = ImageIO.read(getClass.getResource("background/jardin_flou.png"))
+    def env : BufferedImage = ImageIO.read(getClass.getResource(Player.current_area.background))
     var stat_op : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_op.png"))
     var stat_perso : BufferedImage = ImageIO.read(getClass.getResource("HP_bars_perso.png"))
     var pokeball : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille.png"))
     var pokeball_statut : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_statut.png"))
     var pokeball_KO : BufferedImage = ImageIO.read(getClass.getResource("pokeball_bataille_KO.png"))
-    var gel : BufferedImage = ImageIO.read(getClass.getResource("effets/gel.png"))
-    var burned : BufferedImage = ImageIO.read(getClass.getResource("effets/burned.png"))
-    var sleep : BufferedImage = ImageIO.read(getClass.getResource("effets/sleep.png"))
-    var para : BufferedImage = ImageIO.read(getClass.getResource("effets/para.png"))
-    var poison : BufferedImage = ImageIO.read(getClass.getResource("effets/poison.png"))
+    def img_state(p : Pokemon) : BufferedImage = ImageIO.read(getClass.getResource(p.state.file_name))
 
     var you : Character = Empty_character
     var op : Character = Empty_character
@@ -113,10 +109,8 @@ class AffichageBataille extends JPanel {
     }
 
     def print_statut_op (g : Graphics) : Unit = {
-        op.pokemons(op.ip).state match {
-            case Freeze => g.drawImage(gel, 100, 100, 100, 100, null)
-            case Burned => g.drawImage(burned, 100, 100, 100, 100, null)
-            case Sommeil => g.drawImage(sleep, 100, 100, 100, 100, null)
+        if (op.pokemons(op.ip).state != None_state) {
+            g.drawImage(img_state(op.pokemons(op.ip)), 100, 100, 100, 100, null)
         }
     }
     

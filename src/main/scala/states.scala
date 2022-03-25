@@ -1,5 +1,6 @@
 abstract class States {
     var name : String = ""
+    def file_name = "effets/" + name + ".png"
 
     // indice de modification des statistiques
     var mspeed : Int = 0
@@ -20,7 +21,7 @@ abstract class States {
 }
 
 object Freeze extends States {
-    name = "Freeze"
+    name = "gel"
     mspeed = 0
     matk = 0
     mdef = 0
@@ -30,7 +31,7 @@ object Freeze extends States {
 }
 
 object Burned extends States {
-    name = "Burned"
+    name = "burned"
     degat = true
     mspeed = 0
     matk = -1
@@ -41,7 +42,7 @@ object Burned extends States {
 }
 
 object Sommeil extends States {
-    name = "Sommeil"
+    name = "sleep"
     mspeed = 0
     matk = 0
     mdef = 0
@@ -51,7 +52,7 @@ object Sommeil extends States {
 }
 
 object Paralysie extends States {
-    name = "Paralysie"
+    name = "para"
     mspeed = -1
     matk = 0
     mdef = 0
@@ -61,7 +62,7 @@ object Paralysie extends States {
 }
 
 object Empoisonnement extends States {
-    name = "Paralysie"
+    name = "poison"
     degat = true
     mspeed = 0
     matk = 0
