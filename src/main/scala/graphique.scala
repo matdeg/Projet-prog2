@@ -613,16 +613,40 @@ class Menu extends JPanel {
 class AffichageMap extends JPanel {
 
     var tableau : Area = Jardin_BasDroit
+    var p_x : Int = 0
+    var p_y : Int = 0
+    var dx : Int = 0
+    var dy : Int = 0
+    var animation : Boolean = false
+    var image_animation1 : BufferedImage = null
+    var image_animation2 : BufferedImage = null
+    var which_frame : Int = 1
+
+    def move_player(d : Direction) : Unit = {
+        animation = false
+        p_x = Player.x*50
+        p_y = Player.y*50
+        d match {
+            case N => {dx = 0; dy = -5; image_animation1 = ImageIO.read(getClass.getResource(Player.img_nord_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_nord_marche2))}
+            case O => {dx = 5; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_est_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_est_marche2))}
+            case E => {dx = -5; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_ouest_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_ouest_marche2))}
+            case S => {dx = 0; dy = 5; image_animation1 = ImageIO.read(getClass.getResource(Player.img_sud_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_sud_marche2))}
+        }
+        repaint()
+    }
     
     override def paintComponent (g : Graphics) : Unit = {
-        super.paintComponent(g)
 
-        g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
+        super.paintComponent(g)
         
-        for (i <- 0 to 9){
-            for (j <- 0 to 14){
-                tableau.tab(j)(i) match {
-                    case chara : Character => var image_chara = chara.direction match {
+        if (animation) {
+            for (i<-1 to 10) {
+                g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
+                for (i <- 0 to 9){
+                    for (j <- 0 to 14){
+                        tableau.tab(j)(i) match {
+                            case chara : Character if (!chara.is_main) => {
+                                var image_chara = chara.direction match {
                                     case N if (chara.is_fishing)=> chara.img_nord_peche
                                     case S if (chara.is_fishing)=> chara.img_sud_peche
                                     case E if (chara.is_fishing)=> chara.img_ouest_peche
@@ -631,12 +655,49 @@ class AffichageMap extends JPanel {
                                     case S => chara.img_sud
                                     case E => chara.img_ouest
                                     case O => chara.img_est
+                                } 
+                                g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
+                            }
+                            case chara : Character if (chara.is_main) => {
+                                p_x += dx
+                                p_y += dy
+                                g.drawImage(image_animation1, p_x, p_y, 50, 50, null)
+                                which_frame = 3 - which_frame
+                                Thread.sleep(10)
+                            }
+                            case _ => {}
+                        }
                     }
-                    g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
-                    case _ => {}
+                }
+            }
+            println("animation")
+            animation = false
+        }
+        else {
+            g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
+            for (i <- 0 to 9){
+                for (j <- 0 to 14){
+                    tableau.tab(j)(i) match {
+                        case chara : Character => {
+                            var image_chara = chara.direction match {
+                                case N if (chara.is_fishing)=> chara.img_nord_peche
+                                case S if (chara.is_fishing)=> chara.img_sud_peche
+                                case E if (chara.is_fishing)=> chara.img_ouest_peche
+                                case O if (chara.is_fishing)=> chara.img_est_peche
+                                case N => chara.img_nord
+                                case S => chara.img_sud
+                                case E => chara.img_ouest
+                                case O => chara.img_est
+                            } 
+                            g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
+                        }
+                        case _ => {}
+                    }
                 }
             }
         }
+        println(p_x)
+        println(p_y)
     }
 
 }
