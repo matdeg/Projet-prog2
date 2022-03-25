@@ -610,6 +610,14 @@ class Menu extends JPanel {
     }
 }
 
+class Animation extends Thread {
+    override def run : Unit = {
+        Fenetre.map.updateUI()
+        Fenetre.map.repaint()
+        Thread.sleep(10)
+    }
+}
+
 class AffichageMap extends JPanel {
 
     var tableau : Area = Jardin_BasDroit
@@ -632,7 +640,11 @@ class AffichageMap extends JPanel {
             case E => {dx = -5; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_ouest_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_ouest_marche2))}
             case S => {dx = 0; dy = 5; image_animation1 = ImageIO.read(getClass.getResource(Player.img_sud_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_sud_marche2))}
         }
-        repaint()
+        for (i<-1 to 10) {
+            var anim = new Animation
+            anim.run
+        }
+        
     }
     
     override def paintComponent (g : Graphics) : Unit = {
@@ -640,35 +652,37 @@ class AffichageMap extends JPanel {
         super.paintComponent(g)
         
         if (animation) {
-            for (i<-1 to 10) {
-                g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
-                for (i <- 0 to 9){
-                    for (j <- 0 to 14){
-                        tableau.tab(j)(i) match {
-                            case chara : Character if (!chara.is_main) => {
-                                var image_chara = chara.direction match {
-                                    case N if (chara.is_fishing)=> chara.img_nord_peche
-                                    case S if (chara.is_fishing)=> chara.img_sud_peche
-                                    case E if (chara.is_fishing)=> chara.img_ouest_peche
-                                    case O if (chara.is_fishing)=> chara.img_est_peche
-                                    case N => chara.img_nord
-                                    case S => chara.img_sud
-                                    case E => chara.img_ouest
-                                    case O => chara.img_est
-                                } 
-                                g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
-                            }
-                            case chara : Character if (chara.is_main) => {
-                                p_x += dx
-                                p_y += dy
-                                g.drawImage(image_animation1, p_x, p_y, 50, 50, null)
-                                which_frame = 3 - which_frame
-                            }
-                            case _ => {}
+            g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
+            for (i <- 0 to 9){
+                for (j <- 0 to 14){
+                    tableau.tab(j)(i) match {
+                        case chara : Character if (!chara.is_main) => {
+                            var image_chara = chara.direction match {
+                                case N if (chara.is_fishing)=> chara.img_nord_peche
+                                case S if (chara.is_fishing)=> chara.img_sud_peche
+                                case E if (chara.is_fishing)=> chara.img_ouest_peche
+                                case O if (chara.is_fishing)=> chara.img_est_peche
+                                case N => chara.img_nord
+                                case S => chara.img_sud
+                                case E => chara.img_ouest
+                                case O => chara.img_est
+                            } 
+                            g.drawImage(ImageIO.read(getClass.getResource(image_chara)), chara.x*50, chara.y*50, 50, 50, null)
                         }
+                        case chara : Character if (chara.is_main) => {
+                            p_x += dx
+                            p_y += dy
+                            if (which_frame == 1) {
+                                g.drawImage(image_animation1, p_x, p_y, 50, 50, null)
+                            }
+                            else {
+                                g.drawImage(image_animation2, p_x, p_y, 50, 50, null)
+                            }
+                            which_frame = 3 - which_frame
+                        }
+                        case _ => {}
                     }
                 }
-                Thread.sleep(10)
             }
             animation = false
         }
