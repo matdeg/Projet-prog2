@@ -623,7 +623,7 @@ class AffichageMap extends JPanel {
     var which_frame : Int = 1
 
     def move_player(d : Direction) : Unit = {
-        animation = true
+        animation = false
         p_x = Player.x*50
         p_y = Player.y*50
         d match {
