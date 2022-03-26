@@ -21,6 +21,7 @@ object Test_mathis {
                     var baston = new Battle(Player.opp)
                     Player.current_battle = baston; Player.opp.current_battle = baston
                     baston.start
+                    choix = Fenetre.bas_fenetre.print_menu_base()
                 }
                 else {
                     if (Player.is_fishing) {

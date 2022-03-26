@@ -32,7 +32,7 @@ class Battle(other : Character) {
                                     Player.opp = Empty_character
                                     Fenetre.afficher_map ()
                                     Player.in_battle = false
-                                    Test_mathis.choix = Fenetre.bas_fenetre.print_menu_base ()}
+                                }
 
     // actualise l'affichage des données du combat
     def reload_icon() = {
