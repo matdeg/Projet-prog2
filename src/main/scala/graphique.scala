@@ -457,7 +457,7 @@ class Menu extends JPanel {
                 bouton(i).setText(Func.id_items(p.current_items_id(i)).name + " : " + p.bag(p.current_items_id(i)))
                 bouton(i).set_icone(Func.id_items(p.current_items_id(i)).img, 0, -1)
                 bouton(i).info = Func.id_items(p.current_items_id(i)).info
-                if (Func.id_items(p.current_items_id(i)).is_usable(p.pokemons(p.ip))) {
+                if (Func.can_be_used(Func.id_items(p.current_items_id(i)))) {
                     bouton(i).set_font("couleur/blanc.png")
                 }
                 else {
