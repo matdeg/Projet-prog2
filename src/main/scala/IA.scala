@@ -260,7 +260,12 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
             }
         }
         else {
-            (0,choix_attaque(p,f_changement_joueur,loop))
+            if (peut_tuer && pi.speed > qi.speed) {
+                (0,i_atq_kill)
+            }
+            else {
+                (0,choix_attaque(p,f_changement_joueur,loop))
+            }
         }
         
         

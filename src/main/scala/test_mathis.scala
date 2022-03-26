@@ -34,7 +34,8 @@ object Test_mathis {
                             case 1 => Fenetre.msgbox.print_msg("1")
                             case 2 => var (a,choix_sac) = Func.menu_sac_hors_combat()
                                         var choix_item = choix_sac / 6
-                                        var choix_pok = choix_sac - choix_item
+                                        var choix_pok = choix_sac - 6 * choix_item
+                                        println(choix_item,choix_pok)
                                         if (a != -1) {
                                             Player.use_item(Func.id_items(Player.current_items_id(choix_item)),Player.pokemons(choix_pok))
                                         }
