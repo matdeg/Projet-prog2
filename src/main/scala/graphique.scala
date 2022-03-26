@@ -54,6 +54,7 @@ class AffichageBataille extends JPanel {
     var exp = 50
     var next_lvl = 150
 
+    // Actualise les infos sur le Pokéfusion du joueur
     def print_pok_perso (p : Pokemon)  : Unit = {
         derriere = ImageIO.read(getClass.getResource(p.image))
         hp_perso = p.hp
@@ -65,6 +66,7 @@ class AffichageBataille extends JPanel {
         repaint ()
     }
 
+    // Actualise les infos sur le Pokéfusion de l'adversaire
     def print_pok_op (p: Pokemon) : Unit = {
         devant = ImageIO.read(getClass.getResource(p.image))
         hp_op = p.hp
@@ -74,6 +76,7 @@ class AffichageBataille extends JPanel {
         repaint ()
     }
 
+    // Affiche les petites Pokéballs adverses
     def print_ball_op (g : Graphics) : Unit = {
         for (i<-0 to 5) {
             if (!op.pokemons(i).alive) {
@@ -91,6 +94,7 @@ class AffichageBataille extends JPanel {
         }
     }
 
+    // Affiche les petites Pokéballs du joueur
     def print_ball_perso (g : Graphics) : Unit = {
         for (i<-0 to 5) {
             if (!you.pokemons(i).alive) {
@@ -108,11 +112,12 @@ class AffichageBataille extends JPanel {
         }
     }
 
-    def print_statut_op (g : Graphics) : Unit = {
+    // Permet d'afficher si le Pokéfusioj subit un statut mais il manque les images donc inutilisée
+    /*def print_statut_op (g : Graphics) : Unit = {
         if (op.pokemons(op.ip).state != None_state) {
             g.drawImage(img_state(op.pokemons(op.ip)), 100, 100, 100, 100, null)
         }
-    }
+    }*/
     
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent (g)
@@ -191,6 +196,7 @@ class MsgBox extends JPanel {
         repaint ()
     }
 
+    // Permet de remettre le message d'origine quand la souris ne survole plus de bouton
     def print_save () : Unit = {
         texte = save
         repaint ()
@@ -200,7 +206,7 @@ class MsgBox extends JPanel {
 class Bouton extends JButton with MouseListener {
 
     var fond : BufferedImage = ImageIO.read(getClass.getResource("couleur/blanc.png"))
-    var icone : BufferedImage = null
+    var icone : BufferedImage = null // Petites images dans le menu Pokémons et le sac
     var valeur = -2
     var pv = 0
     var max_pv = 100
@@ -287,6 +293,7 @@ class Menu extends JPanel {
         bouton(i).valeur = i
     }
     
+    // Les rangées ne servent qu'à obtenir une présentation jolie
     var rangee_bouton_1 = new JPanel
     rangee_bouton_1.setLayout(new GridLayout(1, 2)) 
     rangee_bouton_1.add(bouton0)
@@ -307,10 +314,12 @@ class Menu extends JPanel {
     rangee_retour.add(boutonr)
 
     var choix_menu = -2
+    // Permet d'interrompre le menu de base quand on est sur la map et qu'on lance un combat
     var interruption_menu_map = false
 
     def print_menu_base () : Int = {
 
+        // On utilse le même menu de base pour le monde ouvert et les ombats, on change juste les chaîne de caractères
         if (Player.in_battle) {
             Fenetre.msgbox.save = "Que voulez vous faire ?"
             bouton0.setText("Attaque")
@@ -466,6 +475,7 @@ class Menu extends JPanel {
                 
             }
             else {
+                // on affiche pas le même nombre de boutons en fonction du nombre d'objets
                 if (i > 1) {
                     rangee_bouton_2.remove(bouton(i))
                     bouton_enleve = i :: bouton_enleve
@@ -535,6 +545,7 @@ class Menu extends JPanel {
         
         Fenetre.msgbox.save = "Bienvenue dans le Pokédex"
 
+        // L'indiçage est complexe mais ça fonctionne ¯\_(ツ)_/¯
         for (i <- 1 to (6 - Pokedex.nb_boutons + Pokedex.current_bouton)) {
             label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).species_name)
             label_list(i-1).setBackground(Color.WHITE)
@@ -575,6 +586,7 @@ class Menu extends JPanel {
         this.updateUI
     }
 
+    // recharger tous les labels est trop couteux, on doit donc refresh
     def refresh_menu_pokedex () = {
 
         Fenetre.requestFocus
@@ -610,15 +622,17 @@ class Menu extends JPanel {
     }
 }
 
-class Animation extends Thread {
+/*class Animation extends Thread {
     override def run : Unit = {
         Fenetre.map.updateUI()
         Fenetre.map.repaint()
         Thread.sleep(10)
     }
-}
+}*/
 
 class AffichageMap extends JPanel {
+
+    // Il y a eu une tentative d'animer le personnage du joueur lors de ses déplacements, cela n'a pas marché mais on a laissé les fonctions au cas où
 
     var tableau : Area = Jardin_BasDroit
     var p_x : Int = 0
@@ -630,7 +644,7 @@ class AffichageMap extends JPanel {
     var image_animation2 : BufferedImage = null
     var which_frame : Int = 1
 
-    def move_player(d : Direction) : Unit = {
+    /*def move_player(d : Direction) : Unit = {
         animation = false
         p_x = Player.x*50
         p_y = Player.y*50
@@ -645,13 +659,13 @@ class AffichageMap extends JPanel {
             anim.run
         }
         
-    }
+    }*/
     
     override def paintComponent (g : Graphics) : Unit = {
 
         super.paintComponent(g)
         
-        if (animation) {
+        if (animation) { // ce cas n'est utile que si l'animation fonctionne
             g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
             for (i <- 0 to 9){
                 for (j <- 0 to 14){
