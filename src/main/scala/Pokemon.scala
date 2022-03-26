@@ -66,7 +66,7 @@ abstract class Pokemon(pname : String) {
 
     // reload each information linked to state
     def reload_state = {
-        if (remaining_time > 0){
+        if (remaining_time > 0 && alive){
             remaining_time = Func.max(remaining_time - 1,0)
             if (state.degat) {
                 var dmg_taken = (max_hp.toDouble * (1.0/16.0)).toInt

@@ -119,9 +119,9 @@ class Battle(other : Character) {
         }
         play(fst,snd,a,b)
         play(snd,fst,c,d)
-        change
         Player.pokemons(Player.ip).reload_state
         other.pokemons(other.ip).reload_state
+        change
         reload_icon
         loop += 1
     }
