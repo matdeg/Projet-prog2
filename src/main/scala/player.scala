@@ -88,7 +88,6 @@ abstract class Character(pname : String) extends Seenable {
         if ((0 <= d.newx(x)  && d.newx(x) < current_area.w) && (0 <= d.newy(y)&& d.newy(y) < current_area.h) && (!is_fishing)) {
             current_area.tab(d.newx(x))(d.newy(y)) match {
             case Empty_seenable =>
-                Fenetre.map.move_player(d) 
                 current_area.tab(d.newx(x))(d.newy(y)) = this 
                 current_area.tab(x)(y) = Empty_seenable
                 x = d.newx(x); y = d.newy(y)
