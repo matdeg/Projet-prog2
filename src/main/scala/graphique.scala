@@ -724,18 +724,23 @@ class AffichagePokedex extends JPanel {
 
         g.setColor(Color.CYAN)
         g.drawRect(5, 5, this.getWidth-10, this.getHeight-10)
+        g.drawRect(100, 100, 150, 150)
         var c_pok = Pokedex.liste_pokemon(Pokedex.current_pokemon)
         if (Pokedex.encountered(c_pok.id)) {
-            g.drawString(c_pok.name, 300, 50)
-            g.drawString(c_pok.ptype.name, 400, 200)
-            Func.print_string(c_pok.description, 50, 250, g, mesure)
-            g.drawImage(ImageIO.read(getClass.getResource(c_pok.image)), 100, 100, null)
+            g.drawString(c_pok.name, (this.getWidth-mesure.stringWidth(c_pok.name))/2, 50)
+            g.fillRect((this.getWidth-mesure.stringWidth(c_pok.name))/2 +5, 50+mesure.getHeight/10, mesure.stringWidth(c_pok.name), 2)
+            g.drawString(c_pok.ptype.name, 500, 175)
+            g.drawRect(25, 275, 700, 200)
+            Func.print_string(c_pok.description, 45, 300, g, mesure)
+            g.drawImage(ImageIO.read(getClass.getResource(c_pok.image)), 105, 105, 140, 140, null)
         }
         else {
-            g.drawString("unknown name", 300, 50)
-            g.drawString("unknown type", 400, 200)
-            Func.print_string("you have to see that pokemon somewhere to complete your pokedex", 50, 250, g, mesure)
-            g.drawImage(ImageIO.read(getClass.getResource(c_pok.image_blanche)), 100, 100, null)
+            g.drawString("unknown name", (this.getWidth-mesure.stringWidth("unknow name"))/2, 50)
+            g.fillRect((this.getWidth-mesure.stringWidth("unknown name"))/2 +5, 50+mesure.getHeight/10, mesure.stringWidth("unknown name"), 2)
+            g.drawString("unknown type", 500, 175)
+            g.drawRect(25, 275, 700, 200)
+            Func.print_string("you have to see that pokemon somewhere to complete your pokedex", 45, 300, g, mesure)
+            g.drawImage(ImageIO.read(getClass.getResource(c_pok.image_blanche)), 105, 105, 140, 140, null)
         }
         
     }
