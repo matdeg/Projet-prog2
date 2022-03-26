@@ -58,6 +58,30 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
         (imax,min) 
     }
 
+    def change_score(p : Character,i : Int,f_changement_joueur : Double, loop : Int) = {
+        var max_score_atq = 0.0
+        for (k <- 0 to 3) {
+            var score_atq = fonction_gain_attaque_bot(p,i,k,f_changement_joueur,loop)
+            if (score_atq > max_score_atq) {
+                max_score_atq = score_atq
+            }
+        }
+        max_score_atq
+    }
+
+    def normal_change(p : Character,f_changement_joueur : Double, loop : Int) = {
+        var max_score = 0.0
+        var i_change = 0
+        for (i <- 0 to 5 if (p.pokemons(i).alive)) {
+            var score = change_score(p,i,f_changement_joueur,loop)
+            if (score > max_score) {
+                max_score = score
+                i_change = i
+            }
+        }
+        i_change
+    } 
+
     //donne un score au pokémon p contre le pokémon q pour le joueur
     def joueur_aime_pokemon(p : Pokemon,q : Pokemon) = {
         var (atq_bot,dmg_bot) = meilleure_atq_direct_selon_joueur(q,p) 
@@ -68,8 +92,8 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
     }
 
     //donne un score à l'attaque k du bot
-    def fonction_gain_attaque_bot(p : Character,k : Int,f_changement_joueur : Double, loop : Int) = {
-        var p_pok = p.pokemons(p.ip)
+    def fonction_gain_attaque_bot(p : Character,i_p : Int, k : Int,f_changement_joueur : Double, loop : Int) = {
+        var p_pok = p.pokemons(i_p)
         var q = Player 
         var q_pok = q.pokemons(q.ip)
         var score = 0.0
@@ -160,7 +184,7 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
         var best = 0.0
         var atq_i = 0
         for (i <- 0 to 3) {
-            var score = fonction_gain_attaque_bot(p,i,f_changement_joueur, loop)
+            var score = fonction_gain_attaque_bot(p,p.ip,i,f_changement_joueur, loop)
             if (score > best) {
                 best = score
                 atq_i = i
@@ -176,9 +200,10 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
     }
 
     // renvoie le meilleur pokémon à envoyer 
-    def change_pokemon(p : Character) = {
+    def change_pokemon_urgent(p : Character, f_changement_joueur : Double, loop : Int) = {
         var (imax,dmg) = min_max_degat(Player.pokemons(Player.ip),p)
-        (1,imax)
+        if (imax != p.ip) {(1,imax)}
+        else {(0,choix_attaque(p,f_changement_joueur,loop))}
     }
 
     // renvoie un booléen : 'est ce que le bot peut one-shot lors de ce tour ?'
@@ -229,7 +254,7 @@ class IA(x0 : Double,x1 : Double,x2 : Double,x3 : Double,x4 : Double,x5 : Double
                         (0,choix_attaque(p,f_changement_joueur,loop))  
                     }
                     else {
-                        change_pokemon(p)
+                        change_pokemon_urgent(p,f_changement_joueur,loop)
                     }     
                 }
             }

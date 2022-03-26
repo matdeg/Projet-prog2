@@ -277,6 +277,7 @@ class Alacool(pname : String) extends Pokemon(pname) {
 class Dracarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 44
     species_name = "dracarpe"
+    lvl = 10
     id = 2
     base_atk = 55
     base_defense = 40

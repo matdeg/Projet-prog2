@@ -48,7 +48,7 @@ class Battle(other : Character) {
             else {
                 Fenetre.msgbox.print_msg("Il change de Pokemon... Il lui en reste " + other.nb_alive.toString)
                 Thread.sleep(1500)
-                while (!other.pokemons(other.ip).alive) {other.ip += 1}
+                other.ip = other.ia.normal_change(other,f1_changement_joueur,loop)
                 Fenetre.msgbox.print_msg("Il envoie " + other.pokemons(other.ip).name)
                 Thread.sleep(1500)
             }
