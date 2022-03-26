@@ -16,9 +16,12 @@ abstract class Item extends Seenable {
     var held_speed : Int = 0
     var state_heal : Array[States] = Array()
     var info = ""
+    var usable_without_pokemon = false 
+    var unique = false
     def is_usable(p : Pokemon) : Boolean = {
         p.alive && (p.hp != p.max_hp)
     } 
+    def effect() = {}
 }
 
 object Empty_item extends Item {}
@@ -139,7 +142,23 @@ class Fishing_rod extends Item {
     img = "items/key-item/fishing-rod.png"
     id = 11
     info = "Permet de pêcher des carpes"
+    unique = true
     override def is_usable (p : Pokemon) = {
         false
     }
 }
+
+class Repel extends Item {
+    name = "repel"
+    img = "items/other-item/repel.png"
+    id = 12
+    info = "Repousse les pokemons sauvages"
+    usable_without_pokemon = true
+    override def effect() = {
+        Player.pas_repel += 50
+    }
+    override def is_usable (p : Pokemon) = {
+        false
+    }
+}
+

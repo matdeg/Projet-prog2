@@ -40,7 +40,7 @@ abstract class Character(pname : String) extends Seenable {
 
     // sac d'objet et page courante dans l'affichage du sac en combat
     var page : Int = 0
-    var bag : Array[Int] = new Array[Int](12)
+    var bag : Array[Int] = new Array[Int](13)
 
     def has_fishing_rod() = {bag(11) > 0}
 
@@ -48,6 +48,8 @@ abstract class Character(pname : String) extends Seenable {
     def current_items_id = {Func.choose(bag,page * 4, (page + 1) * 4)}
 
     def nb_distinct_items = {bag.count(_ > 0)}
+
+    var pas_repel = 50 
 
     // passe à la page suivante/précédente
     def next_page = {
@@ -59,10 +61,14 @@ abstract class Character(pname : String) extends Seenable {
         else {page -= 1} 
     }
     def use_item(it : Item, pok : Pokemon) = {
-        bag(it.id) -= 1
+        if (!it.unique) {bag(it.id) -= 1}
         Fenetre.msgbox.print_msg(name + " utilise " + it.name)
         Thread.sleep(1500)
-        pok.use_item(it)
+        it.usable_without_pokemon match {
+            case true => it.effect
+            case _ => pok.use_item(it)
+        }
+        page = 0
     }
 
     var pokemons : Array[Pokemon] = Array (Empty_Pokemon,Empty_Pokemon,Empty_Pokemon,Empty_Pokemon,Empty_Pokemon,Empty_Pokemon)
@@ -143,10 +149,11 @@ object Player extends Character(readLine()) {
                         Fenetre.msgbox.print_msg(panneau.msg)
                         Thread.sleep(1000)
                     }
-                case Lac if (has_fishing_rod) => {
+                case Lac if ((has_fishing_rod) && !is_fishing) => {
                         Fenetre.bas_fenetre.interruption_menu_map = true
                         is_fishing = true
                     }
+                case Lac if (has_fishing_rod) => is_fishing = false
                 case _ => {}
             }
         }
