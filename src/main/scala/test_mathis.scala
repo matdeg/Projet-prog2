@@ -2,8 +2,7 @@ object Test_mathis {
 
         var choix : Int = -1
 
-        // DEBUT -- initialisation du jeu 
-        Player.name = "Mathis la Saucisse"
+        // DEBUT -- initialisation du jeu
         Player.init()
         Louis.init()
         Schwoon.init()
@@ -29,13 +28,16 @@ object Test_mathis {
                         }
                     else {
                         choix match {
+                            case -2 => {}
                             case -1 => {}
                             case 0 => Pokedex.start
                             case 1 => Fenetre.msgbox.print_msg("1")
                             case 2 => var (a,choix_sac) = Func.menu_sac_hors_combat()
                                         var choix_item = choix_sac / 6
                                         var choix_pok = choix_sac - choix_item
-                                        if (a != -1) {Player.use_item(Func.id_items(Player.current_items_id(choix_item)),Player.pokemons(choix_pok))}
+                                        if (a != -1) {
+                                            Player.use_item(Func.id_items(Player.current_items_id(choix_item)),Player.pokemons(choix_pok))
+                                        }
                             case 3 => Fenetre.msgbox.print_msg("3")
                         }
                         Fenetre.afficher_map()

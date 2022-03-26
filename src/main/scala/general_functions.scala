@@ -33,7 +33,7 @@ object Func {
     val r = scala.util.Random;
 
     // permet de retrouver un item à partir de son id
-    var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal, new Fishing_rod)
+    var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal, new Fishing_rod, new Repel)
 
     // multiplicateur de stat en fonction de l'indice de modification
     def mult_a: Int => Double = {
@@ -59,6 +59,19 @@ object Func {
     def min(a : Int,b : Int) ={
         if (a >= b) {b} else {a}
     }
+
+    def can_be_used(it : Item) = {
+        if (!Player.in_battle && it.usable_without_pokemon) {true}
+        else {
+            for (i <- 0 to (Player.nb_alive - 1)) {
+                var pok = Player.pokemons(i)
+                if (it.is_usable(pok)) {
+                    true
+                }
+            }
+            false
+        }
+    } 
 
     // Selectionne les indices des occurences non nulles d'un tableau, mais seulement de la start-ème à la end-ème (non incluse) (commence à 0)
     def choose(tab : Array[Int],start : Int, end : Int) = {
@@ -211,9 +224,16 @@ object Func {
         choix_objet = Fenetre.bas_fenetre.print_menu_objet(Player)
         choix_objet match {
             case -1 => (-1,0)
-            case 4 => {Player.next_page; menu_sac}
-            case 5 => {Player.back_page; menu_sac}
-            case _ => {menu_pokemon_after_item(choix_objet)}
+            case 4 => {Player.next_page; menu_sac_hors_combat}
+            case 5 => {Player.back_page; menu_sac_hors_combat}
+            case _ => {
+                if (id_items(Player.current_items_id(choix_objet)).usable_without_pokemon) {
+                    (2,choix_objet * 6)
+                }
+                else {
+                    menu_pokemon_after_item(choix_objet)
+                }
+            }
         }
     }
 

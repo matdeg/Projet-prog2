@@ -38,6 +38,11 @@ object Pokedex {
     } 
 
     def start : Unit = {
+        if (Player.name == "pokedex") {
+            for (i <- encountered.indices) {
+                encountered(i) = true
+            }
+        }
         var in_pokedex = true
         Fenetre.afficher_pokedex()
         Fenetre.bas_fenetre.ajouter_menu_pokedex()
