@@ -314,12 +314,12 @@ class Menu extends JPanel {
     rangee_retour.add(boutonr)
 
     var choix_menu = -2
-    // Permet d'interrompre le menu de base quand on est sur la map et qu'on lance un combat
+    // Permet d'interrompre le menu de base quand on est sur la map et quand on lance un combat
     var interruption_menu_map = false
 
     def print_menu_base () : Int = {
 
-        // On utilse le même menu de base pour le monde ouvert et les ombats, on change juste les chaîne de caractères
+        // On utilse le même menu de base pour le monde ouvert et les ombats, on change juste les chaînes de caractères
         if (Player.in_battle) {
             Fenetre.msgbox.save = "Que voulez vous faire ?"
             bouton0.setText("Attaque")
@@ -586,7 +586,7 @@ class Menu extends JPanel {
         this.updateUI
     }
 
-    // recharger tous les labels est trop couteux, on doit donc refresh
+    // recharger tous les labels est trop couteux et cela crée des glitch, on doit donc uniquement toucher aux chaînes de caractères
     def refresh_menu_pokedex () = {
 
         Fenetre.requestFocus
@@ -623,10 +623,14 @@ class Menu extends JPanel {
 }
 
 /*class Animation extends Thread {
+
+    var waiting : Boolean = false
     override def run : Unit = {
-        Fenetre.map.updateUI()
-        Fenetre.map.repaint()
+        waiting = true
+        println("Thread")
+        Fenetre.afficher_map
         Thread.sleep(10)
+        while (waiting) {}
     }
 }*/
 
@@ -643,9 +647,10 @@ class AffichageMap extends JPanel {
     var image_animation1 : BufferedImage = null
     var image_animation2 : BufferedImage = null
     var which_frame : Int = 1
+    // var anim : Animation = new Animation
 
     /*def move_player(d : Direction) : Unit = {
-        animation = false
+        animation = true
         p_x = Player.x*50
         p_y = Player.y*50
         d match {
@@ -658,6 +663,7 @@ class AffichageMap extends JPanel {
             var anim = new Animation
             anim.run
         }
+        animation = false
         
     }*/
     
@@ -698,7 +704,6 @@ class AffichageMap extends JPanel {
                     }
                 }
             }
-            animation = false
         }
         else {
             g.drawImage(ImageIO.read(getClass.getResource(tableau.img)), 0, 0, 750, 500, null)
@@ -723,6 +728,7 @@ class AffichageMap extends JPanel {
                 }
             }
         }
+        //anim.waiting = false
     }
 
 }
@@ -792,7 +798,6 @@ object Fenetre extends JFrame {
     var total = new JPanel
     total.setLayout(new GridLayout(2,1))
     total.add(map)
-    map.repaint()
 
     def afficher_bataille () = {
         total.remove(bas_fenetre)
