@@ -1,11 +1,13 @@
 abstract class Character(pname : String) extends Seenable {
 
+    val r = scala.util.Random;
+
+    // si la joueur est en combat, son adversaire
     var opp : Character = Empty_character
     var in_battle = false
 
     var file_name = ""
 
-    val r = scala.util.Random;
     def img_est = "character/" + file_name + "_est.png"
     def img_nord = "character/" + file_name + "_nord.png"
     def img_ouest = "character/" + file_name + "_ouest.png"
@@ -26,12 +28,13 @@ abstract class Character(pname : String) extends Seenable {
     
     var is_fishing = false
 
-    var ia = new IA(1,1,1,1,1,1,0,1,1)
+    var ia = new IA(1,1,1,1,1,1,0,1,1,1,0)
 
     // true s'il s'agit du joueur 
     var is_main : Boolean = false
 
     var name : String = pname
+
     var nb_pokemons : Int = 0
     var nb_alive : Int = 0
 
@@ -49,7 +52,9 @@ abstract class Character(pname : String) extends Seenable {
 
     def nb_distinct_items = {bag.count(_ > 0)}
 
-    var pas_repel = 50 
+    var pas_repel = 0
+    // facteur de probabilité de rencontre d'un pokémon sauvage
+    def proba_sauvage = 1.0 / (1.0 + (if (pas_repel > 0) {9.0} else {0.0})) 
 
     // passe à la page suivante/précédente
     def next_page = {
@@ -60,6 +65,8 @@ abstract class Character(pname : String) extends Seenable {
         if (page == 0) {page = (nb_distinct_items - 1)/4}
         else {page -= 1} 
     }
+
+    // permet d'utiliser un item sur un pokemon (ou sur le joueur selon l'objet)
     def use_item(it : Item, pok : Pokemon) = {
         if (!it.unique) {bag(it.id) -= 1}
         Fenetre.msgbox.print_msg(name + " utilise " + it.name)
@@ -83,6 +90,7 @@ abstract class Character(pname : String) extends Seenable {
 
     var direction : Direction = S
 
+    // permet de pêcher
     def fish() = {
         var x = r.nextDouble
         if (x > 0.9) {
@@ -90,6 +98,7 @@ abstract class Character(pname : String) extends Seenable {
         }
     }
 
+    // permet de déplacer le joueur, en gérant les cas où il est face à un obstacle ou en bord de map
     def move(d : Direction) = {
         if ((0 <= d.newx(x)  && d.newx(x) < current_area.w) && (0 <= d.newy(y)&& d.newy(y) < current_area.h) && (!is_fishing)) {
             current_area.tab(d.newx(x))(d.newy(y)) match {
@@ -115,6 +124,8 @@ abstract class Character(pname : String) extends Seenable {
         if (!is_fishing) direction = d
     }
 
+
+    // cette fonction sert à initialiser les valeurs de certains personnages comme leurs pokémons etc... c'est un peu la définition de chaque joueur
     def init : Unit = {}
 }
 
@@ -136,9 +147,11 @@ object Player extends Character(readLine()) {
         for(i <- bag.indices) {bag(i) = 1}
     }
 
+    // Le joueur bénéficie d'une fonction qui lui permet d'interagir avec l'environnement
     def interact() = {
         var x2 = direction.newx(x)
         var y2 = direction.newy(y)
+        // s'il ne regarde pas en bord de map, il intéragit avec ce qu'il y a devant lui
         if (0 <= x2 && x2 <= 14 && 0 <= y2 && y2 <= 9) {
             current_area.tab(x2)(y2) match {
                 case chara : Character => {
@@ -158,6 +171,7 @@ object Player extends Character(readLine()) {
                 case _ => {}
             }
         }
+        // sinon, si c'est possible (pas d'obstacle de l'autre coté) il change de map
         else {
             var newx : Int = 0
             var newy : Int = 0  
@@ -182,11 +196,13 @@ object Player extends Character(readLine()) {
     }
 }
 
-
+// Le joueur nature sert pour les combats avec les pokémons sauvages
 class Nature(a : Area) extends Character("Nature") {
     Func.give(this,Func.pokemon_herbe(a))
 }
 
+
+// Le joueur Lac_opp sert pour les combats avec les pokémons sauvages du lac
 class Lac_opp extends Character("Nature") {
     Func.give(this,Func.pokemon_lac)
 }
@@ -196,11 +212,13 @@ object Louis extends Character("louis") {
 
     file_name = "louis"
 
-    ia = new IA(2,1,1,1,1,1,0,1,10)
+    ia = new IA(2,1,1,1,1,1,0,1,10,1,0)
+    ia.bot = this
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        Func.give(this,new Kokicarpe("Kokicarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         for(i <- bag.indices) {
             bag(i) = 1
@@ -212,7 +230,8 @@ object Schwoon extends Character("Stefan Schwoon") {
 
     file_name = "scientifique"
 
-    ia = new IA(2,1,1,1,1,1,0,1,10)
+    ia = new IA(2,1,1,1,1,1,0,1,10,1,0)
+    ia.bot = this
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))

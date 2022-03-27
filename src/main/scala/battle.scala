@@ -6,7 +6,7 @@ class Battle(other : Character) {
     // nombres de tours
     var loop : Int = 0
 
-    // fréquence des changements de pokémons du joueurs jusqu'à maintenant, au tour N-1 et N-2
+    // fréquence des changements de pokémons du joueur jusqu'à : tour N-2, tour N-1, maintenant
     var f1_changement_joueur : Double = 0
     var f2_changement_joueur : Double = 0
     var f3_changement_joueur : Double = 0
@@ -48,7 +48,7 @@ class Battle(other : Character) {
             else {
                 Fenetre.msgbox.print_msg("Il change de Pokemon... Il lui en reste " + other.nb_alive.toString)
                 Thread.sleep(1500)
-                other.ip = other.ia.normal_change(other,f1_changement_joueur,loop)
+                other.ip = other.ia.normal_change
                 Fenetre.msgbox.print_msg("Il envoie " + other.pokemons(other.ip).name)
                 Thread.sleep(1500)
             }
@@ -100,7 +100,7 @@ class Battle(other : Character) {
             else {
             other match {
                 case nat : Nature => second_choix_op = r.nextInt(4)
-                case _ => var (a,b) = other.ia.best_move(other,f1_changement_joueur,loop)
+                case _ => var (a,b) = other.ia.best_move
                           choix_menu_op = a
                           second_choix_op = b
             }

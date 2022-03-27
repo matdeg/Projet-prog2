@@ -10,7 +10,7 @@ object S extends Direction {override def newx(x : Int) = x;
 object O extends Direction {override def newx(x : Int) = x + 1;
                             override def newy(y : Int) = y}
 
-
+// Les revêtement désignent le sol de la map, cela sert par exemple pour savoir si le joueur est sur de l'herbe
 class Revetement {}
 
 object Empty_Revetement extends Revetement {}
@@ -20,6 +20,7 @@ object Sol_jardin extends Revetement {}
 object Herbe extends Revetement {}
 
 
+// Les Seenable sont tous ce sur quoi on ne peut pas marcher (mur,lac,buisson etc...)
 class Seenable {}
 
 object Empty_seenable extends Seenable {}

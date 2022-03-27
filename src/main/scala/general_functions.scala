@@ -60,16 +60,19 @@ object Func {
         if (a >= b) {b} else {a}
     }
 
+    // renvoie si un objet peut être utiliser dans le contexte actuel,
+    // Par exemple, un repel ne peut pas être utilisé en combat, ou une potion si tous les pokémons sont full hp
     def can_be_used(it : Item) = {
         if (!Player.in_battle && it.usable_without_pokemon) {true}
         else {
+            var soluce = false
             for (i <- 0 to (Player.nb_alive - 1)) {
                 var pok = Player.pokemons(i)
                 if (it.is_usable(pok)) {
-                    true
+                    soluce = true
                 }
             }
-            false
+            soluce
         }
     } 
 
@@ -92,19 +95,21 @@ object Func {
         selection
     }
 
+
+    // donne un pokémon qui vient d'être créé au joueur (initialise les statistiques)
     def give(p : Character, pok : Pokemon) = {
                 pok.init()
-                p.pokemons(p.nb_pokemons) = pok
-                pok.maitre = p
-                p.nb_pokemons += 1
+                give_as_it_is(p,pok)
             }
-
+        
     def give_as_it_is(p : Character, pok : Pokemon) = {
                 p.pokemons(p.nb_pokemons) = pok
                 pok.maitre = p
                 p.nb_pokemons += 1
             }
 
+
+    // rempli une portion de tableau (rectangle (a,b) (c,d)) avec l'élément x
     def draw [N](tab : Array[Array[N]], x : N, a : Int, b : Int, c : Int, d : Int) = {
         for (i <- a to c){
             for (j <- b to d) {
@@ -139,17 +144,6 @@ object Func {
             case 3 => (3, 0)
             case _ => (0,0)
         }
-    }
-
-    def random_level() = {
-        var avg = 0
-        for (i <- 0 to (Player.nb_pokemons - 1)) {
-            avg += Player.pokemons(i).lvl
-        }
-        avg = avg / Player.nb_pokemons
-        var low = max(0,avg - 7)
-        var high = min(100,avg - 3)
-        r.nextInt(high - low + 1) + low
     }
 
     // le joueur choisit entre 4 attaques
@@ -218,6 +212,7 @@ object Func {
         }
     }
 
+    // Pareil mais en dehors des combats 
     def menu_sac_hors_combat() : (Int, Int) = {
         Fenetre.msgbox.print_msg("Choisissez un objet :")
         var choix_objet = -2
@@ -244,10 +239,24 @@ object Func {
         p.pokemons(j) = pok_tampon
     }
 
+    // détermine un niveau de pokémon sauvage
+    def random_level() = {
+        var avg = 0
+        for (i <- 0 to (Player.nb_pokemons - 1)) {
+            avg += Player.pokemons(i).lvl
+        }
+        avg = avg / Player.nb_pokemons
+        var low = max(0,avg - 7)
+        var high = min(100,avg - 3)
+        r.nextInt(high - low + 1) + low
+    }
+
+    // renvoie un pokémon pour la pêche
     def pokemon_lac() = {
         var a = new Poissocarpe("Poissocarpe"); a.lvl = random_level; a.init; a
     }
 
+    // renvoie un pokémon sauvage dépendant de la zone
     def pokemon_herbe(a : Area) = {
         a match {
             case _ => var a = new Salatard("Salatard S"); a.lvl = random_level; a.init; a
