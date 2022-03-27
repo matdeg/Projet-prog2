@@ -1,5 +1,7 @@
 object Pokedex {
 
+    var in_pokedex : Boolean = false
+
     def nb_pokemons : Int = liste_pokemon.length
     var current_pokemon : Int = 0
     var nb_boutons : Int = 6
@@ -43,7 +45,7 @@ object Pokedex {
                 encountered(i) = true
             }
         }
-        var in_pokedex = true
+        in_pokedex = true
         Fenetre.afficher_pokedex()
         Fenetre.bas_fenetre.ajouter_menu_pokedex()
         while (in_pokedex) {
