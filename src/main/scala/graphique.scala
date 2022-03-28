@@ -26,6 +26,8 @@ import javax.swing.Timer
 import java.awt.event.FocusEvent
 import javax.swing.LookAndFeel
 import java.awt.Label
+import java.awt.event.MouseWheelListener
+import java.awt.event.MouseWheelEvent
 
 class AffichageBataille extends JPanel {
 
@@ -586,10 +588,16 @@ class Menu extends JPanel {
         this.updateUI
     }
 
+    var scroll : Boolean = false
+
     // recharger tous les labels est trop couteux et cela crée des glitch, on doit donc uniquement toucher aux chaînes de caractères
     def refresh_menu_pokedex () = {
 
         Fenetre.requestFocus
+
+        for (i <- 0 to 5) {
+            label_list(i).setBackground(Color.WHITE)
+        }
 
         for (i <- 1 to (6 - Pokedex.nb_boutons + Pokedex.current_bouton)) {
             label_list(i-1).setText(Pokedex.liste_pokemon(Pokedex.current_pokemon + i + Pokedex.nb_boutons - Pokedex.current_bouton - 7).species_name)
@@ -601,12 +609,13 @@ class Menu extends JPanel {
 
         choix_menu = -2
 
-        while (choix_menu == -2) {
+        while (choix_menu == -2 && !scroll) {
             Thread.sleep(100)
         }
 
         label_list(Pokedex.current_bouton).setBackground(Color.WHITE)
 
+        scroll = false
         choix_menu
     }
 
@@ -761,12 +770,32 @@ class AffichagePokedex extends JPanel {
 
 }
 
-object Fenetre extends JFrame {
+object Fenetre extends JFrame with MouseWheelListener{
     this.setTitle("Best Game Ever")
     this.setSize(750, 1000)
     this.setResizable(false)
     this.setUndecorated(true)
     this.setLocation(100,50)
+
+    this.addMouseWheelListener(this)
+
+    var slow_scroll : Int = 0
+
+    def mouseWheelMoved (e : MouseWheelEvent) : Unit = {
+        if (Pokedex.in_pokedex && slow_scroll == 3) {
+            if (e.getWheelRotation == 1) {
+                Pokedex.next
+            }
+            else {
+                Pokedex.previous
+            }
+            bas_fenetre.scroll = true
+            slow_scroll = 0
+        }
+        else {
+            slow_scroll += 1
+        }
+    }
 
     override def setFocusable(b : Boolean) = {
         super.setFocusable(b)

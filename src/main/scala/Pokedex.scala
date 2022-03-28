@@ -12,7 +12,6 @@ object Pokedex {
     var liste_pokemon : Array[Pokemon] = Array(new Alabri("Alabri"), new Alacool("Alacool"), new Dracarpe("Dracarpe"), new Galopan("Galopan"), new Kokicarpe("Kokicarpe"), new Mcool("Mcool"), new Mherbe("Mherbe"), new Magilangue("Magilangue"), new Poissocarpe("Poissocarpe"), new Poryodin("Poryodin"), new Rhinocarpe("Rhinocarpe"), new Salatard("Salatard"), new Starstar("Starstar"), new Tentapan("Tentapan"), new Torgogo("Torgogo"), new Coconard(""),new Excelbok(""),new Exceli(""),new Exceloss(""),new Grobra(""),new Grofort(""),new Grolait(""),new Pabo(""),new Pacool(""),new Rapasbo(""),new Rondode(""))
     var encountered : Array[Boolean] = Array.fill[Boolean](100)(false)
 
-
     def next = {
         current_pokemon match {
             case k if (k == nb_pokemons - 1) => {}
@@ -55,6 +54,7 @@ object Pokedex {
                 case 5 => previous
                 case 4 => next
                 case -1 => in_pokedex = false; Fenetre.bas_fenetre.enlever_menu_pokedex()
+                case -2 => {}
             }
         }
     }
