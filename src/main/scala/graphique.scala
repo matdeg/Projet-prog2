@@ -633,8 +633,10 @@ class Menu extends JPanel {
 
 class Animation extends Thread {
     override def run : Unit = {
+        println("new Thread")
         for (i<-1 to 4) {
             Fenetre.map.repaint()
+            println("appel Animation")
             Fenetre.bataille.repaint()
             Thread.sleep(50)
         }
@@ -662,10 +664,11 @@ class AffichageMap extends JPanel {
     var which_frame : Int = 1
     var anim : Animation = new Animation
 
-    def move_player(d : Direction) : Unit = {
+    def move_player(d : Direction, x : Int, y : Int) : Unit = {
         animation = true
-        p_x = Player.x*50
-        p_y = Player.y*50
+        println("new coor")
+        p_x = x*50
+        p_y = y*50
         d match {
             case N => {dx = 0; dy = -10; image_animation1 = ImageIO.read(getClass.getResource(Player.img_nord_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_nord_marche2))}
             case O => {dx = 10; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_est_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_est_marche2))}
@@ -701,6 +704,7 @@ class AffichageMap extends JPanel {
                         case chara : Character if (chara.is_main) => {
                             p_x += dx
                             p_y += dy
+                            println(p_x.toString + " " + p_y.toString)
                             if (which_frame == 1) {
                                 g.drawImage(image_animation1, p_x, p_y, 50, 50, null)
                             }
