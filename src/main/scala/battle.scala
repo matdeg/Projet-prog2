@@ -25,7 +25,7 @@ class Battle(other : Character) {
                                     p match {
                                         case Player => Fenetre.msgbox.print_msg("Mince, vous avez perdu")
                                         case Empty_character => Fenetre.msgbox.print_msg("Vous êtes vraiment un trouillard")
-                                        case _ => Fenetre.msgbox.print_msg("Bravo, vous avez battu " + Player.opp.name + " !")
+                                        case _ =>  if (Player.opp.name != "Nature") {Fenetre.msgbox.print_msg("Bravo, vous avez battu " + Player.opp.name + " !")}
                                     }
                                     Thread.sleep(1000)
                                     Fenetre.msgbox.print_msg("")

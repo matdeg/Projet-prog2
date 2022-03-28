@@ -122,9 +122,7 @@ class AffichageBataille extends JPanel {
     }*/
     
     override def paintComponent (g : Graphics) : Unit = {
-        super.paintComponent (g)
-
-        println("bataille")
+        super.paintComponent (g)<
 
         g.drawImage(env, 0, 0, null)
 
@@ -636,15 +634,15 @@ class Menu extends JPanel {
 class Animation extends Thread {
     override def run : Unit = {
         for (i<-1 to 4) {
-            Fenetre.afficher_map()
+            Fenetre.map.repaint()
+            Fenetre.bataille.repaint()
             Thread.sleep(50)
         }
         Fenetre.map.animation = false
-        Fenetre.afficher_map()
+        Fenetre.map.repaint()
+        Fenetre.bataille.repaint()
         if (Player.in_battle) {
             Fenetre.afficher_bataille()
-            println("in_battle")
-            Fenetre.bataille.repaint()
         }
     }
 }
