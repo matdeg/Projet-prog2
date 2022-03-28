@@ -142,8 +142,9 @@ object Player extends Character(readLine()) {
         Func.give(this,new Poissocarpe("Poissocarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         Func.give(this,new Galopan("Galopan"))
-        Func.give(this,new Dracarpe("Dracarpe"))
+        Func.give(this,new Exceloss("Exceloss"))
         Func.give(this,new Mherbe("Mherbe"))
+        for (i <- 0 to 5) {Pokedex.encountered(this.pokemons(i).id) = true} 
         for(i <- bag.indices) {bag(i) = 1}
     }
 
