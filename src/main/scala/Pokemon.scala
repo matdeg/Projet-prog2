@@ -277,13 +277,12 @@ class Alacool(pname : String) extends Pokemon(pname) {
 class Dracarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 44
     species_name = "dracarpe"
-    lvl = 1
     id = 2
     base_atk = 55
     base_defense = 40
     base_speed = 40
     ptype = Feu
-    attaques = Array(Déflagration,Lance_flammes,Pistolet_a_O,Trempette)
+    attaques = Array(Charge,Flammèche,Pistolet_a_O,Trempette)
     description = "Les expériences foireuses du département de Chimie ont fait naître cette carpe cracheuse de feu"
 }
 
@@ -295,7 +294,7 @@ class Galopan(pname : String) extends Pokemon(pname) {
     base_defense = 50
     base_speed = 40
     ptype = Feu
-    attaques = Array(Feu_follet,Flammèche,Hate,Fouet_lianes)
+    attaques = Array(Feu_follet,Flammèche,Hate,Charge)
     description = "Le département de biologie avait pour mission de créer la chenille la plus rapide du monde, une 1 chevau"
 }
 
@@ -307,7 +306,7 @@ class Kokicarpe(pname : String) extends Pokemon(pname) {
     base_defense = 55
     base_speed = 40
     ptype = Eau
-    attaques = Array(Pistolet_a_O,Surf,Repli,Trempette)
+    attaques = Array(Pistolet_a_O,Charge,Repli,Trempette)
     description = "Il est le résultat d'une commande de carpe blindée de l'armée à l'ENS"
 }
 
@@ -319,7 +318,7 @@ class Mcool(pname : String) extends Pokemon(pname) {
     base_defense = 50
     base_speed = 45
     ptype = Psy
-    attaques = Array(Tornade,Psyko,Bec_vrille,Hate)
+    attaques = Array(Tornade,Psyko,Bec_vrille,Charge)
     description = "Papa de Alacool"
 }
 
@@ -331,7 +330,7 @@ class Mherbe(pname : String) extends Pokemon(pname) {
     base_defense = 47
     base_speed = 44
     ptype = Psy
-    attaques = Array(Fouet_lianes,Hate,Yoga,Psyko)
+    attaques = Array(Fouet_lianes,Charge,Yoga,Psyko)
     description = "Papa de Alaherbe"
 }
 
@@ -342,8 +341,8 @@ class Magilangue(pname : String) extends Pokemon(pname) {
     base_atk = 43
     base_defense = 51
     base_speed = 40
-    ptype = Psy
-    attaques = Array(Bouclier,Pistolet_a_O,Psyko,Trempette)
+    ptype = Normal
+    attaques = Array(Bouclier,Pistolet_a_O,Charge,Trempette)
     description = "Pokémon dont les performances sont connues de la moitié de l'humanité"
 }
 
@@ -355,7 +354,7 @@ class Poissocarpe(pname : String) extends Pokemon(pname) {
     base_defense = 47
     base_speed = 43
     ptype = Eau
-    attaques = Array(Surf,Pistolet_a_O,Repli,Trempette)
+    attaques = Array(Charge,Pistolet_a_O,Repli,Trempette)
     description = "Il s'agit de la carpe originelle, la carpe cosmique, la grande carpe, la care verte, la réincarantion de la carpe enchantrice, qui s'est proposée comme candidat à l'élection présidentielle de l'étang Carpe"
 }
 
@@ -367,7 +366,7 @@ class Poryodin(pname : String) extends Pokemon(pname) {
     base_defense = 50
     base_speed = 50
     ptype = Psy
-    attaques = Array(Tornade,Blizzard,Psyko,Hate)
+    attaques = Array(Tornade,Blizzard,Psyko,Charge)
     description = "Personne ne veut savoir comment ce truc est né"
 }
 
@@ -390,7 +389,7 @@ class Salatard(pname : String) extends Pokemon(pname) {
     base_defense = 47
     base_speed = 47
     ptype = Feu
-    attaques = Array(Feu_follet,Pistolet_a_O,Fouet_lianes,Bulles_d_O)
+    attaques = Array(Feu_follet,Pistolet_a_O,Charge,Bulles_d_O)
     description = "gnnnnééé : le seul son qui peut sortir de sa bouche"
 }
 
@@ -402,7 +401,7 @@ class Starstar(pname : String) extends Pokemon(pname) {
     base_defense = 50
     base_speed = 46
     ptype = Eau
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)
+    attaques = Array(Charge,Pistolet_a_O,Repli,Hate)
     description = "Le saviez-vous ? Star veut dire étoile en anglais, Le saviez-vous ? Star veut dire étoile en anglais"
 }
 
@@ -414,7 +413,7 @@ class Tentapan(pname : String) extends Pokemon(pname) {
     base_defense = 60
     base_speed = 43
     ptype = Eau
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)
+    attaques = Array(Pistolet_a_O,Charge,Bouclier,Fouet_lianes)
     description = ""
 }
 
@@ -426,7 +425,7 @@ class Torgogo(pname : String) extends Pokemon(pname) {
     base_defense = 50
     base_speed = 50
     ptype = Poison
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    attaques = Array(Poudre_toxik,Pistolet_a_O,Acide,Charge)   
     state = None_state
     description = "Vous étiez vous déjà demandé à quoi ressemblait un Smogogo rempli d'eau ?" 
 }
@@ -439,7 +438,7 @@ class Coconard(pname : String) extends Pokemon(pname) {
     base_defense = 55
     base_speed = 43
     ptype = Insecte
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    attaques = Array(Piqure,Secretion,Charge,Bouclier)   
     state = None_state
     description = "La politesse n'est pas son fort, il est très convoité par un certain pêcheur" 
 }
@@ -452,7 +451,7 @@ class Excelbok(pname : String) extends Pokemon(pname) {
     base_defense = 48
     base_speed = 46
     ptype = Normal
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    attaques = Array(Acide,Poudre_toxik,Charge,Bouclier)   
     state = None_state
     description = "Il est le résultat de l'expérience COAT sur un serpent" 
 }
@@ -465,7 +464,7 @@ class Exceli(pname : String) extends Pokemon(pname) {
     base_defense = 46
     base_speed = 47
     ptype = Normal
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    attaques = Array(Charge,Bouclier,Flammèche,Feu_follet)   
     state = None_state
     description = "Il est le résultat de l'expérience COAT sur un pauvre écureuil" 
 }
@@ -478,7 +477,7 @@ class Exceloss(pname : String) extends Pokemon(pname) {
     base_defense = 50
     base_speed = 50
     ptype = Normal
-    attaques = Array(Trempette,Trempette,Trempette,Trempette)   
+    attaques = Array(Draco_Griffes,Tornade,Charge,Bouclier)   
     state = None_state
     description = "Il est le résultat de l'expérience COAT sur un dragon, il peut maintenant être acheté dans certains magasins" 
 }
