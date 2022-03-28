@@ -635,7 +635,7 @@ class Animation extends Thread {
 
 class AffichageMap extends JPanel {
 
-    // Il y a eu une tentative d'animer le personnage du joueur lors de ses déplacements, cela n'a pas marché mais on a laissé les fonctions au cas où
+    // Il y a eu une tentative d'animer le personnage du joueur lors de ses déplacements
 
     var tableau : Area = Jardin_BasDroit
     var p_x : Int = 0
