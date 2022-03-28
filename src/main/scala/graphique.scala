@@ -741,8 +741,8 @@ class AffichagePokedex extends JPanel {
         g.drawRect(100, 100, 150, 150)
         var c_pok = Pokedex.liste_pokemon(Pokedex.current_pokemon)
         if (Pokedex.encountered(c_pok.id)) {
-            g.drawString(c_pok.name, (this.getWidth-mesure.stringWidth(c_pok.name))/2, 50)
-            g.fillRect((this.getWidth-mesure.stringWidth(c_pok.name))/2 +5, 50+mesure.getHeight/10, mesure.stringWidth(c_pok.name), 2)
+            g.drawString(c_pok.species_name, (this.getWidth-mesure.stringWidth(c_pok.species_name))/2, 50)
+            g.fillRect((this.getWidth-mesure.stringWidth(c_pok.species_name))/2 +5, 50+mesure.getHeight/10, mesure.stringWidth(c_pok.species_name), 2)
             g.drawString(c_pok.ptype.name, 500, 175)
             g.drawRect(25, 275, 700, 200)
             Func.print_string(c_pok.description, 45, 300, g, mesure)
