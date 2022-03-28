@@ -188,3 +188,11 @@ object Bec_vrille extends Attaque{
     name = "Bec vrille"
     atype = Vol
 }
+
+object Charge extends Attaque{
+    dmg = 50
+    pp = 35
+    precision = 100
+    name = "Charge"
+    atype = Normal
+}

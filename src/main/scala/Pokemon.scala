@@ -11,7 +11,7 @@ abstract class Pokemon(pname : String) {
     var id = 0
 
     // stats en lien avec le niveau du pokémon
-    var lvl = 5
+    var lvl = 10
     var xp = 0
     var base_xp_given = 70
     var xp_given = lvl * base_xp_given / 7
@@ -171,7 +171,7 @@ abstract class Pokemon(pname : String) {
                 case Sommeil => Fenetre.msgbox.print_msg(this.name + " est endormi, il ne peut pas attaquer");Thread.sleep(1500)
             }
         }
-        if (!defenser.alive) {add_xp(defenser.xp_given)}
+        if (!defenser.alive && this.maitre == Player) {add_xp(defenser.xp_given)}
     }
 
 
