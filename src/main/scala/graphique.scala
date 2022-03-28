@@ -626,9 +626,10 @@ class Animation extends Thread {
     override def run : Unit = {
         for (i<-1 to 4) {
             Fenetre.afficher_map()
-            Thread.sleep(20)
+            Thread.sleep(50)
         }
         Fenetre.map.animation = false
+        Fenetre.afficher_map()
     }
 }
 
