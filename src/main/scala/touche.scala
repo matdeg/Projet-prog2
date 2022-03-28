@@ -13,7 +13,7 @@ object Touche extends JPanel with KeyListener {
     def keyTyped (evt : KeyEvent) : Unit = {
         evt.getKeyChar match {
             case 'a' => {aide = !aide}
-            case _ => if (!Player.in_battle && !Pokedex.in_pokedex) {
+            case _ => if (!Player.in_battle && !Pokedex.in_pokedex && !Fenetre.map.animation) {
                 evt.getKeyChar match {
                     case 'z' => {Player.move(N)}
                     case 'q' => {Player.move(E)}
@@ -23,7 +23,6 @@ object Touche extends JPanel with KeyListener {
                     case _ => {}
                 }
             }
-            case _ => {}
         }
         Fenetre.map.repaint()
     }

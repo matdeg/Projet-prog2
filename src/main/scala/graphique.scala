@@ -622,17 +622,15 @@ class Menu extends JPanel {
     }
 }
 
-/*class Animation extends Thread {
-
-    var waiting : Boolean = false
+class Animation extends Thread {
     override def run : Unit = {
-        waiting = true
-        println("Thread")
-        Fenetre.afficher_map
-        Thread.sleep(10)
-        while (waiting) {}
+        for (i<-1 to 4) {
+            Fenetre.afficher_map()
+            Thread.sleep(20)
+        }
+        Fenetre.map.animation = false
     }
-}*/
+}
 
 class AffichageMap extends JPanel {
 
@@ -647,25 +645,21 @@ class AffichageMap extends JPanel {
     var image_animation1 : BufferedImage = null
     var image_animation2 : BufferedImage = null
     var which_frame : Int = 1
-    // var anim : Animation = new Animation
+    var anim : Animation = new Animation
 
-    /*def move_player(d : Direction) : Unit = {
+    def move_player(d : Direction) : Unit = {
         animation = true
         p_x = Player.x*50
         p_y = Player.y*50
         d match {
-            case N => {dx = 0; dy = -5; image_animation1 = ImageIO.read(getClass.getResource(Player.img_nord_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_nord_marche2))}
-            case O => {dx = 5; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_est_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_est_marche2))}
-            case E => {dx = -5; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_ouest_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_ouest_marche2))}
-            case S => {dx = 0; dy = 5; image_animation1 = ImageIO.read(getClass.getResource(Player.img_sud_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_sud_marche2))}
+            case N => {dx = 0; dy = -10; image_animation1 = ImageIO.read(getClass.getResource(Player.img_nord_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_nord_marche2))}
+            case O => {dx = 10; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_est_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_est_marche2))}
+            case E => {dx = -10; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_ouest_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_ouest_marche2))}
+            case S => {dx = 0; dy = 10; image_animation1 = ImageIO.read(getClass.getResource(Player.img_sud_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_sud_marche2))}
         }
-        for (i<-1 to 10) {
-            var anim = new Animation
-            anim.run
-        }
-        animation = false
-        
-    }*/
+        var anim = new Animation
+        anim.start
+    }
     
     override def paintComponent (g : Graphics) : Unit = {
 
@@ -728,7 +722,6 @@ class AffichageMap extends JPanel {
                 }
             }
         }
-        //anim.waiting = false
     }
 
 }
