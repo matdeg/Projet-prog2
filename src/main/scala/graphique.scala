@@ -124,6 +124,8 @@ class AffichageBataille extends JPanel {
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent (g)
 
+        println("bataille")
+
         g.drawImage(env, 0, 0, null)
 
         g.drawImage(devant, 500, 50, null)
@@ -639,6 +641,11 @@ class Animation extends Thread {
         }
         Fenetre.map.animation = false
         Fenetre.afficher_map()
+        if (Player.in_battle) {
+            Fenetre.afficher_bataille()
+            println("in_battle")
+            Fenetre.bataille.repaint()
+        }
     }
 }
 
@@ -667,7 +674,7 @@ class AffichageMap extends JPanel {
             case E => {dx = -10; dy = 0; image_animation1 = ImageIO.read(getClass.getResource(Player.img_ouest_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_ouest_marche2))}
             case S => {dx = 0; dy = 10; image_animation1 = ImageIO.read(getClass.getResource(Player.img_sud_marche1)); image_animation2 = ImageIO.read(getClass.getResource(Player.img_sud_marche2))}
         }
-        var anim = new Animation
+        anim = new Animation
         anim.start
     }
     
@@ -827,6 +834,7 @@ object Fenetre extends JFrame with MouseWheelListener{
         total.remove(map)
         total.add(bataille)
         total.add(bas_fenetre)
+        total.repaint()
     }
 
     def afficher_map () = {
@@ -844,7 +852,6 @@ object Fenetre extends JFrame with MouseWheelListener{
         total.remove(map)
         total.add(info)
         total.add(bas_fenetre)
-        total.repaint()
     }
 
 
