@@ -22,9 +22,9 @@ object Touche extends JPanel with KeyListener {
                     case 'e' => {Player.interact}
                     case _ => {}
                 }
+                Fenetre.map.repaint()
             }
         }
-        Fenetre.map.repaint()
     }
 
 }
