@@ -213,12 +213,10 @@ object Louis extends Character("louis") {
 
     file_name = "louis"
 
-    ia = new IA(2,1,1,1,1,1,0,1,10,1,0)
+    ia = new IA(2,1,1,1,1,1,0,1,2,1,0)
     ia.bot = this
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
-        Func.give(this,new Rhinocarpe("Rhinocarpe"))
-        Func.give(this,new Rhinocarpe("Rhinocarpe"))
         Func.give(this,new Kokicarpe("Kokicarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         for(i <- bag.indices) {
@@ -231,13 +229,12 @@ object Schwoon extends Character("Stefan Schwoon") {
 
     file_name = "scientifique"
 
-    ia = new IA(2,1,1,1,1,1,0,1,10,1,0)
+    ia = new IA(2,10,1,1,1,1,0.15,1,2,1,0)
     ia.bot = this
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
-        Func.give(this,new Rhinocarpe("Rhinocarpe"))
-        Func.give(this,new Rhinocarpe("Rhinocarpe"))
+        Func.give(this,new Mherbe("M.herbe"))
         for(i <- bag.indices) {
             bag(i) = 1
         }

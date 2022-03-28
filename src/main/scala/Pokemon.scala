@@ -473,11 +473,12 @@ class Exceloss(pname : String) extends Pokemon(pname) {
     base_max_hp = 60
     species_name = "exceloss"
     id = 18
+    lvl = 15
     base_atk = 60
     base_defense = 50
     base_speed = 50
     ptype = Normal
-    attaques = Array(Draco_Griffes,Tornade,Charge,Bouclier)   
+    attaques = Array(Draco_Griffes,Tornade,Charge,Surf)   
     state = None_state
     description = "Il est le résultat de l'expérience COAT sur un dragon, il peut maintenant être acheté dans certains magasins" 
 }
