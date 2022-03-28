@@ -122,7 +122,7 @@ class AffichageBataille extends JPanel {
     }*/
     
     override def paintComponent (g : Graphics) : Unit = {
-        super.paintComponent (g)<
+        super.paintComponent (g)
 
         g.drawImage(env, 0, 0, null)
 
