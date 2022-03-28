@@ -108,7 +108,7 @@ abstract class Character(pname : String) extends Seenable {
                 current_area.tab(x)(y) = Empty_seenable
                 x = d.newx(x); y = d.newy(y)
                 current_area.rev(x)(y) match {
-                    case Herbe => if (r.nextDouble() < 0.1) {
+                    case Herbe => if (r.nextDouble() < (0.1 * proba_sauvage)) {
                                     Fenetre.bas_fenetre.interruption_menu_map = true
                                     opp = new Nature(current_area); in_battle = true
                                 }
@@ -122,6 +122,7 @@ abstract class Character(pname : String) extends Seenable {
             }
         }
         if (!is_fishing) direction = d
+        pas_repel -= 1
     }
 
 

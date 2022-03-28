@@ -155,7 +155,7 @@ class Repel extends Item {
     info = "Repousse les pokemons sauvages"
     usable_without_pokemon = true
     override def effect() = {
-        Player.pas_repel += 50
+        Player.pas_repel += 100
     }
     override def is_usable (p : Pokemon) = {
         false
