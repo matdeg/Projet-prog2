@@ -162,3 +162,13 @@ class Repel extends Item {
     }
 }
 
+class Chaussures extends Item {
+    name = "Chaussures de running de la Kult"
+    img = "items/key-item/roller-skates.png"
+    id = 13
+    info = "Permet de courrir"
+    unique = true
+    override def is_usable (p : Pokemon) = {
+        false
+    }
+}

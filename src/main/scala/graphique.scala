@@ -638,7 +638,9 @@ class Animation extends Thread {
             Fenetre.map.repaint()
             //println("appel Animation")
             Fenetre.bataille.repaint()
-            Thread.sleep(50)
+            Thread.sleep((50.0/Game.speed).toInt)
+            if (Game.speed > 1.0) {Fenetre.msgbox.print_msg("GOTTA GO FAST")}
+            else {Fenetre.msgbox.print_msg("")}
         }
         Fenetre.map.animation = false
         Fenetre.map.repaint()

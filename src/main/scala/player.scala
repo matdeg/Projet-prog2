@@ -1,3 +1,5 @@
+import scala.collection.mutable.Queue
+
 abstract class Character(pname : String) extends Seenable {
 
     val r = scala.util.Random;
@@ -5,6 +7,17 @@ abstract class Character(pname : String) extends Seenable {
     // si la joueur est en combat, son adversaire
     var opp : Character = Empty_character
     var in_battle = false
+
+    var ready_to_battle = false
+
+    def my_interaction = {}
+
+    def say(s : String) = {
+        Dialogue.queue.enqueue(s)
+        if (!Dialogue.isAlive) {
+            Dialogue.start
+        }
+    }
 
     var file_name = ""
 
@@ -43,9 +56,10 @@ abstract class Character(pname : String) extends Seenable {
 
     // sac d'objet et page courante dans l'affichage du sac en combat
     var page : Int = 0
-    var bag : Array[Int] = new Array[Int](13)
+    var bag : Array[Int] = new Array[Int](Func.id_items.length)
 
     def has_fishing_rod() = {bag(11) > 0}
+    def has_shoes() = {bag(13) > 0}
 
     // donne un tableau qui contient les id d'items de la page courante
     def current_items_id = {Func.choose(bag,page * 4, (page + 1) * 4)}
@@ -147,6 +161,8 @@ object Player extends Character(readLine()) {
         Func.give(this,new Mherbe("Mherbe"))
         for (i <- 0 to 5) {Pokedex.encountered(this.pokemons(i).id) = true} 
         for(i <- bag.indices) {bag(i) = 1}
+        bag(11) = 0
+        bag(13) = 0
     }
 
     // Le joueur bénéficie d'une fonction qui lui permet d'interagir avec l'environnement
@@ -156,10 +172,13 @@ object Player extends Character(readLine()) {
         // s'il ne regarde pas en bord de map, il intéragit avec ce qu'il y a devant lui
         if (0 <= x2 && x2 <= 14 && 0 <= y2 && y2 <= 9) {
             current_area.tab(x2)(y2) match {
-                case chara : Character => {
+                case chara : Character if (chara.ready_to_battle) => {
                         opp = chara
                         Fenetre.bas_fenetre.interruption_menu_map = true
                         in_battle = true
+                    }
+                case chara : Character => {
+                        chara.my_interaction
                     }
                 case panneau : Panneau => {
                         Fenetre.msgbox.print_msg(panneau.msg)
@@ -209,12 +228,20 @@ class Lac_opp extends Character("Nature") {
 }
 
 object Empty_character extends Character("") {}
-object Louis extends Character("louis") {
+object Louis extends Character("Louis") {
 
     file_name = "louis"
 
     ia = new IA(2,1,1,1,1,1,0,1,2,1,0)
     ia.bot = this
+
+    override def my_interaction = {
+        say("Coucou je suis Louis")
+        say("Tiens voilà des chaussures de running de la Kult")
+        Player.bag(13) += 1
+        say("Youhou je suis chauve")
+        ready_to_battle = true
+    }
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
         Func.give(this,new Kokicarpe("Kokicarpe"))
@@ -238,5 +265,18 @@ object Schwoon extends Character("Stefan Schwoon") {
         for(i <- bag.indices) {
             bag(i) = 1
         }
+    }
+}
+
+object Dialogue extends Thread {
+
+    var queue : Queue[String] = Queue()
+
+    override def run = {
+        while (!queue.isEmpty) {
+            Fenetre.msgbox.print_msg(queue.dequeue)
+            Func.wait_for_enter
+        }
+        Fenetre.msgbox.print_msg("")
     }
 }
