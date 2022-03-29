@@ -196,3 +196,50 @@ object Charge extends Attaque{
     name = "Charge"
     atype = Normal
 }
+
+object Poudre_toxik extends Attaque{
+    dmg = 0
+    pp = 35
+    precision = 75
+    name = "Poudre Toxik"
+    atype = Poison
+    pstate = (Empoisonnement,1.0)
+}
+
+object Acide extends Attaque{
+    dmg = 40
+    pp = 30
+    precision = 100
+    name = "Acide"
+    atype = Poison
+    pstate = (Empoisonnement,0.4)
+}
+
+object Secretion extends Attaque{
+    dmg = 0
+    pp = 30
+    precision = 95
+    name = "Sécrétion"
+    atype = Insecte
+    debuff_speed = (-2,1.0)
+}
+
+object Piqure extends Attaque{
+    dmg = 60
+    pp = 25
+    precision = 100
+    name = "Piqure"
+    atype = Insecte
+}
+
+object Draco_Griffes extends Attaque{
+    dmg = 80
+    pp = 15
+    precision = 100
+    name = "Draco-griffes"
+    atype = Dragon
+}
+
+
+
+

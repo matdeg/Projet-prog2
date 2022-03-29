@@ -73,9 +73,9 @@ object Jardin_BasDroit extends Area {
     tab(7)(9) = new Porte(S,Empty_area)
     tab(9)(9) = new Panneau("Bibliothèque")
     Func.draw(tab,Mur,14,0,14,9)
-    tab(14)(3) = new Panneau("Kfet")
+    tab(14)(2) = new Panneau("Kfet")
     tab(14)(5) = new Porte(E,Empty_area)
-    tab(14)(6) = new Porte(E,Empty_area)
+    tab(14)(4) = new Porte(E,Empty_area)
     for (i <- 0 to 10; if (i <= 2 || 6 <= i)) {
         tab(i)(2) = Buisson
         tab(i)(6) = Buisson
@@ -219,7 +219,7 @@ object Jardin_MilieuDroit extends Area {
 
     tab(14)(4) = new Porte(E,Empty_area)
     tab(14)(5) = new Porte(E,Empty_area)
-    tab(14)(2) = new Panneau("Je sais pas")
+    tab(14)(2) = new Panneau("Pôle Santé")
 
     Func.draw(tab,Lac,0,0,10,2)
     Func.draw(tab,Buisson,10,0,10,7)

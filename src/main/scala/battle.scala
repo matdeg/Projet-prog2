@@ -100,6 +100,7 @@ class Battle(other : Character) {
             else {
             other match {
                 case nat : Nature => second_choix_op = r.nextInt(4)
+                case lac : Lac_opp => second_choix_op = r.nextInt(4)
                 case _ => var (a,b) = other.ia.best_move
                           choix_menu_op = a
                           second_choix_op = b

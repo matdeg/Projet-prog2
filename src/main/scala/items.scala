@@ -155,10 +155,20 @@ class Repel extends Item {
     info = "Repousse les pokemons sauvages"
     usable_without_pokemon = true
     override def effect() = {
-        Player.pas_repel += 50
+        Player.pas_repel += 100
     }
     override def is_usable (p : Pokemon) = {
         false
     }
 }
 
+class Chaussures extends Item {
+    name = "Chaussures de running de la Kult"
+    img = "items/key-item/roller-skates.png"
+    id = 13
+    info = "Permet de courrir"
+    unique = true
+    override def is_usable (p : Pokemon) = {
+        false
+    }
+}

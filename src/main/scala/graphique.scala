@@ -633,12 +633,14 @@ class Menu extends JPanel {
 
 class Animation extends Thread {
     override def run : Unit = {
-        println("new Thread")
+        //println("new Thread")
         for (i<-1 to 4) {
             Fenetre.map.repaint()
-            println("appel Animation")
+            //println("appel Animation")
             Fenetre.bataille.repaint()
-            Thread.sleep(50)
+            Thread.sleep((50.0/Game.speed).toInt)
+            if (Game.speed > 1.0) {Fenetre.msgbox.print_msg("GOTTA GO FAST")}
+            else {Fenetre.msgbox.print_msg("")}
         }
         Fenetre.map.animation = false
         Fenetre.map.repaint()
@@ -666,7 +668,7 @@ class AffichageMap extends JPanel {
 
     def move_player(d : Direction, x : Int, y : Int) : Unit = {
         animation = true
-        println("new coor")
+        //println("new coor")
         p_x = x*50
         p_y = y*50
         d match {
@@ -704,7 +706,7 @@ class AffichageMap extends JPanel {
                         case chara : Character if (chara.is_main) => {
                             p_x += dx
                             p_y += dy
-                            println(p_x.toString + " " + p_y.toString)
+                            //println(p_x.toString + " " + p_y.toString)
                             if (which_frame == 1) {
                                 g.drawImage(image_animation1, p_x, p_y, 50, 50, null)
                             }
