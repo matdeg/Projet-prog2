@@ -163,7 +163,6 @@ object Player extends Character(readLine()) {
                     }
                 case panneau : Panneau => {
                         Fenetre.msgbox.print_msg(panneau.msg)
-                        Thread.sleep(1000)
                     }
                 case Lac if ((has_fishing_rod) && !is_fishing) => {
                         Fenetre.bas_fenetre.interruption_menu_map = true
