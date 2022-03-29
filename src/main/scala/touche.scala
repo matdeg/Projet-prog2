@@ -26,5 +26,4 @@ object Touche extends JPanel with KeyListener {
             }
         }
     }
-
-}
+} 
