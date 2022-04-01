@@ -168,6 +168,7 @@ class Chaussures extends Item {
     id = 13
     info = "Permet de courrir"
     unique = true
+    usable_without_pokemon = true
     override def is_usable (p : Pokemon) = {
         false
     }

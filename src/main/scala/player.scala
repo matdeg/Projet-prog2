@@ -107,7 +107,7 @@ abstract class Character(pname : String) extends Seenable {
     // permet de pêcher
     def fish() = {
         var x = r.nextDouble
-        if (x > 0.9) {
+        if (x > 0.95) {
             opp = new Lac_opp; in_battle = true
         }
     }
@@ -161,7 +161,7 @@ object Player extends Character(readLine()) {
         Func.give(this,new Mherbe("Mherbe"))
         for (i <- 0 to 5) {Pokedex.encountered(this.pokemons(i).id) = true} 
         for(i <- bag.indices) {bag(i) = 1}
-        bag(11) = 0
+        bag(11) = 1
         bag(13) = 0
     }
 
@@ -255,8 +255,9 @@ object Louis extends Character("Louis") {
 object Schwoon extends Character("Stefan Schwoon") {
 
     file_name = "scientifique"
+    ready_to_battle = true
 
-    ia = new IA(2,10,1,1,1,1,0.15,1,2,1,0)
+    ia = new IA(2,10,1,1,1,1,0.15,1,0,1,0)
     ia.bot = this
     override def init() = {
         Func.give(this,new Salatard("Salatard"))

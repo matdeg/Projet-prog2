@@ -275,10 +275,10 @@ class Alacool(pname : String) extends Pokemon(pname) {
 
 
 class Dracarpe(pname : String) extends Pokemon(pname) {
-    base_max_hp = 44
+    base_max_hp = 40
     species_name = "dracarpe"
     id = 2
-    base_atk = 55
+    base_atk = 58
     base_defense = 40
     base_speed = 40
     ptype = Feu
@@ -387,9 +387,9 @@ class Salatard(pname : String) extends Pokemon(pname) {
     id = 11
     base_atk = 50
     base_defense = 47
-    base_speed = 47
+    base_speed = 100
     ptype = Feu
-    attaques = Array(Feu_follet,Pistolet_a_O,Charge,Bulles_d_O)
+    attaques = Array(Feu_follet,Pistolet_a_O,Charge,Flammèche)
     description = "gnnnnééé : le seul son qui peut sortir de sa bouche"
 }
 

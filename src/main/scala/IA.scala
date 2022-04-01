@@ -1,6 +1,6 @@
 // x0 : aime faire des dégats (2 de base)
-// x1 : aime buff la défense (1 de base)
-// x2 : aime buff l'attaque (1 de base)
+// x1 : aime buff l'attaque (1 de base)
+// x2 : aime buff la défense (1 de base)
 // x3 : aime buff la vitesse (1 de base)
 // x4 : aime debuff la défense (1 de base)
 // x5 : aime debuff l'attaque (1 de base)
