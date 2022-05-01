@@ -21,6 +21,7 @@ object Test_mathis {
                 if (Player.in_battle) {
                     var baston = new Battle(Player.opp)
                     Player.current_battle = baston; Player.opp.current_battle = baston
+                    var remember = Player.opp
                     baston.start
                     choix = Fenetre.bas_fenetre.print_menu_base()
                 }

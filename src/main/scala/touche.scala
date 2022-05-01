@@ -22,7 +22,7 @@ object Touche extends JPanel with KeyListener {
     }
 
     def keyTyped (evt : KeyEvent) : Unit = {
-        if (!Dialogue.isAlive) {
+        if (!Game.en_dialogue) {
             evt.getKeyChar.toLower match {
             case 'a' => {aide = !aide}
             case _ => if (!Player.in_battle && !Pokedex.in_pokedex && !Fenetre.map.animation) {

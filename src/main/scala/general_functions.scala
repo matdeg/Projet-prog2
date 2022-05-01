@@ -175,8 +175,8 @@ object Func {
                         menu_pokemon()
                     }
             case i if (i == Player.ip) => {
-                            Fenetre.msgbox.print_msg("Ce pokémon est déjà sur le terrain"); Thread.sleep(1500)
-                            menu_pokemon()
+                        Fenetre.msgbox.print_msg("Ce pokémon est déjà sur le terrain"); Thread.sleep(1500)
+                        menu_pokemon()
                     }
             case i => (1,i) 
         } 
@@ -197,7 +197,23 @@ object Func {
                       }
             case i => (2,choix_objet * 6 + choix_pokemon)
         }
-    }    
+    }
+
+    def menu_pokemon_after_item_hors_combat(choix_objet : Int) : (Int,Int) = {
+        Fenetre.msgbox.print_msg("Choisissez un pokémon :")
+        var choix_pokemon = -2
+        var item_id = Player.current_items_id(choix_objet)
+        var item = Func.id_items(item_id)
+        choix_pokemon = Fenetre.bas_fenetre.print_menu_pokemon(Player)
+        choix_pokemon match {
+            case -1 => menu_sac_hors_combat
+            case i if (!item.is_usable(Player.pokemons(i))) => {
+                        Fenetre.msgbox.print_msg("Cet objet n'est pas utilisable sur ce pokémon"); Thread.sleep(1500)
+                        menu_pokemon_after_item_hors_combat(choix_objet)
+                      }
+            case i => (2,choix_objet * 6 + choix_pokemon)
+        }
+    }   
 
     //le joueur choisit un objet, le 2e entier est (6 * id_objet + id_pokemon) selon quel pokémon est choisi pour l'objet
     def menu_sac() : (Int, Int) = {
@@ -226,7 +242,7 @@ object Func {
                     (2,choix_objet * 6)
                 }
                 else {
-                    menu_pokemon_after_item(choix_objet)
+                    menu_pokemon_after_item_hors_combat(choix_objet)
                 }
             }
         }

@@ -1,5 +1,5 @@
 import scala.collection.mutable.Queue
-
+import scala.collection.mutable.Stack
 abstract class Character(pname : String) extends Seenable {
 
     val r = scala.util.Random;
@@ -10,13 +10,14 @@ abstract class Character(pname : String) extends Seenable {
 
     var ready_to_battle = false
 
-    def my_interaction = {}
+    var interactions = Stack[Int => Unit]()
+    var end_battle = Stack[Int => Unit]()
 
-    def say(s : String) = {
-        Dialogue.queue.enqueue(s)
-        if (!Dialogue.isAlive) {
-            Dialogue.start
-        }
+    def say(s : Array[String]) = {
+        Game.en_dialogue = true
+        var dial = new Dialogue
+        for (i <- s) dial.queue.enqueue(i)
+        dial.start
     }
 
     var file_name = ""
@@ -173,12 +174,13 @@ object Player extends Character(readLine()) {
         if (0 <= x2 && x2 <= 14 && 0 <= y2 && y2 <= 9) {
             current_area.tab(x2)(y2) match {
                 case chara : Character if (chara.ready_to_battle) => {
-                        opp = chara
                         Fenetre.bas_fenetre.interruption_menu_map = true
+                        opp = chara
                         in_battle = true
                     }
                 case chara : Character => {
-                        chara.my_interaction
+                        var x = chara.interactions.pop
+                        x(0)
                     }
                 case panneau : Panneau => {
                         Fenetre.msgbox.print_msg(panneau.msg)
@@ -235,20 +237,29 @@ object Louis extends Character("Louis") {
     ia = new IA(2,1,1,1,1,1,0,1,2,1,0)
     ia.bot = this
 
-    override def my_interaction = {
-        say("Coucou je suis Louis")
-        say("Tiens voilà des chaussures de running de la Kult")
+    val inter0 = (n : Int) => {
+        say(Array("Coucou je suis Louis","Tiens voilà des chaussures de running de la Kult","Youhou je suis chauve"))
         Player.bag(13) += 1
-        say("Youhou je suis chauve")
         ready_to_battle = true
     }
+
+    val inter1 : Int => Unit = (n : Int) => {
+        say(Array("tu m'as déjà battu va te faire foutre"))
+        interactions.push(inter1)
+    }
+
+    val beaten0 = (n : Int) => {
+        say(Array("Oh tu es meilleur que moi sal batard"))
+        ready_to_battle = false
+    }
     override def init() = {
-        Func.give(this,new Salatard("Salatard"))
-        Func.give(this,new Kokicarpe("Kokicarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         for(i <- bag.indices) {
             bag(i) = 1
         }
+        interactions.push(inter1)
+        interactions.push(inter0)
+        end_battle.push(beaten0)
     }
 }
 
@@ -269,7 +280,7 @@ object Schwoon extends Character("Stefan Schwoon") {
     }
 }
 
-object Dialogue extends Thread {
+class Dialogue extends Thread {
 
     var queue : Queue[String] = Queue()
 
@@ -279,5 +290,6 @@ object Dialogue extends Thread {
             Func.wait_for_enter
         }
         Fenetre.msgbox.print_msg("")
+        Game.en_dialogue = false
     }
 }

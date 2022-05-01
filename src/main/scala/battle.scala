@@ -30,8 +30,10 @@ class Battle(other : Character) {
                                     Thread.sleep(1000)
                                     Fenetre.msgbox.print_msg("")
                                     Player.opp = Empty_character
-                                    Fenetre.afficher_map ()
+                                    Fenetre.afficher_map()
                                     Player.in_battle = false
+                                    var x = p.end_battle.pop
+                                    x(0)
                                 }
 
     // actualise l'affichage des données du combat
