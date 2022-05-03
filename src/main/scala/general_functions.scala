@@ -33,7 +33,7 @@ object Func {
     val r = scala.util.Random;
 
     // permet de retrouver un item à partir de son id
-    var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal, new Fishing_rod, new Repel, new Chaussures)
+    var id_items : Array[Item] = Array(new Potion,new Super_potion,new Hyper_potion,new Revive,new Max_revive,new Antidote,new Awakening,new Burn_heal,new Ice_heal,new Paralyze_heal,new Full_heal, new Fishing_rod, new Repel, new Chaussures, new Rare_candy)
 
     // multiplicateur de stat en fonction de l'indice de modification
     def mult_a: Int => Double = {
@@ -284,6 +284,14 @@ object Func {
         while (!Game.enter) {
             Thread.sleep(10)
         } 
+    }
+
+    def echange_pok(p1 : Character,p2 : Character,i1 : Int, i2 : Int) = {
+        var tmp = p1.pokemons(i1)
+        p1.pokemons(i1) = p2.pokemons(i2)
+        p2.pokemons(i2) = tmp
+        p1.pokemons(i1).maitre = p1
+        p2.pokemons(i2).maitre = p2
     }
 
     def print_string(s : String, x : Int, y : Int, g : Graphics, m : FontMetrics) : Unit = {

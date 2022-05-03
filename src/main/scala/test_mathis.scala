@@ -6,6 +6,8 @@ object Test_mathis {
         Player.init()
         Louis.init()
         Schwoon.init()
+        Chatain.init()
+        Jardin_MilieuDroit.add_character(Chatain,5,7)
         Jardin_BasDroit.add_character(Player,5,6)
         Jardin_BasDroit.add_character(Louis,7,7)
         Jardin_MilieuDroit.add_character(Schwoon,6,7)

@@ -10,8 +10,12 @@ abstract class Character(pname : String) extends Seenable {
 
     var ready_to_battle = false
 
-    var interactions = Stack[Int => Unit]()
-    var end_battle = Stack[Int => Unit]()
+    var fond_de_pile : Int => Unit = (n : Int) => {
+        end_battle.push(fond_de_pile)
+    }
+
+    var interactions = Stack[Int => Unit](fond_de_pile)
+    var end_battle = Stack[Int => Unit](fond_de_pile)
 
     def say(s : Array[String]) = {
         Game.en_dialogue = true
@@ -41,6 +45,21 @@ abstract class Character(pname : String) extends Seenable {
 
     
     var is_fishing = false
+    def has_carp(n : Int) : Boolean = {
+        var b = false
+        for (i <- 0 to 5) {
+            if (pokemons(i).is_carp && pokemons(i).lvl >= n) {b = true}
+        }
+        return b
+    }
+
+    def get_carp(n : Int) : Int = {
+        var b = 0
+        for (i <- 0 to 5) {
+            if (pokemons(i).is_carp && pokemons(i).lvl >= n) {b = i}
+        }
+        return b
+    }
 
     var ia = new IA(1,1,1,1,1,1,0,1,1,1,0)
 
@@ -140,6 +159,7 @@ abstract class Character(pname : String) extends Seenable {
         pas_repel -= 1
     }
 
+    var nb_badge : Int = 0
 
     // cette fonction sert à initialiser les valeurs de certains personnages comme leurs pokémons etc... c'est un peu la définition de chaque joueur
     def init : Unit = {}
@@ -157,9 +177,7 @@ object Player extends Character(readLine()) {
         Func.give(this,new Dracarpe("Dracarpe"))
         Func.give(this,new Poissocarpe("Poissocarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
-        Func.give(this,new Galopan("Galopan"))
         Func.give(this,new Exceloss("Exceloss"))
-        Func.give(this,new Mherbe("Mherbe"))
         for (i <- 0 to 5) {Pokedex.encountered(this.pokemons(i).id) = true} 
         for(i <- bag.indices) {bag(i) = 1}
         bag(11) = 1
@@ -249,7 +267,11 @@ object Louis extends Character("Louis") {
     }
 
     val beaten0 = (n : Int) => {
-        say(Array("Oh tu es meilleur que moi sal batard"))
+        say(Array("Oh tu es meilleur que moi sal batard","Tiens, voilà de l'argent","Vous avez gagné 1000£","voilà un poisson aussi","Vous avez obtenu un Poissocarpe"))
+        Player.money = Player.money + 1000
+        var pokk = new Poissocarpe("Poissocarpe")
+        pokk.lvl = 14
+        Func.give(Player,pokk)
         ready_to_battle = false
     }
     override def init() = {
@@ -266,17 +288,95 @@ object Louis extends Character("Louis") {
 object Schwoon extends Character("Stefan Schwoon") {
 
     file_name = "scientifique"
-    ready_to_battle = true
+    ready_to_battle = false
 
     ia = new IA(2,10,1,1,1,1,0.15,1,0,1,0)
     ia.bot = this
+
+    val inter0 : Int => Unit = (n : Int) => {
+        if (Player.money < 1000) {
+            say(Array("Coucou je suis M.Schwoon","Je suis la première personne que tu dois vaincre","Malheureusement, il te faut 1000 £ pour me combattre"))
+            interactions.push(inter0)
+        }
+        else {
+            say(Array("Oh tu as assez d'argent pour me combattre","Reviens me voir quand tu es prêt pour la bagarre"))
+            ready_to_battle = true
+        }
+    }
+
+    val inter1 : Int => Unit = (n : Int) => {
+        say(Array("tu m'as déjà battu, il faut que tu ailles voir M.Chatain maintenant"))
+        interactions.push(inter1)
+    }
+
+    val beaten0 = (n : Int) => {
+        say(Array("Bravo tu es super fort, voilà ton premier badge"))
+        Player.nb_badge += 1
+        ready_to_battle = false
+    }
     override def init() = {
         Func.give(this,new Salatard("Salatard"))
-        Func.give(this,new Rhinocarpe("Rhinocarpe"))
-        Func.give(this,new Mherbe("M.herbe"))
         for(i <- bag.indices) {
             bag(i) = 1
         }
+        interactions.push(inter1)
+        interactions.push(inter0)
+        end_battle.push(beaten0)
+    }
+}
+
+object Chatain extends Character("Thomas Chatain") {
+
+    file_name = "scientifique"
+    ready_to_battle = false
+
+    ia = new IA(2,10,1,1,1,1,0.15,1,0,1,0)
+    ia.bot = this
+
+    val inter0 : Int => Unit = (n : Int) => {
+        if (Player.nb_badge < 1) {
+            say(Array("Il te faut vaincre M.Schwoon avant de m'affronter","reviens me voir quand tu seras assez fort"))
+            interactions.push(inter0)
+        }
+        else {
+            if (Player.has_carp(15)) {
+                say(Array("Oh tu as une belle carpe dis-donc"))
+                Func.echange_pok(Player,Chatain,Player.get_carp(15),1)
+                say(Array("AHAH, j'ai échangé nos carpes"))
+                Thread.sleep(1000)
+                Fenetre.bas_fenetre.interruption_menu_map = true
+                Player.opp = this
+                Player.in_battle = true
+                ready_to_battle = true
+            }
+            else {
+                say(Array("Il te faut une carpe de niveau 15 ou plus","reviens me voir quand tu seras assez fort"))
+                interactions.push(inter0)
+            }
+        }
+    }
+
+    val inter1 : Int => Unit = (n : Int) => {
+        say(Array("tu m'as déjà battu, il faut que tu ailles voir _____ maintenant"))
+        interactions.push(inter1)
+    }
+
+    val beaten0 = (n : Int) => {
+        say(Array("Bravo tu es super fort, voilà ton deuxième badge"))
+        Player.nb_badge += 1
+        ready_to_battle = false
+    }
+    override def init() = {
+        Func.give(this,new Salatard("Salatard"))
+        var poisson_nul = new Kokicarpe("Poissonul")
+        poisson_nul.lvl = 1
+        Func.give(this,poisson_nul)
+        for(i <- bag.indices) {
+            bag(i) = 1
+        }
+        interactions.push(inter1)
+        interactions.push(inter0)
+        end_battle.push(beaten0)
     }
 }
 

@@ -415,7 +415,7 @@ class Menu extends JPanel {
         Fenetre.requestFocus
         
         Fenetre.msgbox.save = "Choisissez un Pokéfusion : "
-        for (i <- 0 to 5) {
+        for (i <- 0 to (Player.nb_pokemons -1)) {
             bouton(i).setText(p.pokemons(i).name)
             bouton(i).set_font(p.pokemons(i).ptype.image)
             bouton(i).set_icone(p.pokemons(i).image, p.pokemons(i).hp, p.pokemons(i).max_hp)

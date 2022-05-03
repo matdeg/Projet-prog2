@@ -7,6 +7,7 @@ abstract class Item extends Seenable {
     var img : String = ""
     var regen : Int = 0
     var revive : Double = 0
+    var buff_lvl : Int = 0
     var buff_atk : Int = 0
     var buff_defense : Int = 0
     var buff_speed : Int = 0
@@ -171,5 +172,15 @@ class Chaussures extends Item {
     usable_without_pokemon = true
     override def is_usable (p : Pokemon) = {
         false
+    }
+}
+class Rare_candy extends Item {
+    name = "rare-candy"
+    img = "items/medicine/rare-candy.png"
+    id = 14
+    info = "augmente le niveau d'un pokémon de 1"
+    buff_lvl = 1
+    override def is_usable (p : Pokemon) = {
+        true
     }
 }

@@ -9,6 +9,7 @@ abstract class Pokemon(pname : String) {
     var description = ""
 
     var id = 0
+    var is_carp = false
 
     // stats en lien avec le niveau du pokémon
     var lvl = 10
@@ -103,6 +104,7 @@ abstract class Pokemon(pname : String) {
                                 Fenetre.msgbox.print_msg("La défense de " + this.name + " diminue...");Thread.sleep(1500)}
         if (i.buff_speed < 0) {speed_mult = Func.max(i.buff_speed + speed_mult,-6)
                                 Fenetre.msgbox.print_msg("La vitesse de " + this.name + " diminue...");Thread.sleep(1500)}
+        if (i.buff_lvl > 0) {lvl  += 1; Fenetre.msgbox.print_msg(this.name + " gagne 1 niveau");Thread.sleep(1500)}
         i.state_heal.foreach(x => if (state == x) {state = None_state;Fenetre.msgbox.print_msg(this.name + " n'a plus l'effet " + x.name);Thread.sleep(1500)})
     }
 
@@ -276,6 +278,7 @@ class Alacool(pname : String) extends Pokemon(pname) {
 
 class Dracarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 40
+    is_carp = true
     species_name = "dracarpe"
     id = 2
     base_atk = 58
@@ -300,6 +303,7 @@ class Galopan(pname : String) extends Pokemon(pname) {
 
 class Kokicarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 40
+    is_carp = true
     species_name = "kokicarpe"
     id = 4
     base_atk = 40
@@ -349,6 +353,7 @@ class Magilangue(pname : String) extends Pokemon(pname) {
 class Poissocarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 47
     species_name = "poissocarpe"
+    is_carp = true
     id = 8
     base_atk = 50
     base_defense = 47
@@ -374,6 +379,7 @@ class Rhinocarpe(pname : String) extends Pokemon(pname) {
     base_max_hp = 45
     species_name = "rhinocarpe"
     id = 10
+    is_carp = true
     base_atk = 55
     base_defense = 45
     base_speed = 45
