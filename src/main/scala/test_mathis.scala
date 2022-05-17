@@ -7,10 +7,12 @@ object Test_mathis {
         Louis.init()
         Schwoon.init()
         Chatain.init()
+        Goubault.init()
         Jardin_MilieuDroit.add_character(Chatain,5,7)
         Jardin_BasDroit.add_character(Player,5,6)
         Jardin_BasDroit.add_character(Louis,7,7)
         Jardin_MilieuDroit.add_character(Schwoon,6,7)
+        Jardin_MilieuDroit.add_character(Goubault,4,8)
         Fenetre.afficher_map ()
         // FIN -- initialisation du jeu
 

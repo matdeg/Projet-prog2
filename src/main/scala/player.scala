@@ -8,6 +8,9 @@ abstract class Character(pname : String) extends Seenable {
     var opp : Character = Empty_character
     var in_battle = false
 
+    var is_goubault : Boolean = false
+    var stack_pause : Int = 0
+
     var ready_to_battle = false
 
     var fond_de_pile : Int => Unit = (n : Int) => {
@@ -174,10 +177,12 @@ object Player extends Character(readLine()) {
     
     file_name = "player"
     override def init() = {
+        Func.give(this,new Exceloss("Exceloss"))
         Func.give(this,new Dracarpe("Dracarpe"))
         Func.give(this,new Poissocarpe("Poissocarpe"))
         Func.give(this,new Rhinocarpe("Rhinocarpe"))
         Func.give(this,new Exceloss("Exceloss"))
+
         for (i <- 0 to 5) {Pokedex.encountered(this.pokemons(i).id) = true} 
         for(i <- bag.indices) {bag(i) = 1}
         bag(11) = 1
@@ -357,7 +362,7 @@ object Chatain extends Character("Thomas Chatain") {
     }
 
     val inter1 : Int => Unit = (n : Int) => {
-        say(Array("tu m'as déjà battu, il faut que tu ailles voir _____ maintenant"))
+        say(Array("tu m'as déjà battu, il faut que tu ailles voir Goubault maintenant"))
         interactions.push(inter1)
     }
 
@@ -379,6 +384,63 @@ object Chatain extends Character("Thomas Chatain") {
         end_battle.push(beaten0)
     }
 }
+
+object Goubault extends Character("Jean Goubault-Larrecq") {
+
+    file_name = "scientifique"
+    ready_to_battle = false
+
+    ia = new IA(2,10,1,1,1,1,0.15,1,0,1,0)
+    ia.bot = this
+
+    stack_pause = 0
+    is_goubault = true
+    def force_atq = {Mini_Pause}
+
+    val inter0 : Int => Unit = (n : Int) => {
+        if (Player.nb_badge < 2) {
+            say(Array("Il te faut vaincre M.Chatain avant de m'affronter","reviens me voir quand tu seras assez fort"))
+            interactions.push(inter0)
+        }
+        else {
+            say(Array("Si tu veux me combattre, laisses moi te prévenir,","J'ai lu une étude américaine sur la psychologie de l'enseignement,","elle préconise d'effectuer des mini-pauses de 1 min toutes les 20 minutes,","Vous m'en voyez navré mais vous allez être mon cobaye !"))
+            ready_to_battle = true
+        }
+    }
+
+    val inter1 : Int => Unit = (n : Int) => {
+        say(Array("tu m'as déjà battu, il faut que tu ailles voir _____ maintenant"))
+        interactions.push(inter1)
+    }
+
+    val beaten0 = (n : Int) => {
+        say(Array("Bravo tu es super fort, voilà ton troisième badge"))
+        Player.nb_badge += 1
+        ready_to_battle = false
+    }
+    override def init() = {
+        Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Salatard("Salatard"))
+        Func.give(this,new Salatard("Salatard"))
+        for(i <- bag.indices) {
+            bag(i) = 1
+        }
+        interactions.push(inter1)
+        interactions.push(inter0)
+        end_battle.push(beaten0)
+    }
+}
+
+
+
+
+
+
+
+
 
 class Dialogue extends Thread {
 

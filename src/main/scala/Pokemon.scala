@@ -150,8 +150,9 @@ abstract class Pokemon(pname : String) {
 
     // tentes de lancer l'attaque i sur defenser, si l'attaque n'échoue pas, lance lands_attack et receive_attack
     def cast_attaque(i : Int,defenser : Pokemon) = {
-        var a = attaques(i); 
-        pp_list(i) -= 1 
+        var a : Attaque = Mini_Pause;
+        if (i != 4) {a = attaques(i)}
+        if (i != 4) {pp_list(i) -= 1}
         if (!state.stun) {
             Fenetre.msgbox.print_msg(this.name + " lance l'attaque " + a.name);Thread.sleep(1500)
             if (r.nextDouble > state.miss) {

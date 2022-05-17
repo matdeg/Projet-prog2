@@ -3,6 +3,8 @@ class Battle(other : Character) {
     Fenetre.bataille.you = Player
     Fenetre.bataille.op = other
 
+    
+
     // nombres de tours
     var loop : Int = 0
 
@@ -87,9 +89,21 @@ class Battle(other : Character) {
 
         // gestion menu - boutons
         while (!finished) {
+
             var (choix_menu,second_choix) = Func.menu_principal()
             var choix_menu_op = 0
             var second_choix_op = 0
+
+            // on gère la spécialité de goubault
+            if (other.is_goubault) {
+                other.stack_pause match {
+                    case 0 => other.stack_pause += 1
+                    case 1 if (r.nextDouble() < 0.4)  => other.stack_pause = 0; choix_menu = 0; second_choix = 4
+                    case 1 =>  other.stack_pause += 1
+                    case n:Int if (r.nextDouble() < 0.4) => other.stack_pause -= 2; choix_menu = 0; second_choix = 4
+                    case n:Int => other.stack_pause += 1
+                }
+            } 
 
             // en cas de fuite, on termine le tour instantanément
             if (choix_menu == 3) {

@@ -240,6 +240,14 @@ object Draco_Griffes extends Attaque{
     atype = Dragon
 }
 
+object Mini_Pause extends Attaque{
+    dmg = 0
+    pp = 100
+    precision = 100
+    name = "mini-pause"
+    atype = Normal
+}
+
 
 
 
