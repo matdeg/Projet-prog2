@@ -1,0 +1,9 @@
+2022.05.17 22:12:28 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/gaspard_reghem/Documents/Projet_Pok/Projet-prog2/src/.metals/lsp.trace.json or /home/gaspard_reghem/.cache/metals/lsp.trace.json
+2022.05.17 22:12:29 INFO  logging to file /home/gaspard_reghem/Documents/Projet_Pok/Projet-prog2/src/.metals/metals.log
+2022.05.17 22:12:29 INFO  Started: Metals version 0.11.5 in workspace '/home/gaspard_reghem/Documents/Projet_Pok/Projet-prog2/src' for client Visual Studio Code 1.67.1.
+2022.05.17 22:12:29 WARN  Can't instantiate JavaInteractiveSemanticdb (version: Some(JdkVersion(11)), jdkHome: /usr/lib/jvm/java-11-openjdk-amd64, javac exists: false)
+2022.05.17 22:12:31 INFO  time: initialize in 2.1s
+2022.05.17 22:12:31 WARN  Flyway upgrade recommended: H2 2.1.212 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2022.05.17 22:12:31 WARN  Build server is not auto-connectable.
+2022.05.17 22:12:31 WARN  no build tool detected in workspace '/home/gaspard_reghem/Documents/Projet_Pok/Projet-prog2/src'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2022.05.17 22:12:33 INFO  shutting down Metals
