@@ -344,10 +344,10 @@ class Menu extends JPanel {
             Fenetre.msgbox.save = ""
             bouton0.setText("Pokédex")
             bouton0.set_font("couleur/rouge.jpeg")
-            bouton0.info = "Permet d'accéder au Pokédex'"
+            bouton0.info = "Permet d'accéder au Pokédex"
             bouton1.setText("Pokémon")
             bouton1.set_font("couleur/vert.png")
-            bouton1.info = "Permet d'interagir avec les Pokémons'"
+            bouton1.info = "Permet d'interagir avec les Pokémons"
             bouton2.setText("Sac")
             bouton2.set_font("couleur/jaune.jpg")
             bouton2.info = "Permet d'utiliser des objets"
