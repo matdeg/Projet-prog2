@@ -213,7 +213,29 @@ object Func {
                       }
             case i => (2,choix_objet * 6 + choix_pokemon)
         }
-    }   
+    }
+
+    def menu_pokemon_hors_combat () = {
+        Fenetre.msgbox.print_msg("Choisissez deux pokémons :")
+        var choix_pokemon = -2
+        choix_pokemon = Fenetre.bas_fenetre.print_menu_pokemon(Player)
+        choix_pokemon match {
+            case -1 => {}
+            case i => {
+                choix_pokemon = -2
+                choix_pokemon = Fenetre.bas_fenetre.print_menu_pokemon(Player)
+                choix_pokemon match {
+                    case -1 => {}
+                    case j if (i != j && Player.pokemons(i).name != "" && Player.pokemons(j).name != "") => {
+                        var res = Player.pokemons(i)
+                        Player.pokemons(i) = Player.pokemons(j)
+                        Player.pokemons(j) = res
+                    }
+                    case j => {}
+                }
+            }
+        }
+    }
 
     //le joueur choisit un objet, le 2e entier est (6 * id_objet + id_pokemon) selon quel pokémon est choisi pour l'objet
     def menu_sac() : (Int, Int) = {

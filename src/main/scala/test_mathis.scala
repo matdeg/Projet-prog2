@@ -43,7 +43,7 @@ object Test_mathis {
                             case -2 => {}
                             case -1 => {}
                             case 0 => Pokedex.start
-                            case 1 => Fenetre.msgbox.print_msg("1")
+                            case 1 => Func.menu_pokemon_hors_combat()
                             case 2 => {
                                 var (a,choix_sac) = Func.menu_sac_hors_combat()
                                 var choix_item = choix_sac / 6
