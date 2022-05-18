@@ -9,6 +9,7 @@ abstract class Character(pname : String) extends Seenable {
     var in_battle = false
 
     var is_goubault : Boolean = false
+    var chatain_is_free : Boolean = true 
     var stack_pause : Int = 0
 
     var ready_to_battle = false
@@ -345,13 +346,8 @@ object Chatain extends Character("Thomas Chatain") {
         }
         else {
             if (Player.has_carp(15)) {
-                say(Array("Oh tu as une belle carpe dis-donc"))
                 Func.echange_pok(Player,Chatain,Player.get_carp(15),1)
-                say(Array("AHAH, j'ai échangé nos carpes"))
-                Thread.sleep(1000)
-                Fenetre.bas_fenetre.interruption_menu_map = true
-                Player.opp = this
-                Player.in_battle = true
+                say(Array("Oh tu as une belle carpe dis-donc","AHAH, j'ai échangé nos carpes, reviens me voir pour commencer les combat"))
                 ready_to_battle = true
             }
             else {
