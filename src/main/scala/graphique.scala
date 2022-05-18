@@ -421,7 +421,7 @@ class Menu extends JPanel {
             if (p.pokemons(i).name != "") {
                 bouton(i).set_icone(p.pokemons(i).image, p.pokemons(i).hp, p.pokemons(i).max_hp)
             }
-            bouton(i).info = "Hp : " +  p.pokemons(i).hp.toString + "/" + p.pokemons(i).max_hp.toString + "   " + "Atk : " + p.pokemons(i).atk.toString + "   Dfs : " + p.pokemons(i).defense.toString + "   Spd : " + p.pokemons(i).speed.toString
+            bouton(i).info = "Lvl : " + p.pokemons(i).lvl.toString + "   " + "Hp : " +  p.pokemons(i).hp.toString + "/" + p.pokemons(i).max_hp.toString + "   " + "Atk : " + p.pokemons(i).atk.toString + "   Dfs : " + p.pokemons(i).defense.toString + "   Spd : " + p.pokemons(i).speed.toString
         }
         boutonr.setText("Retour")
         boutonr.info = "Permet de retourner au menu principal"
